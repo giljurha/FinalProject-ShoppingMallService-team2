@@ -11,6 +11,7 @@
         android:id="@+id/toolbarLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize">
 
@@ -28,14 +29,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:hint="아이디"
-        android:theme="@style/Login_Join_Xml"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:transitionGroup="true"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputLoginId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,7 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:hint="비밀번호"
-        android:theme="@style/Login_Join_Xml"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:transitionGroup="true"
         app:endIconMode="password_toggle">
 
@@ -82,6 +85,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center"
             android:text="회원가입"
+            android:clickable="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="#00B6FF" />
     </LinearLayout>
@@ -106,4 +110,5 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#24FA00"
         android:text="네이버 로그인" />
+
 </LinearLayout>
