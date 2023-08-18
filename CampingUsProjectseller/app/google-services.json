@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "768769153586",
+    "project_id": "campingus-cb5bb",
+    "storage_bucket": "campingus-cb5bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768769153586:android:8ea69d1a89dc40982d7a2b",
+        "android_client_info": {
+          "package_name": "com.test.campingusproject_seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768769153586-qfm793h46tomvpmme7ujiq3vmpcc7i07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClKgnj1AyVy04t98zCRbVufT5-5xgpqGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768769153586-qfm793h46tomvpmme7ujiq3vmpcc7i07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
