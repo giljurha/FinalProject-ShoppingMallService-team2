@@ -11,8 +11,8 @@
         android:id="@+id/toolbarLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/white"
         android:minHeight="?attr/actionBarSize">
 
         <TextView
