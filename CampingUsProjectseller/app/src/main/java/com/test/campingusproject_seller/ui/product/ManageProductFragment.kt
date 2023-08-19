@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentManageProductBinding
-import com.test.campingusproject_seller.databinding.RowProductBinding
+import com.test.campingusproject_seller.databinding.RowProductItemBinding
 import com.test.campingusproject_seller.ui.main.MainActivity
 
 class ManageProductFragment : Fragment() {
@@ -72,7 +72,7 @@ class ManageProductFragment : Fragment() {
     }
 
     inner class ManageProductAdapter : RecyclerView.Adapter<ManageProductAdapter.ManageProductViewHolder>(){
-        inner class ManageProductViewHolder(rowProductBinding : RowProductBinding) : RecyclerView.ViewHolder(rowProductBinding.root) {
+        inner class ManageProductViewHolder(rowProductItemBinding: RowProductItemBinding) : RecyclerView.ViewHolder(rowProductItemBinding.root) {
             val imageViewRowProduct : ImageView
             val textViewRowProductName : TextView
             val textViewRowProductCount : TextView
@@ -80,27 +80,27 @@ class ManageProductFragment : Fragment() {
             val checkBoxRowProduct : CheckBox
 
             init {
-                imageViewRowProduct = rowProductBinding.imageViewRowProduct
-                textViewRowProductName = rowProductBinding.textViewRowProductName
-                textViewRowProductCount = rowProductBinding.textViewRowProductCount
-                textViewRowProductSellingStatus = rowProductBinding.textViewRowProductSellingStatus
-                checkBoxRowProduct = rowProductBinding.checkBoxRowProduct
+                imageViewRowProduct = rowProductItemBinding.imageViewRowProduct
+                textViewRowProductName = rowProductItemBinding.textViewRowProductName
+                textViewRowProductCount = rowProductItemBinding.textViewRowProductCount
+                textViewRowProductSellingStatus = rowProductItemBinding.textViewRowProductSellingStatus
+                checkBoxRowProduct = rowProductItemBinding.checkBoxRowProduct
 
-                rowProductBinding.root.setOnClickListener {
+                rowProductItemBinding.root.setOnClickListener {
                     mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, null)
                 }
             }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageProductViewHolder {
-            val rowProductBinding = RowProductBinding.inflate(layoutInflater)
+            val rowProductItemBinding = RowProductItemBinding.inflate(layoutInflater)
 
-            rowProductBinding.root.layoutParams = ViewGroup.LayoutParams(
+            rowProductItemBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
-            return ManageProductViewHolder(rowProductBinding)
+            return ManageProductViewHolder(rowProductItemBinding)
         }
 
         override fun getItemCount(): Int {
