@@ -1,15 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CampingUsProjectseller" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 기본 색 -->
         <item name="colorPrimary">@color/mainColor</item>
+        <!-- 상태바 색상 및 아이콘 색상 -->
         <item name="colorPrimaryDark">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <!-- 글자 및 아이콘 색상 -->
+        <item name="colorOnPrimary">@color/highLightColor</item>
+        <!-- 강조 색상 -->
+        <item name="colorAccent">@color/highLightColor</item>
+        <!-- 컨트롤러에 사용하는 색상 -->
+        <item name="colorControlNormal">@color/subColor</item>
+        <!-- 위젯 터치등의 액션 발생 시 나타나는 색상 -->
+        <item name="colorControlHighlight">@color/highLightColor</item>
+
+        <!--bottom nav 설정 -->
+        <item name = "bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
     </style>
 
     <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
 
+    <!-- 툴바 설정 -->
     <style name="Theme.CampingUs.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
         <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/highLightColor</item>
     </style>
 
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectseller">
