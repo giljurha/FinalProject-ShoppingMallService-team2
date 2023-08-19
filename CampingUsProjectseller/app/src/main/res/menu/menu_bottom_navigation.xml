@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemManageProduct"
+        android:icon="@drawable/assignment_24px"
+        android:iconTint="@color/highLightColor"
+        android:title="제품관리"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemSellStatus"
+        android:icon="@drawable/attach_money_24px"
+        android:iconTint="@color/highLightColor"
+        android:title="판매현황"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemCustomerAsk"
+        android:icon="@drawable/error_24px"
+        android:iconTint="@color/highLightColor"
+        android:title="고객문의"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemMyInfo"
+        android:icon="@drawable/account_circle_24px"
+        android:iconTint="@color/highLightColor"
+        android:title="내정보"
+        app:showAsAction="always|withText" />
+</menu>

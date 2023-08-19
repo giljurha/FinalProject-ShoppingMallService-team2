@@ -5,7 +5,7 @@ data class ProductModel (
     var productSellerId : String,           //상품 판매자 ID
     var productName : String,               //상품 이름
     var productPrice : Long,                //상품 가격
-    var productImage : String,              //상품 이미지
+    var productImage : String?,              //상품 이미지
     var productInfo : String,               //상품 정보
     var productCount : Long,                //상품 수량
     var productSellingStatus : Boolean,     //상품 판매상태
