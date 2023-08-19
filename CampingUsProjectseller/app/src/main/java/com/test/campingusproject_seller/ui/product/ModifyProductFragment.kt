@@ -22,6 +22,9 @@ class ModifyProductFragment : Fragment() {
         fragmentModifyProductBinding = FragmentModifyProductBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         fragmentModifyProductBinding.run {
             materialToolbarModifyProduct.run {
                 title = "제품 수정"

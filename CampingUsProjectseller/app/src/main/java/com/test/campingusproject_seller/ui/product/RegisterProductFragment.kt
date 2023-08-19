@@ -1,16 +1,30 @@
 package com.test.campingusproject_seller.ui.product
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.android.material.carousel.CarouselLayoutManager
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentRegisterProductBinding
+import com.test.campingusproject_seller.databinding.RowProductImageBinding
 import com.test.campingusproject_seller.dataclassmodel.ProductModel
 import com.test.campingusproject_seller.repository.ProductRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
@@ -27,6 +41,8 @@ class RegisterProductFragment : Fragment() {
         "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"
     )
 
+    var productImageList = mutableListOf<Bitmap>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,10 +51,55 @@ class RegisterProductFragment : Fragment() {
         fragmentRegisterProductBinding = FragmentRegisterProductBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
-        
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
+        albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            val option = BitmapFactory.Options()
+            option.inSampleSize = 4
+
+            //이미지 가져오기 성공
+            if(it.resultCode == RESULT_OK){
+
+                //사진 여러장 선택한 경우
+                if(it.data?.clipData != null){
+                    val count = it.data?.clipData?.itemCount
+
+                    for(idx in 0 until count!!){
+                        val imageUri = it.data?.clipData?.getItemAt(idx)?.uri
+
+                        val inputStream = mainActivity.contentResolver.openInputStream(imageUri!!)
+                        val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+
+                        inputStream?.close()
+
+                        productImageList.add(bitmap!!)
+                    }
+                }
+                //한장 선택한 경우
+                else{
+                        it.data?.data?.let { uri ->
+                            val imageUri = uri
+
+                            val inputStream = mainActivity.contentResolver.openInputStream(imageUri!!)
+                            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+
+                            inputStream?.close()
+
+                            if(bitmap != null){
+                                productImageList.add(bitmap)
+                            }
+                        }
+                }
+
+                //recycler view 갱신
+                fragmentRegisterProductBinding.recyclerViewRegisterProductImage.adapter?.notifyDataSetChanged()
+            }
+        }
 
         fragmentRegisterProductBinding.run {
 
+            //spinner 목록 셋팅
             spinnerRegisterProductCount.run {
                 val a1 = ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, productCountList)
                 a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -46,6 +107,15 @@ class RegisterProductFragment : Fragment() {
                 adapter = a1
                 //기본값 0으로 설정
                 setSelection(0)
+            }
+
+            //이미지 추가 버튼 클릭 이벤트
+            imageButtonRegisterProductImage.setOnClickListener{
+                val albumIntent = Intent(Intent.ACTION_PICK)
+                albumIntent.setType("image/*")
+
+                albumIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                albumLauncher.launch(albumIntent)
             }
 
             materialToolbarRegisterProduct.run {
@@ -112,9 +182,45 @@ class RegisterProductFragment : Fragment() {
                     textInputLayoutRegisterProductDiscountRate.visibility = View.GONE
                 }
             }
+
+            recyclerViewRegisterProductImage.run {
+                adapter = RegisterProductAdapter()
+
+                //recycler view 가로로 확장되게 함
+                layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
+            }
         }
 
         return fragmentRegisterProductBinding.root
+    }
+
+    inner class RegisterProductAdapter : RecyclerView.Adapter<RegisterProductAdapter.RegisterProductViewHolder>(){
+        inner class RegisterProductViewHolder (rowProductImageBinding: RowProductImageBinding) :
+                RecyclerView.ViewHolder(rowProductImageBinding.root){
+                    var imageViewRowProductImage : ImageView
+
+                    init {
+                        imageViewRowProductImage = rowProductImageBinding.imageViewRowProductImage
+                    }
+                }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegisterProductViewHolder {
+            val rowProductImageBinding = RowProductImageBinding.inflate(layoutInflater)
+
+            return RegisterProductViewHolder(rowProductImageBinding)
+        }
+
+        override fun getItemCount(): Int {
+            return productImageList.size
+        }
+
+        override fun onBindViewHolder(holder: RegisterProductViewHolder, position: Int) {
+
+            Glide.with(mainActivity).load(productImageList[position])
+                .override(500, 500)
+                .into(holder.imageViewRowProductImage)
+
+        }
     }
 
 }

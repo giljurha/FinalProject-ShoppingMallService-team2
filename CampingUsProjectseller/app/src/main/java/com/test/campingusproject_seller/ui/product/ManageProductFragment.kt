@@ -29,6 +29,9 @@ class ManageProductFragment : Fragment() {
         fragmentManageProductBinding = FragmentManageProductBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        //하단 nav bar 보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+
         fragmentManageProductBinding.run {
 
             materialToolbarManageProduct.run {
@@ -64,8 +67,10 @@ class ManageProductFragment : Fragment() {
             }
 
             floatingActionButtonManageProduct.setOnClickListener {
+                //제품 등록 화면으로 전환
                 mainActivity.replaceFragment(MainActivity.REGISTER_PRODUCT_FRAGMENT, true, true, null)
             }
+
         }
 
         return fragmentManageProductBinding.root
