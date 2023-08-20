@@ -19,7 +19,6 @@ class InquiryFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentInquiryBinding: FragmentInquiryBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +42,7 @@ class InquiryFragment : Fragment() {
                         // Handle notification icon press
                         true
                     }
+
                     else -> false
                 }
             }
@@ -51,7 +51,12 @@ class InquiryFragment : Fragment() {
             recyclerViewInquiry.run {
                 adapter = InquiryRecyclerAdapterClass()
                 layoutManager = LinearLayoutManager(context)
-                addItemDecoration(MaterialDividerItemDecoration(context, MaterialDividerItemDecoration.VERTICAL))
+                addItemDecoration(
+                    MaterialDividerItemDecoration(
+                        context,
+                        MaterialDividerItemDecoration.VERTICAL
+                    )
+                )
             }
         }
 
@@ -62,7 +67,8 @@ class InquiryFragment : Fragment() {
     inner class InquiryRecyclerAdapterClass :
         RecyclerView.Adapter<InquiryRecyclerAdapterClass.InquiryViewHolderClass>() {
 
-        inner class InquiryViewHolderClass(rowInquiryBinding: RowInquiryBinding) : RecyclerView.ViewHolder(rowInquiryBinding.root) {
+        inner class InquiryViewHolderClass(rowInquiryBinding: RowInquiryBinding) :
+            RecyclerView.ViewHolder(rowInquiryBinding.root) {
 
             var imageViewInquiryProfile: ImageView
             var textViewInquiryTitle: TextView
