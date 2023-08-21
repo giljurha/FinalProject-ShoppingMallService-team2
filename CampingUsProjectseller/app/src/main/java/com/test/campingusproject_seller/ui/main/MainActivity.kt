@@ -42,17 +42,21 @@ class MainActivity : AppCompatActivity() {
                     //제품관리 클릭
                     R.id.menuItemManageProduct->{
                         replaceFragment(MANAGE_PRODUCT_FRAGMENT, false, false, null)
+                        it.isChecked = true
                     }
                     //판매현황 클릭
                     R.id.menuItemSellStatus->{
+                        it.isChecked = true
 
                     }
                     //고객문의 클릭
                     R.id.menuItemCustomerAsk->{
+                        it.isChecked = true
 
                     }
                     //내정보 클릭
                     R.id.menuItemMyInfo->{
+                        it.isChecked = true
 
                     }
                 }
