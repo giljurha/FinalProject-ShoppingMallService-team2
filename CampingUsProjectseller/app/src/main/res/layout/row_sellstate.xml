@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutSellStateContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="30dp">
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/textViewSellstateCustomerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="구매자명"
-        android:textSize="@dimen/text_size_2"
+        android:textSize="@dimen/text_size_1"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,62 +41,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewSellstateOrderHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="주문내역"
-        android:textSize="@dimen/text_size_2"
-        app:layout_constraintTop_toBottomOf="@id/textViewSellstateDate" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSellstateOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSellstateOrderHistory"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintTop_toBottomOf="@id/buttonSellstateToSellStateDetail" />
 
-    <TextView
-        android:id="@+id/textViewSellstateProdeuctName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="25dp"
-        android:text="상품 이름"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/textViewSellstateOrderHistory" />
-
-    <TextView
-        android:id="@+id/textViewSellstateProdeuctPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:text="가격"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/textViewSellstateProdeuctName" />
-
-    <TextView
-        android:id="@+id/textViewSellstateProdeuctNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:text="갯수"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@id/textViewSellstateProdeuctPrice" />
-
-    <Button
-        android:id="@+id/buttonSellstateSend"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="10dp"
-        android:text="발송"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
