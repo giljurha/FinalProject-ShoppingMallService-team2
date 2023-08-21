@@ -61,8 +61,35 @@ class ProductRepository {
         fun getAllProductData(callback1: (Task<DataSnapshot>) -> Unit){
             val database = FirebaseDatabase.getInstance()
 
-            val productDataRef = database.getReference("ProductData")
-            productDataRef.orderByChild("productId").get().addOnCompleteListener(callback1)
+            val productRef = database.getReference("ProductData")
+            productRef.orderByChild("productId").get().addOnCompleteListener(callback1)
+        }
+
+        fun removeProduct(productId: Long, callback1: (Task<Void>)-> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val productRef = database.getReference("ProductData")
+
+            productRef.orderByChild("productId").equalTo(productId.toDouble()).get().addOnCompleteListener {
+                for(a1 in it.result.children){
+                    a1.ref.removeValue().addOnCompleteListener(callback1)
+                }
+            }
+        }
+
+        fun removeImages(fileDir: String, callback1: ()->Unit){
+            val storage = FirebaseStorage.getInstance()
+            val filePath = fileDir.substring(0, fileDir.length-1)
+            val fileDirRef = storage.reference.child(filePath)
+
+            fileDirRef.listAll()
+                .addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        task.result.items.forEach {
+                            it.delete()
+                        }
+                        callback1()
+                    }
+                }
         }
     }
 }

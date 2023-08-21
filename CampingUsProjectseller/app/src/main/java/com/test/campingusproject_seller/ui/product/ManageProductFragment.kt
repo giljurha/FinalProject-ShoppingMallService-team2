@@ -22,6 +22,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentManageProductBinding
 import com.test.campingusproject_seller.databinding.RowProductItemBinding
@@ -35,6 +36,8 @@ class ManageProductFragment : Fragment() {
     lateinit var mainActivity: MainActivity
 
     lateinit var productViewModel : ProductViewModel
+
+    var productCheckedList = mutableListOf<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +56,11 @@ class ManageProductFragment : Fragment() {
             productList.observe(mainActivity){
                 //recycler view 갱신
                 fragmentManageProductBinding.recyclerViewManageProduct.adapter?.notifyDataSetChanged()
+
+                productCheckedList.clear()
+                for(i in 0 until productList.value?.size!!){
+                    productCheckedList.add(false)
+                }
             }
         }
 
@@ -68,7 +76,22 @@ class ManageProductFragment : Fragment() {
                 //삭제 아이콘 클릭 이벤트
                 setOnMenuItemClickListener {
                     if(it.itemId == R.id.menuItemDelete){
-                        //삭제 아이템 클릭 처리
+                        for(idx in productCheckedList.size-1 downTo 0){
+                            if(productCheckedList[idx]){
+                                //Log.e("deleteList", productViewModel.productList.value?.get(idx)?.productName!!)
+                                val product = productViewModel.productList.value?.get(idx)
+
+                                val productId = product?.productId!!
+                                val productImage = product?.productImage!!
+
+                                ProductRepository.removeProduct(productId){
+                                    ProductRepository.removeImages(productImage){
+                                        productViewModel.getAllProductData(ProductRepository.getSellerId())
+                                        Snackbar.make(fragmentManageProductBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                        }
                     }
                     false
                 }
@@ -127,6 +150,15 @@ class ManageProductFragment : Fragment() {
                 rowProductItemBinding.root.setOnClickListener {
                     mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, null)
                 }
+
+                checkBoxRowProduct.setOnCheckedChangeListener { compoundButton, b ->
+                    if(b){
+                        productCheckedList[adapterPosition] = b
+                    }
+                    else{
+                        productCheckedList[adapterPosition] = b
+                    }
+                }
             }
         }
 
@@ -177,6 +209,4 @@ class ManageProductFragment : Fragment() {
     fun printSellingStatus(sellingStatus : Boolean) : String{
         return if(sellingStatus) "판매중" else "매진"
     }
-
-
 }
