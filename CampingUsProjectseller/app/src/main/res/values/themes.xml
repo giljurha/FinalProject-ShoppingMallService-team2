@@ -3,10 +3,11 @@
     <style name="Base.Theme.CampingUsProjectseller" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
     </style>
 
     <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
-    
+
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
@@ -18,4 +19,5 @@
     <style name="Theme.App.Small" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
+
 </resources>
