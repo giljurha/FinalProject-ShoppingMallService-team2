@@ -20,5 +20,8 @@
         android:layout_height="wrap_content"
         app:itemRippleColor="@color/subColor"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_navigation" />
+        app:menu="@menu/menu_bottom_navigation" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </LinearLayout>
