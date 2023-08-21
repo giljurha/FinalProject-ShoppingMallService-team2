@@ -5,6 +5,4 @@
     <color name="mainColor">#FEF9F3</color>
     <color name="subColor">#E3CAA5</color>
     <color name="highLightColor">#3C2A21</color>
-    <color name="gray">#808080</color>
-    <color name="soft_gray">#ACACAC</color>
 </resources>
