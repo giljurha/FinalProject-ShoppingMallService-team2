@@ -18,4 +18,10 @@
     <style name="Theme.App.Small" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
+
+    <!-- 툴바의 테마로 사용할 테마 -->
+    <style name="Theme.Mini02.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorPrimary">@color/material_dynamic_tertiary99</item>
+    </style>
+
 </resources>
