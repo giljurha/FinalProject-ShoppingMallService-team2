@@ -46,7 +46,7 @@
                     android:inputType="text|textPersonName"
                     android:text="구매물품"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_size_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +65,7 @@
                     android:inputType="text|textPersonName"
                     android:text="작성자"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_size_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,7 +84,7 @@
                     android:inputType="text|textPersonName"
                     android:text="문의내용"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_size_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text|textPersonName|textMultiLine"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_size_2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -114,7 +114,7 @@
                 android:layout_marginTop="20dp"
                 android:text="등록"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/text_size_2" />
 
         </LinearLayout>
     </ScrollView>

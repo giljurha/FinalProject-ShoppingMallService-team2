@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:textSize="@dimen/text_size_2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold" />
 
@@ -39,6 +40,7 @@
                 android:layout_marginTop="5dp"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:textSize="@dimen/text_size_3"
                 android:text="TextView jasoidfj apoiejopfa jopif ajopiefj opisje fpoiasjep ofi "
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
         </LinearLayout>
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:text="답변 완료"
+                android:textSize="@dimen/text_size_2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
@@ -62,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="bottom|end"
+                android:textSize="@dimen/text_size_3"
                 android:text="작성자" />
         </LinearLayout>
     </LinearLayout>
