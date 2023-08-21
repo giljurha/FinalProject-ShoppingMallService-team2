@@ -62,7 +62,6 @@
             android:id="@+id/checkBoxRowProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/subColor"
             android:checked="false" />
     </LinearLayout>
 </LinearLayout>
