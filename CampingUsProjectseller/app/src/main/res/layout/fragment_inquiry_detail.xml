@@ -106,12 +106,14 @@
 
             <Button
                 android:id="@+id/buttonInquiryDetailAdd"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:backgroundTint="@color/subColor"
+                style="@style/Widget.Material3.Button.ElevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="20dp"
                 android:text="등록"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>
