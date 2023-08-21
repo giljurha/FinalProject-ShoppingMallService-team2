@@ -44,5 +44,25 @@ class ProductRepository {
                 imageRef.putFile(uploadUri[idx]).addOnCompleteListener(callback1)
             }
         }
+
+        fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+            val fileName = fileDir + "1.jpeg"
+
+            val imageRef = storage.reference.child(fileName)
+            imageRef.downloadUrl.addOnCompleteListener(callback1)
+        }
+
+        //판매자 id 받아오는 함수 - 수정필
+        fun getSellerId() : String{
+            return "jieun"
+        }
+
+        fun getAllProductData(callback1: (Task<DataSnapshot>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+
+            val productDataRef = database.getReference("ProductData")
+            productDataRef.orderByChild("productId").get().addOnCompleteListener(callback1)
+        }
     }
 }
