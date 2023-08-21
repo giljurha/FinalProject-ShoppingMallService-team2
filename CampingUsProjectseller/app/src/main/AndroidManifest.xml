@@ -15,12 +15,19 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true">
         <activity
+            android:name=".ui.splashscreen.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.App.Starting"><!--디폴트 스플래시 스크린이 나오므로 그것을 안보이게 해주는 것-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
