@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutSellStateContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="30dp">
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/textViewSellstateCustomerName"
@@ -46,6 +47,7 @@
         android:layout_marginTop="30dp"
         android:text="주문내역"
         android:textSize="@dimen/text_size_2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewSellstateDate" />
 
     <ImageView
