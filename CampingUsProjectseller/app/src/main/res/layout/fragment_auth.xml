@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/ifSendCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -89,10 +90,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <LinearLayout
+        android:id="@+id/layoutInputAuthCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
 
         <EditText
             android:id="@+id/editTextInputAuthNumber"
@@ -117,7 +118,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonAuth"
+        android:id="@+id/buttonAuthComplete"
         style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:layout_width="250dp"
         android:layout_height="wrap_content"

@@ -1,16 +1,22 @@
 package com.test.campingusproject_seller.ui.main
 
 import android.Manifest
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.ActivityMainBinding
+import com.test.campingusproject_seller.repository.LoginRepository
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
+import com.test.campingusproject_seller.ui.user.AuthFragment
+import com.test.campingusproject_seller.ui.user.JoinFragment
+import com.test.campingusproject_seller.ui.user.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +26,9 @@ class MainActivity : AppCompatActivity() {
         val MANAGE_PRODUCT_FRAGMENT = "ManageProductFragment"
         val MODIFY_PRODUCT_FRAGMENT = "ModifyProductFragment"
         val REGISTER_PRODUCT_FRAGMENT = "RegisterProductFragment"
+        val LOGIN_FRAGMENT="LoginFragment"
+        val JOIN_FRAGMENT="joinFragment"
+        val AUTH_FRAGMENT="AuthFragment"
     }
 
     val permissionList = arrayOf(
@@ -32,6 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
+
+        //로그인한적 없으면 로그인 화면으로
+        if(!LoginRepository.checkLogin(this)){
+            replaceFragment(LOGIN_FRAGMENT,false,false,null)
+            activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
+        }
+
 
         requestPermissions(permissionList, 0)
 
@@ -71,6 +87,9 @@ class MainActivity : AppCompatActivity() {
             MANAGE_PRODUCT_FRAGMENT -> ManageProductFragment()
             MODIFY_PRODUCT_FRAGMENT -> ModifyProductFragment()
             REGISTER_PRODUCT_FRAGMENT -> RegisterProductFragment()
+            LOGIN_FRAGMENT->LoginFragment()
+            JOIN_FRAGMENT->JoinFragment()
+            AUTH_FRAGMENT->AuthFragment()
             else -> Fragment()
         }
 

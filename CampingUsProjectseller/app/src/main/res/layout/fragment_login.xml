@@ -32,7 +32,9 @@
         android:layout_marginRight="30dp"
         android:hint="아이디"
         android:transitionGroup="true"
-        app:endIconMode="clear_text">
+        app:boxStrokeColor="@color/highLightColor"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/highLightColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputLoginId"
@@ -50,7 +52,9 @@
         android:layout_marginRight="30dp"
         android:hint="비밀번호"
         android:transitionGroup="true"
-        app:endIconMode="password_toggle">
+        app:boxStrokeColor="@color/highLightColor"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/highLightColor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextInputLoginPassword"
