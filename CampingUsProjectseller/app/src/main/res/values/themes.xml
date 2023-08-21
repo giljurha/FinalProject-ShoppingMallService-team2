@@ -22,8 +22,8 @@
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
 
-    <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
 
+    <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
 
     <!-- 툴바 설정 -->
     <style name="Theme.CampingUs.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
@@ -31,11 +31,18 @@
         <item name="colorOnPrimary">@color/highLightColor</item>
     </style>
 
-    <!-- 글꼴 크키별 스타일 -->
+    <!--디폴트 스플래시 스크린이 나오므로 그것을 안보이게 해주는 것-->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="postSplashScreenTheme">@style/Theme.CampingUsProjectseller</item>
+        <item name="windowSplashScreenAnimationDuration">0</item>
+    </style>
+
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
 
+    <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Medium" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_2</item>
     </style>
