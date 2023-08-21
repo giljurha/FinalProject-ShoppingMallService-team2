@@ -40,7 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="제품 이름"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -57,7 +58,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="가격"
-                    android:inputType="number|numberSigned" />
+                    android:inputType="number|numberSigned"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -74,7 +76,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="제품 설명"
-                    android:inputType="text|textMultiLine" />
+                    android:inputType="text|textMultiLine"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,7 +147,8 @@
                     android:layout_height="wrap_content"
                     android:hint="할인율"
                     android:inputType="number|numberDecimal|numberSigned"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
