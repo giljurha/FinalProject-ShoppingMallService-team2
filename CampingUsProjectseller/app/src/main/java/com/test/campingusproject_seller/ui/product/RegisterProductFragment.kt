@@ -98,6 +98,7 @@ class RegisterProductFragment : Fragment() {
 
                     if(it.itemId == R.id.menuItemSubmit){
 
+                        //상품 Id 값 가져옴
                         ProductRepository.getProductId {
                             var productId = it.result.value as Long
                             val productCount = spinnerRegisterProductCount.selectedItem.toString().toLong()

@@ -34,13 +34,14 @@ class ManageProductFragment : Fragment() {
 
         fragmentManageProductBinding.run {
 
+            //툴바
             materialToolbarManageProduct.run {
 
                 title = "제품 관리"
 
                 inflateMenu(R.menu.menu_delete)
 
-                //toolbar 삭제 메뉴 클릭 이벤트
+                //삭제 아이콘 클릭 이벤트
                 setOnMenuItemClickListener {
                     if(it.itemId == R.id.menuItemDelete){
                         //삭제 아이템 클릭 처리
