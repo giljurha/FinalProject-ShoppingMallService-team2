@@ -44,7 +44,7 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorSurface">@color/subColor</item>
+        <item name="colorSurface">@color/mainColor</item>
         <item name="colorOnSurfaceVariant">@color/highLightColor</item>
     </style>
 </resources>
