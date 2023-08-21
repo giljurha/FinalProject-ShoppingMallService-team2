@@ -1,4 +1,4 @@
-package com.test.campingusproject_seller.ui.login
+package com.test.campingusproject_seller.ui.user
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
