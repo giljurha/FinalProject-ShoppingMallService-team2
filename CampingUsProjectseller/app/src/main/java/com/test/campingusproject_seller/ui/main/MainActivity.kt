@@ -3,17 +3,22 @@ package com.test.campingusproject_seller.ui.main
 import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.ActivityMainBinding
 import com.test.campingusproject_seller.ui.notification.NotificationMainFragment
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
 import com.test.campingusproject_seller.ui.sellstate.SellStateFragment
 import com.test.campingusproject_seller.ui.sellstatedetail.SellStateDetailFragment
+import com.test.campingusproject_seller.ui.user.AuthFragment
+import com.test.campingusproject_seller.ui.user.JoinFragment
+import com.test.campingusproject_seller.ui.user.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         val SELL_STATE_FRAGMENT = "SellStateFragment"
         val SELL_STATE_DETAIL_FRAGMENT = "SellStateDetailFragment"
         val NOTIFICATION_MAIN_FRAGMENT = "NotificationMainFragment"
+        val LOGIN_FRAGMENT="LoginFragment"
+        val JOIN_FRAGMENT="joinFragment"
+        val AUTH_FRAGMENT="AuthFragment"
     }
 
     val permissionList = arrayOf(
@@ -38,6 +46,13 @@ class MainActivity : AppCompatActivity() {
 
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
+
+        //로그인한적 없으면 로그인 화면으로
+        if(!UserInfoRepository.checkPref(this)){
+            replaceFragment(LOGIN_FRAGMENT,false,false,null)
+            activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
+        }
+
 
         requestPermissions(permissionList, 0)
 
@@ -84,6 +99,9 @@ class MainActivity : AppCompatActivity() {
             SELL_STATE_FRAGMENT -> SellStateFragment()
             SELL_STATE_DETAIL_FRAGMENT -> SellStateDetailFragment()
             NOTIFICATION_MAIN_FRAGMENT -> NotificationMainFragment()
+            LOGIN_FRAGMENT->LoginFragment()
+            JOIN_FRAGMENT->JoinFragment()
+            AUTH_FRAGMENT->AuthFragment()
             else -> Fragment()
         }
 

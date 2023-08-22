@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/mainColor</item>
         <!-- 상태바 색상 및 아이콘 색상 -->
         <item name="colorPrimaryDark">@color/white</item>
+
         <item name="android:windowLightStatusBar">true</item>
         <!-- 글자 및 아이콘 색상 -->
         <item name="colorOnPrimary">@color/highLightColor</item>
@@ -20,8 +21,9 @@
 
         <!-- check box style 설정 -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
-    </style>
 
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
 
     <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
 
@@ -38,11 +40,11 @@
         <item name="windowSplashScreenAnimationDuration">0</item>
     </style>
 
+    <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
 
-    <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Medium" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_2</item>
     </style>
@@ -76,6 +78,15 @@
 
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/subColor</item>
+    </style>
+
+    <!--다이얼로그 디자인-->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>
