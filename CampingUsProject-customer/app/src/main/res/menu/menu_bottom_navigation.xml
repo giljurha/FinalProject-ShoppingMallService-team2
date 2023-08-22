@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemCamping"
+        android:enabled="true"
+        android:icon="@drawable/camping_24px"
+        android:title="캠핑장"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemShopping"
+        android:enabled="true"
+        android:icon="@drawable/inventory_2_24px"
+        android:title="쇼핑"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemHome"
+        android:enabled="true"
+        android:icon="@drawable/home_24px"
+        android:title="홈"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemComunity"
+        android:enabled="true"
+        android:icon="@drawable/groups_24px"
+        android:title="커뮤니티"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/menuItemMyProfile"
+        android:enabled="true"
+        android:icon="@drawable/account_circle_24px"
+        android:title="내정보"
+        app:showAsAction="always|withText" />
+</menu>

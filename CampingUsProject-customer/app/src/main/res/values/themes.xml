@@ -1,9 +1,73 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CampingUsProjectcustomer" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- 기본 색 -->
+        <item name="colorPrimary">@color/mainColor</item>
+        <!-- 상태바 색상 및 아이콘 색상 -->
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- 글자 및 아이콘 색상 -->
+        <item name="colorOnPrimary">@color/highLightColor</item>
+        <!-- 강조 색상 -->
+        <item name="colorAccent">@color/highLightColor</item>
+        <!-- 컨트롤러에 사용하는 색상 -->
+        <item name="colorControlNormal">@color/subColor</item>
+        <!-- 위젯 터치등의 액션 발생 시 나타나는 색상 -->
+        <item name="colorControlHighlight">@color/highLightColor</item>
+
+        <!--bottom nav style 설정 -->
+        <item name = "bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+        <!-- check box style 설정 -->
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
 
     <style name="Theme.CampingUsProjectcustomer" parent="Base.Theme.CampingUsProjectcustomer" />
+    <!--디폴트 스플래시 스크린이 나오므로 그것을 안보이게 해주는 것-->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="postSplashScreenTheme">@style/Theme.CampingUsProjectcustomer</item>
+        <item name="windowSplashScreenAnimationDuration">0</item>
+    </style>
+
+    <!-- 글꼴 크키별 스타일 -->
+    <style name="Theme.App.Large" parent="Theme.CampingUsProjectcustomer">
+        <item name="android:textSize">@dimen/text_size_1</item>
+    </style>
+
+    <style name="Theme.App.Medium" parent="Theme.CampingUsProjectcustomer">
+        <item name="android:textSize">@dimen/text_size_2</item>
+    </style>
+
+    <style name="Theme.App.Small" parent="Theme.CampingUsProjectcustomer">
+        <item name="android:textSize">@dimen/text_size_3</item>
+    </style>
+
+    <!-- bottom nav bar 스타일 커스텀 -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorSurface">@color/mainColor</item>
+        <item name="colorOnSurfaceVariant">@color/highLightColor</item>
+    </style>
+
+    <!-- check box 스타일 커스텀 -->
+    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CheckBox</item>
+    </style>
+
+<!--    바텀 네비게이션 클릭 시 아이콘 주변에 색상 변경-->
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/subColor</item>
+    </style>
+
+    <style name="ThemeOverlay.App.CheckBox" parent="">
+        <!-- Container colors -->
+        <item name="colorPrimary">@color/subColor</item>
+        <!-- Icon colors -->
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
 </resources>
