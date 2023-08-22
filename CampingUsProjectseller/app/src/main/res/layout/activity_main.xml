@@ -16,11 +16,12 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationViewMain"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
-        app:itemRippleColor="@color/subColor"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_navigation" >
+        app:menu="@menu/menu_bottom_navigation"
+        app:itemIconTint="@drawable/selector_bottom_navigation_view"
+        app:itemTextColor="@drawable/selector_bottom_navigation_view"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

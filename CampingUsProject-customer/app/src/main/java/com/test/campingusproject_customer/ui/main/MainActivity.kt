@@ -1,69 +1,63 @@
-package com.test.campingusproject_seller.ui.main
+package com.test.campingusproject_customer.ui.main
 
-import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.test.campingusproject_seller.R
-import com.test.campingusproject_seller.databinding.ActivityMainBinding
-import com.test.campingusproject_seller.ui.notification.NotificationMainFragment
-import com.test.campingusproject_seller.ui.product.ManageProductFragment
-import com.test.campingusproject_seller.ui.product.ModifyProductFragment
-import com.test.campingusproject_seller.ui.product.RegisterProductFragment
-import com.test.campingusproject_seller.ui.sellstate.SellStateFragment
-import com.test.campingusproject_seller.ui.sellstatedetail.SellStateDetailFragment
+import com.test.campingusproject_customer.R
+import com.test.campingusproject_customer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var activityMainBinding: ActivityMainBinding
 
     companion object{
-        val MANAGE_PRODUCT_FRAGMENT = "ManageProductFragment"
-        val MODIFY_PRODUCT_FRAGMENT = "ModifyProductFragment"
-        val REGISTER_PRODUCT_FRAGMENT = "RegisterProductFragment"
-        val SELL_STATE_FRAGMENT = "SellStateFragment"
-        val SELL_STATE_DETAIL_FRAGMENT = "SellStateDetailFragment"
-        val NOTIFICATION_MAIN_FRAGMENT = "NotificationMainFragment"
+        val HOME_FRAGMENT = "HomeFragment"
+        val CAMPING_FRAGMENT = "CampingFragment"
+        val SHOPPING_FRAGMENT = "ShoppingFragment"
+        val COMUNITY_FRAGMENT = "ComunityFragment"
+        val MYPROFILE_FRAGMENT = "MyProfileFragment"
     }
-
-    val permissionList = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_MEDIA_LOCATION
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        requestPermissions(permissionList, 0)
+        //시작하면 홈으로 가기
+        replaceFragment(HOME_FRAGMENT, false, false, null)
 
         activityMainBinding.run {
 
             bottomNavigationViewMain.setOnItemSelectedListener {
                 when(it.itemId){
-                    //제품관리 클릭
-                    R.id.menuItemManageProduct->{
-                        replaceFragment(MANAGE_PRODUCT_FRAGMENT, false, false, null)
+                    //홈 클릭
+                    R.id.menuItemHome->{
+                        replaceFragment(HOME_FRAGMENT, false, false, null)
                         it.isChecked = true
                     }
-                    //판매현황 클릭
-                    R.id.menuItemSellStatus->{
-                        replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
+                    //캠핑장 클릭
+                    R.id.menuItemCamping->{
+//                        replaceFragment(CAMPING_FRAGMENT, true, false, null)
                         it.isChecked = true
                     }
-                    //고객문의 클릭
-                    R.id.menuItemCustomerAsk->{
+                    //쇼핑 클릭
+                    R.id.menuItemShopping->{
+//                        replaceFragment(SHOPPING_FRAGMENT, true, false, null)
                         it.isChecked = true
-
+                    }
+                    //커뮤니티 클릭
+                    R.id.menuItemComunity->{
+//                        replaceFragment(COMUNITY_FRAGMENT, true, false, null)
+                        it.isChecked = true
                     }
                     //내정보 클릭
-                    R.id.menuItemMyInfo->{
+                    R.id.menuItemMyProfile->{
+//                        replaceFragment(MYPROFILE_FRAGMENT, true, false, null)
                         it.isChecked = true
-
+                    }
+                    else -> {
+                        replaceFragment(HOME_FRAGMENT, false, false, null)
                     }
                 }
                 false
@@ -78,12 +72,11 @@ class MainActivity : AppCompatActivity() {
 
         // 새로운 Fragment를 담을 변수
         var newFragment = when(name){
-            MANAGE_PRODUCT_FRAGMENT -> ManageProductFragment()
-            MODIFY_PRODUCT_FRAGMENT -> ModifyProductFragment()
-            REGISTER_PRODUCT_FRAGMENT -> RegisterProductFragment()
-            SELL_STATE_FRAGMENT -> SellStateFragment()
-            SELL_STATE_DETAIL_FRAGMENT -> SellStateDetailFragment()
-            NOTIFICATION_MAIN_FRAGMENT -> NotificationMainFragment()
+            HOME_FRAGMENT -> HomeFragment()
+//            CAMPING_FRAGMENT -> CampingFragment()
+//            SHOPPING_FRAGMENT -> ShoppingFragment()
+//            COMUNITY_FRAGMENT -> ComunityFragment()
+//            MYPROFILE_FRAGMENT -> MyProfileFragment()
             else -> Fragment()
         }
 

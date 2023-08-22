@@ -44,5 +44,52 @@ class ProductRepository {
                 imageRef.putFile(uploadUri[idx]).addOnCompleteListener(callback1)
             }
         }
+
+        fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+            val fileName = fileDir + "1.jpeg"
+
+            val imageRef = storage.reference.child(fileName)
+            imageRef.downloadUrl.addOnCompleteListener(callback1)
+        }
+
+        //판매자 id 받아오는 함수 - 수정필
+        fun getSellerId() : String{
+            return "jieun"
+        }
+
+        fun getAllProductData(callback1: (Task<DataSnapshot>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+
+            val productRef = database.getReference("ProductData")
+            productRef.orderByChild("productId").get().addOnCompleteListener(callback1)
+        }
+
+        fun removeProduct(productId: Long, callback1: (Task<Void>)-> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val productRef = database.getReference("ProductData")
+
+            productRef.orderByChild("productId").equalTo(productId.toDouble()).get().addOnCompleteListener {
+                for(a1 in it.result.children){
+                    a1.ref.removeValue().addOnCompleteListener(callback1)
+                }
+            }
+        }
+
+        fun removeImages(fileDir: String, callback1: ()->Unit){
+            val storage = FirebaseStorage.getInstance()
+            val filePath = fileDir.substring(0, fileDir.length-1)
+            val fileDirRef = storage.reference.child(filePath)
+
+            fileDirRef.listAll()
+                .addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        task.result.items.forEach {
+                            it.delete()
+                        }
+                        callback1()
+                    }
+                }
+        }
     }
 }
