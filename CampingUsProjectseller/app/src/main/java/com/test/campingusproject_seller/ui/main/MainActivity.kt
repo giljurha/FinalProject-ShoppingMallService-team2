@@ -1,7 +1,6 @@
 package com.test.campingusproject_seller.ui.main
 
 import android.Manifest
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,7 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.ActivityMainBinding
-import com.test.campingusproject_seller.repository.LoginRepository
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         //로그인한적 없으면 로그인 화면으로
-        if(!LoginRepository.checkLogin(this)){
+        if(!UserInfoRepository.checkPref(this)){
             replaceFragment(LOGIN_FRAGMENT,false,false,null)
             activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
         }

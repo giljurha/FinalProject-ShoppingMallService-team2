@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentJoinBinding
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
 import kotlin.concurrent.fixedRateTimer
 

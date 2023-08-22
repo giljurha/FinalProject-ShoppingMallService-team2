@@ -9,15 +9,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.test.campingusproject_seller.dataclassmodel.UserModel
+import com.test.campingusproject_seller.repository.UserInfoRepository
 
-class AuthViewModel: ViewModel(){
-    val userName=MutableLiveData<String>()
-    val userId=MutableLiveData<String>()
-    val userPw=MutableLiveData<String>()
-    val userPw2=MutableLiveData<String>()
-    val userPhoneNum=MutableLiveData<String>()
-    val authResult=MutableLiveData<Boolean>()
-    val verificationIdStr=MutableLiveData<String>()
+class AuthViewModel : ViewModel() {
+    val authResult = MutableLiveData<Boolean>()
+    val verificationIdStr = MutableLiveData<String>()
 
     fun authCallback(): PhoneAuthProvider.OnVerificationStateChangedCallbacks {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -31,7 +28,7 @@ class AuthViewModel: ViewModel(){
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w("testt", "onVerificationFailed", e)
-                authResult.value=false
+                authResult.value = false
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -40,25 +37,28 @@ class AuthViewModel: ViewModel(){
                 } else if (e is FirebaseAuthMissingActivityForRecaptchaException) {
                     // reCAPTCHA verification attempted with null Activity
                 }
-
-                // Show a message and update the UI
             }
 
             override fun onCodeSent(
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken,
             ) {
-                authResult.value=true
-//                fragmentAuthBinding.ifSendCode.visibility= View.VISIBLE
-//                fragmentAuthBinding.layoutInputAuthCode.visibility= View.VISIBLE
+                authResult.value = true
                 Log.d("testt", "onCodeSent:$verificationId")
-                Log.d("testt",verificationId)
+                Log.d("testt", verificationId)
 
-                // Save verification ID and resending token so we can use them later
+                //인증 코드 아이디 저장
                 verificationIdStr.value = verificationId
-//                token = token
             }
         }
         return callbacks
+    }
+
+    fun join(userName:String,userId:String,userPw:String,userPhoneNum:String) {
+        val userClass=UserModel(userName,userId,userPw,userPhoneNum)
+        //저장할 사용자 인덱스 가져오기
+        UserInfoRepository.addUserInfo(userClass) {
+
+        }
     }
 }
