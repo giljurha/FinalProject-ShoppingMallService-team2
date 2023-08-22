@@ -11,6 +11,7 @@ import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.ActivityMainBinding
 import com.test.campingusproject_seller.ui.notification.NotificationMainFragment
 import com.test.campingusproject_seller.repository.UserInfoRepository
+import com.test.campingusproject_seller.ui.myinfo.MyInfoFragment
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         val LOGIN_FRAGMENT="LoginFragment"
         val JOIN_FRAGMENT="joinFragment"
         val AUTH_FRAGMENT="AuthFragment"
+        val MY_INFO_FRAGMENT="MyInfoFragment"
     }
 
     val permissionList = arrayOf(
@@ -80,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //내정보 클릭
                     R.id.menuItemMyInfo->{
+                        replaceFragment(MY_INFO_FRAGMENT, false, false, null)
                         it.isChecked = true
 
                     }
@@ -105,6 +108,7 @@ class MainActivity : AppCompatActivity() {
             LOGIN_FRAGMENT->LoginFragment()
             JOIN_FRAGMENT->JoinFragment()
             AUTH_FRAGMENT->AuthFragment()
+            MY_INFO_FRAGMENT->MyInfoFragment()
             else -> Fragment()
         }
 
