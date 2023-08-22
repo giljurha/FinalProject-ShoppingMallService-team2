@@ -37,6 +37,9 @@ class NotificationMainFragment : Fragment() {
 
             // 뷰페이저
             viewPager2Notification.run {
+                val adapter = ViewPagerAdapter(mainActivity)
+                viewPager2Notification.adapter = adapter
+
                 TabLayoutMediator(tabLayoutNotification, viewPager2Notification) { tab, position ->
                     when(position) {
                         0 -> tab.text = "결제"
@@ -52,8 +55,13 @@ class NotificationMainFragment : Fragment() {
 
     // 뷰페이저 어댑터
     inner class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+        val fragments: List<Fragment>
+        init {
+            fragments= listOf(NotificationPaymentFragment(), NotificationReviewFragment(), NotificationInquiryFragment())
+        }
+
         override fun getItemCount(): Int {
-            return 3
+            return fragments.size
         }
 
         override fun createFragment(position: Int): Fragment {
