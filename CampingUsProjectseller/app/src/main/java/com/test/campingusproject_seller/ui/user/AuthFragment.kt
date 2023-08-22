@@ -59,11 +59,8 @@ class AuthFragment : Fragment() {
                     fragmentAuthBinding.ifSendCode.visibility = View.VISIBLE
                     fragmentAuthBinding.layoutInputAuthCode.visibility = View.VISIBLE
                 } else {
-                    Snackbar.make(
-                        fragmentAuthBinding.root,
-                        "인증번호 발급 실패 전화 번호를 다시 확인하세요!",
-                        Snackbar.LENGTH_LONG
-                    ).setAction("확인") {
+                    Snackbar.make(fragmentAuthBinding.root, "인증번호 발급 실패 전화 번호를 다시 확인하세요!", Snackbar.LENGTH_LONG)
+                        .setAction("확인") {
 
                     }.show()
                 }
