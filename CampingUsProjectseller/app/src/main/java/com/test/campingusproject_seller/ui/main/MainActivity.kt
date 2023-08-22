@@ -8,9 +8,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.ActivityMainBinding
+import com.test.campingusproject_seller.ui.notification.NotificationMainFragment
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
+import com.test.campingusproject_seller.ui.sellstate.SellStateFragment
+import com.test.campingusproject_seller.ui.sellstatedetail.SellStateDetailFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         val MANAGE_PRODUCT_FRAGMENT = "ManageProductFragment"
         val MODIFY_PRODUCT_FRAGMENT = "ModifyProductFragment"
         val REGISTER_PRODUCT_FRAGMENT = "RegisterProductFragment"
+        val SELL_STATE_FRAGMENT = "SellStateFragment"
+        val SELL_STATE_DETAIL_FRAGMENT = "SellStateDetailFragment"
+        val NOTIFICATION_MAIN_FRAGMENT = "NotificationMainFragment"
     }
 
     val permissionList = arrayOf(
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //판매현황 클릭
                     R.id.menuItemSellStatus->{
-
+                        replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
                     }
                     //고객문의 클릭
                     R.id.menuItemCustomerAsk->{
@@ -71,6 +77,9 @@ class MainActivity : AppCompatActivity() {
             MANAGE_PRODUCT_FRAGMENT -> ManageProductFragment()
             MODIFY_PRODUCT_FRAGMENT -> ModifyProductFragment()
             REGISTER_PRODUCT_FRAGMENT -> RegisterProductFragment()
+            SELL_STATE_FRAGMENT -> SellStateFragment()
+            SELL_STATE_DETAIL_FRAGMENT -> SellStateDetailFragment()
+            NOTIFICATION_MAIN_FRAGMENT -> NotificationMainFragment()
             else -> Fragment()
         }
 
