@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.test.campingusproject_seller.R
-import com.test.campingusproject_seller.databinding.FragmentSellstateBinding
+import com.test.campingusproject_seller.databinding.FragmentSellStateBinding
 
-class SellstateFragment : Fragment() {
-    lateinit var fragmentSellstateBinding: FragmentSellstateBinding
+class SellStateFragment : Fragment() {
+    lateinit var fragmentSellStateBinding: FragmentSellStateBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentSellstateBinding = FragmentSellstateBinding.inflate(inflater)
+        fragmentSellStateBinding = FragmentSellStateBinding.inflate(inflater)
 
-        fragmentSellstateBinding.run {
+        fragmentSellStateBinding.run {
             toolbarSellstate.run {
                 title = "판매현황"
 
@@ -31,6 +31,6 @@ class SellstateFragment : Fragment() {
 //                }
             }
         }
-        return fragmentSellstateBinding.root
+        return fragmentSellStateBinding.root
     }
 }

@@ -5,24 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.test.campingusproject_seller.R
-import com.test.campingusproject_seller.databinding.FragmentSellstateDetailBinding
+import com.test.campingusproject_seller.databinding.FragmentSellStateDetailBinding
 
-class SellstateDetailFragment : Fragment() {
-    lateinit var fragmentSellstateDetailBinding: FragmentSellstateDetailBinding
+class SellStateDetailFragment : Fragment() {
+    lateinit var fragmentSellStateDetailBinding: FragmentSellStateDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentSellstateDetailBinding = FragmentSellstateDetailBinding.inflate(inflater)
+        fragmentSellStateDetailBinding = FragmentSellStateDetailBinding.inflate(inflater)
 
-        fragmentSellstateDetailBinding.run {
+        fragmentSellStateDetailBinding.run {
             toolbarSellstateDetail.run {
                 title = "판매현황 상세보기"
 
             }
         }
-        return fragmentSellstateDetailBinding.root
+        return fragmentSellStateDetailBinding.root
     }
 }
