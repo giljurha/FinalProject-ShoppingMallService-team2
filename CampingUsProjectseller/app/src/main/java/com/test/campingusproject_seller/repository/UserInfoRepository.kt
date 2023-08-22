@@ -45,12 +45,22 @@ class UserInfoRepository {
             userDataRef.push().setValue(userClass).addOnCompleteListener(callback)
         }
 
+        //해당 전화번호로 가입한 사람이 있는지 확인하는 메서드
         fun checkDuplicationUser(userPhoneNum:String,listener:ValueEventListener){
             val database = FirebaseDatabase.getInstance()
             val userDataRef = database.getReference("Users")
 
             //유저 정보중에 가입한 번호가 있는지 찾는다
             userDataRef.orderByChild("userPhoneNumber").equalTo(userPhoneNum).addListenerForSingleValueEvent(listener)
+        }
+
+        //시용자 아이디를 통해 사용자 정보를 가져온다
+        fun getUserInfoByUserId(loginId:String,callback: (Task<DataSnapshot>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val userDataRef = database.getReference("Users")
+
+            //유저 아이디가 사용자가 입력환 아이디와 같은 데이터를 가져온다
+            userDataRef.orderByChild("userId").equalTo(loginId).get().addOnCompleteListener(callback)
         }
     }
 }
