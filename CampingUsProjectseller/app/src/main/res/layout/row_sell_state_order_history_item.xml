@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewSellStateProduct"
         android:layout_width="120dp"
         android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:text="상품 이름"
         android:textSize="@dimen/text_size_2"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSellStateProduct"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_marginTop="10dp"
         android:text="가격"
         android:textSize="@dimen/text_size_2"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSellStateProduct"
         app:layout_constraintTop_toBottomOf="@id/textViewSellStateProductName" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_marginTop="10dp"
         android:text="갯수"
         android:textSize="@dimen/text_size_2"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSellStateProduct"
         app:layout_constraintTop_toBottomOf="@id/textViewSellStateProductPrice" />
 
     <Button
