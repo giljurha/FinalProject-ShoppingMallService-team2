@@ -38,11 +38,11 @@
         <item name="windowSplashScreenAnimationDuration">0</item>
     </style>
 
+    <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_1</item>
     </style>
 
-    <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Medium" parent="Theme.CampingUsProjectseller">
         <item name="android:textSize">@dimen/text_size_2</item>
     </style>
