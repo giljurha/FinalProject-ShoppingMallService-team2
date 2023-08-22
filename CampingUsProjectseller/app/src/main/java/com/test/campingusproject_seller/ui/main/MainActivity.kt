@@ -13,6 +13,7 @@ import com.test.campingusproject_seller.ui.notification.NotificationMainFragment
 import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.inquiry.InquiryDetailFragment
 import com.test.campingusproject_seller.ui.inquiry.InquiryFragment
+import com.test.campingusproject_seller.ui.myinfo.MyInfoFragment
 import com.test.campingusproject_seller.ui.product.ManageProductFragment
 import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         val LOGIN_FRAGMENT="LoginFragment"
         val JOIN_FRAGMENT="joinFragment"
         val AUTH_FRAGMENT="AuthFragment"
+        val MY_INFO_FRAGMENT="MyInfoFragment"
         val INQUIRY_FRAGMENT = "InquiryFragment"
         val INQUIRY_DETAIL_FRAGMENT = "InquiryDetailFragment"
     }
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //내정보 클릭
                     R.id.menuItemMyInfo->{
+                        replaceFragment(MY_INFO_FRAGMENT, false, false, null)
                         it.isChecked = true
 
                     }
@@ -112,6 +115,7 @@ class MainActivity : AppCompatActivity() {
             AUTH_FRAGMENT->AuthFragment()
             INQUIRY_FRAGMENT -> InquiryFragment()
             INQUIRY_DETAIL_FRAGMENT -> InquiryDetailFragment()
+            MY_INFO_FRAGMENT->MyInfoFragment()
             else -> Fragment()
         }
 
