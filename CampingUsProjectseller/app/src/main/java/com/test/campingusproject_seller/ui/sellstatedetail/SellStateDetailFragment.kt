@@ -17,7 +17,7 @@ class SellStateDetailFragment : Fragment() {
         fragmentSellStateDetailBinding = FragmentSellStateDetailBinding.inflate(inflater)
 
         fragmentSellStateDetailBinding.run {
-            toolbarSellstateDetail.run {
+            toolbarSellStateDetail.run {
                 title = "판매현황 상세보기"
 
             }
