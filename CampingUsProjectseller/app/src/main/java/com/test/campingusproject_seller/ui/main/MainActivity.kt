@@ -26,8 +26,12 @@ class MainActivity : AppCompatActivity() {
         val SELL_STATE_FRAGMENT = "SellStateFragment"
         val SELL_STATE_DETAIL_FRAGMENT = "SellStateDetailFragment"
         val NOTIFICATION_MAIN_FRAGMENT = "NotificationMainFragment"
-    }
 
+        val productCountList = arrayOf(
+            "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
+            "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"
+        )
+    }
     val permissionList = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.ACCESS_MEDIA_LOCATION
