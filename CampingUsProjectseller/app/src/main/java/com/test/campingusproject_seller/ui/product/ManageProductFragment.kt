@@ -156,7 +156,9 @@ class ManageProductFragment : Fragment() {
 
                 //아이템 클릭 시 수정 화면으로 전환
                 rowProductItemBinding.root.setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, null)
+                    val newBundle = Bundle()
+                    newBundle.putInt("adapterPosition", adapterPosition)
+                    mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, newBundle)
                 }
 
                 checkBoxRowProduct.setOnCheckedChangeListener { compoundButton, b ->
