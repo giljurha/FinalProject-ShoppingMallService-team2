@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentJoinBinding
 import com.test.campingusproject_seller.databinding.FragmentLoginBinding
+import com.test.campingusproject_seller.dataclassmodel.UserModel
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
 
 class LoginFragment : Fragment() {
@@ -53,6 +56,49 @@ class LoginFragment : Fragment() {
                         show()
                     }
                     return@setOnClickListener
+                }
+                val userId = editTextInputLoginId.text.toString()
+                val userPw = editTextInputLoginPassword.text.toString()
+                UserInfoRepository.getUserInfoByUserId(userId) {
+                    if (it.result.exists() == false) {
+                        MaterialAlertDialogBuilder(
+                            mainActivity,
+                            R.style.ThemeOverlay_App_MaterialAlertDialog
+                        ).run {
+                            setTitle("로그인 오류")
+                            setMessage("존재하지 않는 아이디입니다!")
+                            setPositiveButton("확인", null)
+                            show()
+                        }
+                        return@getUserInfoByUserId
+                    } else {
+                        for (c1 in it.result.children) {
+                            val databaseUserPw = c1.child("userPassword").value as String
+
+                            //입력한 비번과 현재 계정의 비번이 다르다면
+                            if (userPw != databaseUserPw) {
+                                MaterialAlertDialogBuilder(
+                                    mainActivity,
+                                    R.style.ThemeOverlay_App_MaterialAlertDialog
+                                ).run {
+                                    setTitle("로그인 오류")
+                                    setMessage("비밀번호를 확인하세요!")
+                                    setPositiveButton("확인", null)
+                                    show()
+                                }
+                            } //입력한 비번과 현재 계정의 비번이 같다면
+                            else {
+                                val userName = c1.child("userName").value as String
+                                val userId = c1.child("userId").value as String
+                                val userPassword = c1.child("userPassword").value as String
+                                val userPhoneNumber = c1.child("userPhoneNumber").value as String
+
+                                UserInfoRepository.savePre(mainActivity, UserModel(userName,userId,userPassword,userPhoneNumber))
+                                Snackbar.make(fragmentJoinBinding.root, "로그인 되었습니다", Snackbar.LENGTH_SHORT).show()
+                                mainActivity.replaceFragment(MainActivity.SELL_STATE_FRAGMENT,false,true,null)
+                            }
+                        }
+                    }
                 }
             }
         }

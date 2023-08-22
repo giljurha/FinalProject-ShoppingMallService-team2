@@ -78,9 +78,9 @@ class JoinFragment : Fragment() {
                     }
                     return@setOnClickListener
                 }
-                val joinName=editTextInputJoinName.text.toString()
-                val joinId=editTextInputJoinId.text.toString()
-                val joinPw=editTextInputJoinPassword.text.toString()
+                val joinName = editTextInputJoinName.text.toString()
+                val joinId = editTextInputJoinId.text.toString()
+                val joinPw = editTextInputJoinPassword.text.toString()
                 val bundle=Bundle()
                 bundle.putString("joinName",joinName)
                 bundle.putString("joinId",joinId)

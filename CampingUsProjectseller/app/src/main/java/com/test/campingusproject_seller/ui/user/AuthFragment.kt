@@ -59,11 +59,8 @@ class AuthFragment : Fragment() {
                     fragmentAuthBinding.ifSendCode.visibility = View.VISIBLE
                     fragmentAuthBinding.layoutInputAuthCode.visibility = View.VISIBLE
                 } else {
-                    Snackbar.make(
-                        fragmentAuthBinding.root,
-                        "인증번호 발급 실패 전화 번호를 다시 확인하세요!",
-                        Snackbar.LENGTH_LONG
-                    ).setAction("확인") {
+                    Snackbar.make(fragmentAuthBinding.root, "인증번호 발급 실패 전화 번호를 다시 확인하세요!", Snackbar.LENGTH_LONG)
+                        .setAction("확인") {
 
                     }.show()
                 }
@@ -101,15 +98,14 @@ class AuthFragment : Fragment() {
                     auth.setLanguageCode("kr")
                 }
 
-
-                MaterialAlertDialogBuilder(
-                    mainActivity,
-                    R.style.ThemeOverlay_App_MaterialAlertDialog).run {
-                    setTitle("인증번호 전송중..")
-                    setMessage("인증번호 기입 부분 생성까지 잠시만 기다려주세요")
-                    setPositiveButton("확인", null)
-                    show()
-                }
+//                MaterialAlertDialogBuilder(
+//                    mainActivity,
+//                    R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+//                    setTitle("인증번호 전송중..")
+//                    setMessage("인증번호 기입 부분 생성까지 잠시만 기다려주세요")
+//                    setPositiveButton("확인", null)
+//                    show()
+//                }
             }
 //
             //인증 완료 클릭 시
