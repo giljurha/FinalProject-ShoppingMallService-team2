@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -14,11 +15,14 @@ import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentInquiryBinding
 import com.test.campingusproject_seller.databinding.RowInquiryBinding
 import com.test.campingusproject_seller.ui.main.MainActivity
+import com.test.campingusproject_seller.viewmodel.InquiryViewModel
 
 class InquiryFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentInquiryBinding: FragmentInquiryBinding
+
+    lateinit var inquiryViewModel: InquiryViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,6 +31,16 @@ class InquiryFragment : Fragment() {
 
         mainActivity = activity as MainActivity
         fragmentInquiryBinding = FragmentInquiryBinding.inflate(layoutInflater)
+
+//        inquiryViewModel = ViewModelProvider(mainActivity)[InquiryViewModel::class.java]
+//        inquiryViewModel.run {
+//            inquiryDataList.observe(mainActivity) {
+//                fragmentInquiryBinding.recyclerViewInquiry.adapter?.notifyDataSetChanged()
+//            }
+//        }
+
+        //하단 nav bar 보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
 
         fragmentInquiryBinding.run {
 
@@ -84,7 +98,16 @@ class InquiryFragment : Fragment() {
                 textViewInquiryName = rowInquiryBinding.textViewInquiryName
 
                 rowInquiryBinding.root.setOnClickListener {
-
+//                    val inquiryIdx = inquiryViewModel.inquiryDataList.value?.get(adapterPosition)?.inquiryIdx
+//                    val newBundle = Bundle()
+//                    newBundle.putLong("inquiryIdx", inquiryIdx!!)
+//                    mainActivity.replaceFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT, true, false, newBundle)
+                    mainActivity.replaceFragment(
+                        MainActivity.INQUIRY_DETAIL_FRAGMENT,
+                        true,
+                        false,
+                        null
+                    )
                 }
             }
         }
@@ -103,10 +126,22 @@ class InquiryFragment : Fragment() {
 
         override fun getItemCount(): Int {
             return 10
+//            return inquiryViewModel.inquiryDataList.value?.size!!
         }
 
         override fun onBindViewHolder(holder: InquiryViewHolderClass, position: Int) {
             holder.textViewInquiryName.text = "test $position"
+//            holder.imageViewInquiryProfile.setImageBitmap()
+//            holder.textViewInquiryTitle.text = inquiryViewModel.inquiryDataList.value?.get(position)?.inquiryItemTitle
+//            holder.textViewInquiryName.text = inquiryViewModel.inquiryDataList.value?.get(position)?.inquiryUserName
+//            holder.textViewInquiryContent.text = inquiryViewModel.inquiryDataList.value?.get(position)?.inquiryContent
+//
+//            if(inquiryViewModel.inquiryDataList.value?.get(position)?.inquiryResult == true) {
+//                holder.textViewInquiryContent.text = "답변 완료"
+//            } else {
+//                holder.textViewInquiryContent.text = "미답변"
+//            }
+
         }
     }
 
