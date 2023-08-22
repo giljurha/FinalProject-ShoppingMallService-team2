@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.sellstate.SellstateFragment">
+    tools:context=".ui.sellstate.SellStateFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:orientation="vertical" >
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbarSellstate"
+                android:id="@+id/toolbarSellState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -25,7 +25,7 @@
                 android:theme="?attr/actionBarTheme" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSellstate"
+                android:id="@+id/recyclerViewSellState"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

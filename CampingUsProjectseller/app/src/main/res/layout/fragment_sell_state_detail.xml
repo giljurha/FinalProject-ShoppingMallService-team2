@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".ui.sellstatedetail.SellstateDetailFragment">
+    tools:context=".ui.sellstatedetail.SellStateDetailFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbarSellstateDetail"
+                android:id="@+id/toolbarSellStateDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -31,7 +31,7 @@
                 android:layout_margin="5dp">
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderDate"
+                    android:id="@+id/textViewSellStateDetailOrderDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2023-08-10 주문"
@@ -40,7 +40,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderNumber"
+                    android:id="@+id/textViewSellStateDetailOrderNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12341234"
@@ -62,7 +62,7 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailPayInfo"
+                    android:id="@+id/textViewSellStateDetailPayInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="결제 정보"
@@ -70,7 +70,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailPayTypeTitle"
+                    android:id="@+id/textViewSellStateDetailPayTypeTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -79,7 +79,7 @@
                     android:textSize="@dimen/text_size_3" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailPayType"
+                    android:id="@+id/textViewSellStateDetailPayType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -88,7 +88,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailPayDateTitle"
+                    android:id="@+id/textViewSellStateDetailPayDateTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -96,7 +96,7 @@
                     android:textColor="@android:color/darker_gray" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailPayDate"
+                    android:id="@+id/textViewSellStateDetailPayDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -105,7 +105,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailProductPayHistoryTitle"
+                    android:id="@+id/textViewSellStateDetailProductPayHistoryTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -120,7 +120,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailProductPriceTitle"
+                        android:id="@+id/textViewSellStateDetailProductPriceTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -128,7 +128,7 @@
                         android:textSize="@dimen/text_size_2" />
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailProductPrice"
+                        android:id="@+id/textViewSellStateDetailProductPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -146,7 +146,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailDeliveryPriceTitle"
+                        android:id="@+id/textViewSellStateDetailDeliveryPriceTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -154,7 +154,7 @@
                         android:textSize="@dimen/text_size_2" />
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailDeliveryPrice"
+                        android:id="@+id/textViewSellStateDetailDeliveryPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -179,7 +179,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailTotalPriceTitle"
+                        android:id="@+id/textViewSellStateDetailTotalPriceTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -187,7 +187,7 @@
                         android:textSize="@dimen/text_size_2" />
 
                     <TextView
-                        android:id="@+id/textViewSellstateDetailTotalPrice"
+                        android:id="@+id/textViewSellStateDetailTotalPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -210,7 +210,7 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderInfo"
+                    android:id="@+id/textViewSellStateDetailOrderInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="주문자 정보"
@@ -218,7 +218,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderName"
+                    android:id="@+id/textViewSellStateDetailOrderName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -227,7 +227,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderEmail"
+                    android:id="@+id/textViewSellStateDetailOrderEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -236,7 +236,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderPhonNumber"
+                    android:id="@+id/textViewSellStateDetailOrderPhonNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -254,7 +254,7 @@
                     android:background="#000000" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailDeliveryInfo"
+                    android:id="@+id/textViewSellStateDetailDeliveryInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="배송 정보"
@@ -262,7 +262,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailRecipientName"
+                    android:id="@+id/textViewSellStateDetailRecipientName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -271,7 +271,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailRecipientPhonNumber"
+                    android:id="@+id/textViewSellStateDetailRecipientPhonNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -280,7 +280,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailRecipientAddress"
+                    android:id="@+id/textViewSellStateDetailRecipientAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -289,7 +289,7 @@
                     android:textSize="@dimen/text_size_2" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailRecipientAddressDetail"
+                    android:id="@+id/textViewSellStateDetailRecipientAddressDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -310,7 +310,7 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderProductInfo"
+                    android:id="@+id/textViewSellStateDetailOrderProductInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="주문상품"
@@ -320,44 +320,44 @@
                     tools:layout_editor_absoluteX="30dp" />
 
                 <ImageView
-                    android:id="@+id/imageViewSellstateDetailOrderProductImage"
+                    android:id="@+id/imageViewSellStateDetailOrderProductImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSellstateDetailOrderProductInfo"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSellStateDetailOrderProductInfo"
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderProductName"
+                    android:id="@+id/textViewSellStateDetailOrderProductName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="24dp"
                     android:text="텐트"
-                    app:layout_constraintLeft_toRightOf="@id/imageViewSellstateDetailOrderProductImage"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSellstateDetailOrderProductInfo" />
+                    app:layout_constraintLeft_toRightOf="@id/imageViewSellStateDetailOrderProductImage"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSellStateDetailOrderProductInfo" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderProductPrice"
+                    android:id="@+id/textViewSellStateDetailOrderProductPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="16dp"
                     android:text="485000원"
-                    app:layout_constraintLeft_toRightOf="@id/imageViewSellstateDetailOrderProductImage"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSellstateDetailOrderProductName" />
+                    app:layout_constraintLeft_toRightOf="@id/imageViewSellStateDetailOrderProductImage"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSellStateDetailOrderProductName" />
 
                 <TextView
-                    android:id="@+id/textViewSellstateDetailOrderProductNumber"
+                    android:id="@+id/textViewSellStateDetailOrderProductNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="16dp"
                     android:text="1개"
-                    app:layout_constraintLeft_toRightOf="@id/imageViewSellstateDetailOrderProductImage"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSellstateDetailOrderProductPrice" />
+                    app:layout_constraintLeft_toRightOf="@id/imageViewSellStateDetailOrderProductImage"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSellStateDetailOrderProductPrice" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
