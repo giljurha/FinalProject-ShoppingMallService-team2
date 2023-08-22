@@ -11,15 +11,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentNotificationMainBinding
+import com.test.campingusproject_seller.ui.main.MainActivity
 
 class NotificationMainFragment : Fragment() {
     lateinit var fragmentNotificationMainBinding: FragmentNotificationMainBinding
+    lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         fragmentNotificationMainBinding = FragmentNotificationMainBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
 
         fragmentNotificationMainBinding.run {
             toolbarNotification.run {
@@ -27,6 +30,9 @@ class NotificationMainFragment : Fragment() {
 
                 // 백버튼
                 setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.NOTIFICATION_MAIN_FRAGMENT)
+                }
             }
 
             // 뷰페이저
