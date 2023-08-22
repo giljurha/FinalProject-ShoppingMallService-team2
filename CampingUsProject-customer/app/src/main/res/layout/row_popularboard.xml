@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewRowPopularBoardWriterImage"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        app:srcCompat="@drawable/account_circle_24px" />
+
+    <LinearLayout
+        android:layout_width="209dp"
+        android:layout_height="69dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/imageViewRowPopularBoardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/highLightColor"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/imageViewRowPopularBoardWriter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/highLightColor"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewRowPopularBoardLike"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/favorite_fill_24px"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/highLightColor" />
+</LinearLayout>
