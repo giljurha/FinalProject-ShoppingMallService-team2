@@ -10,12 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentNotificationPaymentBinding
-import com.test.campingusproject_seller.databinding.RowNotificationPaymentBinding
-import com.test.campingusproject_seller.databinding.RowSellStateOrderHistoryBinding
 import com.test.campingusproject_seller.ui.main.MainActivity
-import com.test.campingusproject_seller.ui.sellstate.SellStateFragment
 
 class NotificationPaymentFragment : Fragment() {
     lateinit var fragmentNotificationPaymentBinding: FragmentNotificationPaymentBinding
@@ -71,7 +67,6 @@ class NotificationPaymentFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: PaymentViewHolder, position: Int) {
-//            holder.imageViewRowNotificationPayment
             holder.textViewRowNotificationPaymentContent.text = "장작 상품이 5개 주문되었습니다."
             holder.buttonRowNotificationPaymentToSellStateDetail.setOnClickListener {
                 mainActivity.replaceFragment(MainActivity.SELL_STATE_DETAIL_FRAGMENT, true, true, null)
