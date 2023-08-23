@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.test.campingusproject_customer.R
-import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
 import com.test.campingusproject_customer.databinding.FragmentShoppingBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
 
@@ -22,7 +21,7 @@ class ShoppingFragment : Fragment() {
     ): View? {
         mainActivity = activity as MainActivity
         fragmentShoppingBinding = FragmentShoppingBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
+
         return fragmentShoppingBinding.root
     }
     //뒤로가기 버튼 눌렀을 때 동작할 코드 onDetech까지
@@ -40,5 +39,4 @@ class ShoppingFragment : Fragment() {
         super.onDetach()
         callback.remove()
     }
-
 }
