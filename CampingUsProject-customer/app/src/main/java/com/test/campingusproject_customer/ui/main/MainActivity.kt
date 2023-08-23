@@ -10,6 +10,7 @@ import com.test.campingusproject_customer.databinding.ActivityMainBinding
 import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
 import com.test.campingusproject_customer.ui.camping.CampingFragment
+import com.test.campingusproject_customer.ui.comunity.PostWriteFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
         val CAMPSITE_FRAGMENT = "CampsiteFragment"
         val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
+        val POST_WRITE_FRAGMENT = "PostWriteFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,8 +88,7 @@ class MainActivity : AppCompatActivity() {
             COMUNITY_FRAGMENT -> ComunityFragment()
             MYPROFILE_FRAGMENT -> MyprofileFragment()
             CAMPSITE_FRAGMENT->CampsiteFragment()
-
-
+            POST_WRITE_FRAGMENT -> PostWriteFragment()
             else -> Fragment()
         }
 
