@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.shopping.ShoppingProductFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageViewShoppingProductImage"
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:layout_margin="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:text="바람숭숭 텐트"
+                    android:textSize="@dimen/text_size_1"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewShoppingProductImage" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="남은 수량 : 20"
+                    android:textSize="@dimen/text_size_3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewShoppingProductImage" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductTotalNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="누적구매수량 : 5"
+                    android:textSize="@dimen/text_size_3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductNumber" />
+
+                <View
+                    android:id="@+id/lineShoppingProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/soft_gray"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductTotalNumber"
+                    tools:layout_editor_absoluteX="5dp" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductSale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="특가 할인 상품"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="5791000원"
+                    android:textColor="#FF0000"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductSale" />
+
+                <Button
+                    android:id="@+id/buttonShoppingProductToBuy"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="구매"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintRight_toLeftOf="@id/buttonShoppingToCart"
+                    app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct" />
+
+                <Button
+                    android:id="@+id/buttonShoppingToCart"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="장바구니 담기"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct" />
+
+                <View
+                    android:id="@+id/lineShoppingProduct2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/soft_gray"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductPrice"
+                    tools:layout_editor_absoluteX="5dp" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="상품 기본 정보"
+                    android:textSize="@dimen/text_size_1"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct2" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutShoppingProductSeller"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductInfoTitle">
+
+                    <TextView
+                        android:id="@+id/textViewSellerTitle"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="100dp"
+                        android:text="판매자"
+                        android:textSize="@dimen/text_size_2" />
+
+                    <TextView
+                        android:id="@+id/textViewShoppingProductSellerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="장용진"
+                        android:textSize="@dimen/text_size_2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutShoppingProductCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayoutShoppingProductSeller">
+
+                    <TextView
+                        android:id="@+id/textViewProductCategoryTitle"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="100dp"
+                        android:text="상품 카테고리"
+                        android:textSize="@dimen/text_size_2" />
+
+                    <TextView
+                        android:id="@+id/textViewShoppingProductCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="텐트"
+                        android:textSize="@dimen/text_size_2" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toogleGroupShoppingProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayoutShoppingProductCategory"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/buttonToggleShoppingProductExplanation"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="상품 설명" />
+
+                    <Button
+                        android:id="@+id/buttonToggleShoppingReview"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="리뷰" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductExplanationDetailTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="상품 상세 설명"
+                    android:textSize="@dimen/text_size_1"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toogleGroupShoppingProduct" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductExplanationDetailContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="날이 추워도 날이 따뜻해도 언제나 안락한 텐트"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductExplanationDetailTitle" />
+
+                <View
+                    android:id="@+id/lineShoppingProduct3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/soft_gray"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductExplanationDetailContent"
+                    tools:layout_editor_absoluteX="5dp" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductReviewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="리뷰"
+                    android:textSize="@dimen/text_size_1"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct3" />
+
+                <TextView
+                    android:id="@+id/textViewShoppingProductReviewContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="떼잉 쯔쯪 생각보다 텐트가 별루네요~"
+                    android:textSize="@dimen/text_size_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductReviewTitle" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButtonShoppingProductInquriry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@color/subColor"
+                    android:clickable="true"
+                    android:src="@drawable/camping_24px"
+                    android:tint="@color/highLightColor"
+                    app:backgroundTint="@color/subColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
