@@ -72,6 +72,8 @@ class MainActivity : AppCompatActivity() {
         requestPermissions(permissionList, 0)
 
         activityMainBinding.run {
+            bottomNavigationViewMain.menu.findItem(R.id.menuItemSellStatus).setChecked(true)
+            replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
 
             bottomNavigationViewMain.setOnItemSelectedListener {
                 when(it.itemId){

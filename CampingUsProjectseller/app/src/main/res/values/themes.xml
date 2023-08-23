@@ -3,16 +3,20 @@
     <style name="Base.Theme.CampingUsProjectseller" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 기본 색 -->
         <item name="colorPrimary">@color/mainColor</item>
+
         <!-- 상태바 색상 및 아이콘 색상 -->
         <item name="colorPrimaryDark">@color/white</item>
-
         <item name="android:windowLightStatusBar">true</item>
+
         <!-- 글자 및 아이콘 색상 -->
         <item name="colorOnPrimary">@color/highLightColor</item>
+
         <!-- 강조 색상 -->
         <item name="colorAccent">@color/highLightColor</item>
+
         <!-- 컨트롤러에 사용하는 색상 -->
         <item name="colorControlNormal">@color/subColor</item>
+
         <!-- 위젯 터치등의 액션 발생 시 나타나는 색상 -->
         <item name="colorControlHighlight">@color/highLightColor</item>
 
@@ -22,7 +26,15 @@
         <!-- check box style 설정 -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
 
+        <!-- 텍스트 컬러 설정 -->
         <item name="android:textColorPrimary">@color/black</item>
+
+        <!-- 위젯 폰트 적용-->
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:checkboxStyle">@style/CheckBoxStyle</item>
+        <item name="android:spinnerStyle">@style/SpinnerStyle</item>
     </style>
 
     <style name="Theme.CampingUsProjectseller" parent="Base.Theme.CampingUsProjectseller" />
