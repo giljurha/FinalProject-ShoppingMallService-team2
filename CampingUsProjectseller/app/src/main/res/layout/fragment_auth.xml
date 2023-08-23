@@ -8,7 +8,7 @@
     tools:context=".ui.user.AuthFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+        android:id="@+id/toolbarAuth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -68,16 +68,16 @@
             android:hint="휴대폰 번호를 입력하세요"
             android:inputType="text" />
 
-        <TextView
+        <Button
             android:id="@+id/buttonGetAuthNumber"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
+            android:backgroundTint="@color/subColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
-            android:text="인증 번호 요청"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:text="인증 번호 요청" />
     </LinearLayout>
 
     <TextView
