@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(LOGIN_FRAGMENT,false,false,null)
             activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
         }else{
-            activityMainBinding.bottomNavigationViewMain.visibility= View.VISIBLE
+            replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
         }
 
 
@@ -73,8 +73,6 @@ class MainActivity : AppCompatActivity() {
 
         activityMainBinding.run {
             bottomNavigationViewMain.menu.findItem(R.id.menuItemSellStatus).setChecked(true)
-            replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
-
             bottomNavigationViewMain.setOnItemSelectedListener {
                 when(it.itemId){
                     //제품관리 클릭
