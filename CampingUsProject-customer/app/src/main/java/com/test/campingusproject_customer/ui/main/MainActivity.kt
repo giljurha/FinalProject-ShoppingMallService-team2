@@ -7,17 +7,22 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.ui.camping.CampingFragment
+import com.test.campingusproject_customer.ui.comunity.ComunityFragment
+import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
+import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
 
-    companion object{
+    companion object {
         val HOME_FRAGMENT = "HomeFragment"
         val CAMPING_FRAGMENT = "CampingFragment"
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,61 +33,59 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(HOME_FRAGMENT, false, false, null)
 
         activityMainBinding.run {
+            bottomNavigationViewMain.run {
+                this.selectedItemId = R.id.menuItemHome
+                setOnItemSelectedListener {
+                    when (it.itemId) {
+                        //홈 클릭
+                        R.id.menuItemHome -> {
+                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                        }
+                        //캠핑장 클릭
+                        R.id.menuItemCamping -> {
+                            replaceFragment(CAMPING_FRAGMENT, true, false, null)
+                        }
+                        //쇼핑 클릭
+                        R.id.menuItemShopping -> {
+                            replaceFragment(SHOPPING_FRAGMENT, true, false, null)
+                        }
+                        //커뮤니티 클릭
+                        R.id.menuItemComunity -> {
+                            replaceFragment(COMUNITY_FRAGMENT, true, false, null)
+                        }
+                        //내정보 클릭
+                        R.id.menuItemMyProfile -> {
+                            replaceFragment(MYPROFILE_FRAGMENT, true, false, null)
+                        }
 
-            bottomNavigationViewMain.setOnItemSelectedListener {
-                when(it.itemId){
-                    //홈 클릭
-                    R.id.menuItemHome->{
-                        replaceFragment(HOME_FRAGMENT, false, false, null)
-                        it.isChecked = true
+                        else -> {
+                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                        }
                     }
-                    //캠핑장 클릭
-                    R.id.menuItemCamping->{
-//                        replaceFragment(CAMPING_FRAGMENT, true, false, null)
-                        it.isChecked = true
-                    }
-                    //쇼핑 클릭
-                    R.id.menuItemShopping->{
-//                        replaceFragment(SHOPPING_FRAGMENT, true, false, null)
-                        it.isChecked = true
-                    }
-                    //커뮤니티 클릭
-                    R.id.menuItemComunity->{
-//                        replaceFragment(COMUNITY_FRAGMENT, true, false, null)
-                        it.isChecked = true
-                    }
-                    //내정보 클릭
-                    R.id.menuItemMyProfile->{
-//                        replaceFragment(MYPROFILE_FRAGMENT, true, false, null)
-                        it.isChecked = true
-                    }
-                    else -> {
-                        replaceFragment(HOME_FRAGMENT, false, false, null)
-                    }
+                    true
                 }
-                false
             }
         }
     }
 
     // 지정한 Fragment를 보여주는 메서드
-    fun replaceFragment(name:String, addToBackStack:Boolean, animate:Boolean, bundle:Bundle?){
+    fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
         // Fragment 교체 상태로 설정한다.
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
         // 새로운 Fragment를 담을 변수
-        var newFragment = when(name){
+        var newFragment = when (name) {
             HOME_FRAGMENT -> HomeFragment()
-//            CAMPING_FRAGMENT -> CampingFragment()
-//            SHOPPING_FRAGMENT -> ShoppingFragment()
-//            COMUNITY_FRAGMENT -> ComunityFragment()
-//            MYPROFILE_FRAGMENT -> MyProfileFragment()
+            CAMPING_FRAGMENT -> CampingFragment()
+            SHOPPING_FRAGMENT -> ShoppingFragment()
+            COMUNITY_FRAGMENT -> ComunityFragment()
+            MYPROFILE_FRAGMENT -> MyprofileFragment()
             else -> Fragment()
         }
 
         newFragment.arguments = bundle
 
-        if(newFragment != null) {
+        if (newFragment != null) {
             // Fragment를 교체한다.
             fragmentTransaction.replace(R.id.fragmentContainerMain, newFragment)
 
@@ -102,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Fragment를 BackStack에서 제거한다.
-    fun removeFragment(name:String){
+    fun removeFragment(name: String) {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 }

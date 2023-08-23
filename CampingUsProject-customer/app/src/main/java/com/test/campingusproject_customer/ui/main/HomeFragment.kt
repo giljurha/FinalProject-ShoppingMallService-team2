@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentHomeBinding
-import com.test.campingusproject_customer.databinding.RowPopularboardBinding
+import com.test.campingusproject_customer.databinding.RowBoardBinding
 import com.test.campingusproject_customer.databinding.RowPopularsaleBinding
 import com.test.campingusproject_customer.databinding.RowRealtimerankBinding
 
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
 
         fragmentHomeBinding.run {
-            materialToolbarHome.run {
+            materialToolbarHomeFragment.run {
                 title = "CampingUs"
                 setOnMenuItemClickListener {
                     //장바구니로 가기
@@ -84,15 +84,15 @@ class HomeFragment : Fragment() {
 
             //인기특가 더보기 눌렀을 때
             textViewHomePopularSaleShowMore.setOnClickListener {
-                materialToolbarHome.title = "인기특가 더보기"
+                materialToolbarHomeFragment.title = "인기특가 더보기"
             }
             //실시간랭킹 더보기 눌렀을 때
             textViewHomeRealTimeRankShowMore.setOnClickListener {
-                materialToolbarHome.title = "실시간랭킹 더보기"
+                materialToolbarHomeFragment.title = "실시간랭킹 더보기"
             }
             //인기게시판 더보기 눌렀을 때
             textViewHomePopularBoardShowMore.setOnClickListener {
-                materialToolbarHome.title = "인기게시판 더보기"
+                materialToolbarHomeFragment.title = "인기게시판 더보기"
             }
         }
 
@@ -189,23 +189,27 @@ class HomeFragment : Fragment() {
 
     //인기게시판 리싸이클러뷰 어댑터
     inner class PopularBoardAdapter : RecyclerView.Adapter<PopularBoardAdapter.PopularBoardViewHolder>(){
-        inner class PopularBoardViewHolder(rowPopularboardBinding: RowPopularboardBinding) : RecyclerView.ViewHolder(rowPopularboardBinding.root) {
-            val imageViewRowPopularBoardWriterImage : ImageView // 작성자 프로필 사진
-            val imageViewRowPopularBoardTitle : TextView // 게시글 제목
-            val imageViewRowPopularBoardWriter : TextView // 게시글 작성자
-            val textViewRowPopularBoardLike : TextView // 좋아요 수
+        inner class PopularBoardViewHolder(rowPopularboardBinding: RowBoardBinding) : RecyclerView.ViewHolder(rowPopularboardBinding.root) {
+            val imageViewRowBoardWriterImage : ImageView // 작성자 프로필 사진
+            val textViewRowBoardTitle : TextView // 게시글 제목
+            val textViewRowBoardWriter : TextView // 게시글 작성자
+            val textViewRowBoardLike : TextView // 좋아요 수
+            val textVewRowBoardWriteDate : TextView // 글 작성 시간
+            val textViewRowBoardComment : TextView // 댓글 수
 
 
             init {
-                imageViewRowPopularBoardWriterImage = rowPopularboardBinding.imageViewRowPopularBoardWriterImage
-                imageViewRowPopularBoardTitle = rowPopularboardBinding.imageViewRowPopularBoardTitle
-                imageViewRowPopularBoardWriter = rowPopularboardBinding.imageViewRowPopularBoardWriter
-                textViewRowPopularBoardLike = rowPopularboardBinding.textViewRowPopularBoardLike
+                imageViewRowBoardWriterImage = rowPopularboardBinding.imageViewRowBoardWriterImage
+                textViewRowBoardTitle = rowPopularboardBinding.textViewRowBoardTitle
+                textViewRowBoardWriter = rowPopularboardBinding.textViewRowBoardWriter
+                textViewRowBoardLike = rowPopularboardBinding.textViewRowBoardLike
+                textVewRowBoardWriteDate = rowPopularboardBinding.textViewRowBoardWriteDate
+                textViewRowBoardComment = rowPopularboardBinding.textViewRowBoardComment
             }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularBoardViewHolder {
-            val rowPopularboardBinding = RowPopularboardBinding.inflate(layoutInflater)
+            val rowPopularboardBinding = RowBoardBinding.inflate(layoutInflater)
 
             rowPopularboardBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -220,10 +224,12 @@ class HomeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: PopularBoardViewHolder, position: Int) {
-            // holder.imageViewRowPopularBoardWriterImage =
-            holder.imageViewRowPopularBoardTitle.text = "강현구 = 차은우"
-            holder.imageViewRowPopularBoardWriter.text = "강현구"
-            holder.textViewRowPopularBoardLike.text = "${100 - position}"
+            // holder.imageViewRowBoardWriterImage =
+            holder.textViewRowBoardTitle.text = "강현구 = 차은우"
+            holder.textViewRowBoardWriter.text = "강현구"
+            holder.textViewRowBoardLike.text = "${100 - position}"
+            holder.textVewRowBoardWriteDate.text = "2023-08-23"
+            holder.textViewRowBoardComment.text = "${100 - position}"
         }
 
     }
