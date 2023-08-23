@@ -93,6 +93,7 @@ class AuthFragment : Fragment() {
 
             //인증번호 받기 버튼 클릭 시
             buttonGetAuthNumber.setOnClickListener {
+                mainActivity.hideKeyboard(fragmentAuthBinding.root)
                 val inputPhoneNum = editTextInputAuthPhoneNumber.text.toString()
                 val authPhoneNum = phoneNumber82(inputPhoneNum)
 
@@ -108,7 +109,7 @@ class AuthFragment : Fragment() {
                     auth.setLanguageCode("kr")
                 }
 
-                Snackbar.make(fragmentAuthBinding.root, "인증번호 발급 실패 전화 번호를 다시 확인하세요!", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(fragmentAuthBinding.root, "인증 번호 발급중 잠시만 기다려주세요!", Snackbar.LENGTH_SHORT).show()
 
 //                MaterialAlertDialogBuilder(
 //                    mainActivity,
@@ -122,10 +123,12 @@ class AuthFragment : Fragment() {
 //
             //인증 완료 클릭 시
             buttonAuthComplete.setOnClickListener {
+                mainActivity.hideKeyboard(fragmentAuthBinding.root)
                 val inputAuthCode = editTextInputAuthNumber.text.toString()
                 //PhoneAuthCredential 객체로 인증코드 분석
                 val credential = PhoneAuthProvider.getCredential(authCodeDecoded, inputAuthCode)
                 signInWithPhoneAuthCredential(credential)
+
 
             }
         }
