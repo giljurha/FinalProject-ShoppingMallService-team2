@@ -156,7 +156,7 @@ class ComunityFragment : Fragment() {
                 textViewRowBoardComment = rowComunityBinding.textViewRowBoardComment
 
                 rowComunityBinding.root.setOnClickListener {
-
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,false,null)
                 }
             }
         }
@@ -181,7 +181,7 @@ class ComunityFragment : Fragment() {
             holder.textViewRowBoardTitle.text = "강현구 = 차은우"
             holder.textViewRowBoardWriter.text = "강현구"
             holder.textViewRowBoardLike.text = "${100 - position}"
-            holder.textVewRowBoardWriteDate.text = "2023-08-23"
+            holder.textVewRowBoardWriteDate.text = "2023-08-23 14:50"
             holder.textViewRowBoardComment.text = "${100 - position}"
         }
     }

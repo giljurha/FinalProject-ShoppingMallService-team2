@@ -72,6 +72,8 @@ class PostWriteFragment : Fragment() {
                 this.isClickable = true
                 setOnClickListener {
                     materialToolbarPostWrite.title = "저장"
+                    mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,false,null)
                 }
             }
         }
