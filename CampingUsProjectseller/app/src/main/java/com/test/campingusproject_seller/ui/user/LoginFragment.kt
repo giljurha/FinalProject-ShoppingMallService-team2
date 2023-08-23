@@ -96,6 +96,8 @@ class LoginFragment : Fragment() {
                                 UserInfoRepository.savePre(mainActivity, UserModel(userName,userId,userPassword,userPhoneNumber))
                                 Snackbar.make(fragmentJoinBinding.root, "로그인 되었습니다", Snackbar.LENGTH_SHORT).show()
                                 mainActivity.replaceFragment(MainActivity.SELL_STATE_FRAGMENT,false,true,null)
+                                //메인 화면의 네비게이션 visible=true
+                                mainActivity.activityMainBinding.bottomNavigationViewMain.visibility=View.VISIBLE
                             }
                         }
                     }

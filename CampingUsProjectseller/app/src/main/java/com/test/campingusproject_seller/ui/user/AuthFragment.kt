@@ -58,6 +58,7 @@ class AuthFragment : Fragment() {
                     //인증코드 발급시 인증코드 기입부분 VISIBLE
                     fragmentAuthBinding.ifSendCode.visibility = View.VISIBLE
                     fragmentAuthBinding.layoutInputAuthCode.visibility = View.VISIBLE
+                    fragmentAuthBinding.buttonAuthComplete.visibility = View.VISIBLE
                 } else {
                     Snackbar.make(fragmentAuthBinding.root, "인증번호 발급 실패 전화 번호를 다시 확인하세요!", Snackbar.LENGTH_LONG)
                         .setAction("확인") {
@@ -79,10 +80,20 @@ class AuthFragment : Fragment() {
         //인증 정보를 문자로 받기전까지 인증코드 부분 GONE
         fragmentAuthBinding.ifSendCode.visibility = View.GONE
         fragmentAuthBinding.layoutInputAuthCode.visibility = View.GONE
+        fragmentAuthBinding.buttonAuthComplete.visibility = View.GONE
 
         fragmentAuthBinding.run {
+            toolbarAuth.run {
+                setNavigationIcon(R.drawable.arrow_back_24px)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.AUTH_FRAGMENT)
+                }
+            }
+
+
             //인증번호 받기 버튼 클릭 시
             buttonGetAuthNumber.setOnClickListener {
+                mainActivity.hideKeyboard(fragmentAuthBinding.root)
                 val inputPhoneNum = editTextInputAuthPhoneNumber.text.toString()
                 val authPhoneNum = phoneNumber82(inputPhoneNum)
 
@@ -98,6 +109,8 @@ class AuthFragment : Fragment() {
                     auth.setLanguageCode("kr")
                 }
 
+                Snackbar.make(fragmentAuthBinding.root, "인증 번호 발급중 잠시만 기다려주세요!", Snackbar.LENGTH_SHORT).show()
+
 //                MaterialAlertDialogBuilder(
 //                    mainActivity,
 //                    R.style.ThemeOverlay_App_MaterialAlertDialog).run {
@@ -110,10 +123,13 @@ class AuthFragment : Fragment() {
 //
             //인증 완료 클릭 시
             buttonAuthComplete.setOnClickListener {
+                mainActivity.hideKeyboard(fragmentAuthBinding.root)
                 val inputAuthCode = editTextInputAuthNumber.text.toString()
                 //PhoneAuthCredential 객체로 인증코드 분석
                 val credential = PhoneAuthProvider.getCredential(authCodeDecoded, inputAuthCode)
                 signInWithPhoneAuthCredential(credential)
+
+
             }
         }
 
