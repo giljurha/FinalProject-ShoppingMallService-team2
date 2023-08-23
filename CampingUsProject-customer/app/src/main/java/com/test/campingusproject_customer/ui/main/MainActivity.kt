@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.ui.shopping.ShoppingMainFragment
+import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
 import com.test.campingusproject_customer.ui.camping.CampingFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
+        val SHOPPING_MAIN_FRAGMENT = "ShoppingMainFragment"
+        val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +61,36 @@ class MainActivity : AppCompatActivity() {
                         R.id.menuItemMyProfile -> {
                             replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
                         }
-
-                        else -> {
-                            replaceFragment(HOME_FRAGMENT, false, false, null)
-                        }
+                        
+            bottomNavigationViewMain.setOnItemSelectedListener {
+                when(it.itemId){
+                    //홈 클릭
+                    R.id.menuItemHome->{
+                        replaceFragment(HOME_FRAGMENT, false, false, null)
+                        it.isChecked = true
+                    }
+                    //캠핑장 클릭
+                    R.id.menuItemCamping->{
+//                        replaceFragment(CAMPING_FRAGMENT, true, false, null)
+                        it.isChecked = true
+                    }
+                    //쇼핑 클릭
+                    R.id.menuItemShopping->{
+                        replaceFragment(SHOPPING_MAIN_FRAGMENT, false, false, null)
+                        it.isChecked = true
+                    }
+                    //커뮤니티 클릭
+                    R.id.menuItemComunity->{
+//                        replaceFragment(COMUNITY_FRAGMENT, true, false, null)
+                        it.isChecked = true
+                    }
+                    //내정보 클릭
+                    R.id.menuItemMyProfile->{
+//                        replaceFragment(MYPROFILE_FRAGMENT, true, false, null)
+                        it.isChecked = true
+                    }
+                    else -> {
+                        replaceFragment(HOME_FRAGMENT, false, false, null)
                     }
                     true
                 }
@@ -77,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         var newFragment = when (name) {
             HOME_FRAGMENT -> HomeFragment()
             CAMPING_FRAGMENT -> CampingFragment()
-            SHOPPING_FRAGMENT -> ShoppingFragment()
+            SHOPPING_MAIN_FRAGMENT -> ShoppingMainFragment()
             COMUNITY_FRAGMENT -> ComunityFragment()
             MYPROFILE_FRAGMENT -> MyprofileFragment()
             else -> Fragment()
