@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.ui.shopping.ShoppingMainFragment
+import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
+        val SHOPPING_MAIN_FRAGMENT = "ShoppingMainFragment"
+        val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     //쇼핑 클릭
                     R.id.menuItemShopping->{
-//                        replaceFragment(SHOPPING_FRAGMENT, true, false, null)
+                        replaceFragment(SHOPPING_MAIN_FRAGMENT, false, false, null)
                         it.isChecked = true
                     }
                     //커뮤니티 클릭
@@ -74,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         var newFragment = when(name){
             HOME_FRAGMENT -> HomeFragment()
 //            CAMPING_FRAGMENT -> CampingFragment()
-//            SHOPPING_FRAGMENT -> ShoppingFragment()
+            SHOPPING_MAIN_FRAGMENT -> ShoppingMainFragment()
 //            COMUNITY_FRAGMENT -> ComunityFragment()
 //            MYPROFILE_FRAGMENT -> MyProfileFragment()
             else -> Fragment()
