@@ -10,7 +10,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,7 +23,6 @@
         app:itemRippleColor="@null"
         app:itemTextColor="@drawable/bottom_navigation_selector"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_navigation">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/menu_bottom_navigation"></com.google.android.material.bottomnavigation.BottomNavigationView>
     <!--        app:itemRippleColor="@color/subColor"-->
 </LinearLayout>
