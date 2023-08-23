@@ -43,19 +43,19 @@ class MainActivity : AppCompatActivity() {
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
-                            replaceFragment(CAMPING_FRAGMENT, true, false, null)
+                            replaceFragment(CAMPING_FRAGMENT, false, false, null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
-                            replaceFragment(SHOPPING_FRAGMENT, true, false, null)
+                            replaceFragment(SHOPPING_FRAGMENT, false, false, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
-                            replaceFragment(COMUNITY_FRAGMENT, true, false, null)
+                            replaceFragment(COMUNITY_FRAGMENT, false, false, null)
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
-                            replaceFragment(MYPROFILE_FRAGMENT, true, false, null)
+                            replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
                         }
 
                         else -> {

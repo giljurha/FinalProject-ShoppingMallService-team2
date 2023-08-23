@@ -48,7 +48,6 @@ class ComunityFragment : Fragment() {
             title = "전체 게시판"
             setNavigationIcon(R.drawable.menu_24px)
             setNavigationOnClickListener {
-
                 // 키보드가 열려있으면 내림
                 val inputMethodManager = mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
