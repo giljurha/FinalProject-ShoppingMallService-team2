@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.shopping.ShoppingFragment">
+    tools:context=".ui.shopping.ShoppingPlusFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayoutShopping"
+        android:id="@+id/coordinatorLayoutShoppingPlus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbarShopping"
+                android:id="@+id/toolbarShoppingPlus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
@@ -31,38 +31,12 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.search.SearchBar
-                    android:id="@+id/searchBarShopping"
+                    android:id="@+id/searchBarShoppingPlus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textViewShoppingCategoryName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="카테고리 이름"
-                        android:textSize="@dimen/text_size_1"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/buttonShoppingToPlus"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="더보기"
-                        android:textColor="#000000"
-                        app:icon="@drawable/add_24px" />
-                </LinearLayout>
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewShoppingProduct"
+                    android:id="@+id/recyclerViewShoppingPlusProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp" />
@@ -77,16 +51,16 @@
         android:id="@+id/searchViewPostList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/searchBarShopping">
+        app:layout_anchor="@id/searchBarShoppingPlus">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewShoppingSearchView"
+            android:id="@+id/recyclerViewShoppingPlusSearchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.google.android.material.search.SearchView>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationViewShopping"
+        android:id="@+id/navigationViewShoppingPlus"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

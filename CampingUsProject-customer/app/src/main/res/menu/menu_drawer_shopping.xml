@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemShoppingRealTimeRanking"
+        android:icon="@drawable/circle_20px"
+        android:title="실시간 랭킹" />
+    <item
+        android:id="@+id/itemShoppingPopularitySale"
+        android:icon="@drawable/circle_20px"
+        android:title="인기 특가"
+        app:showAsAction="ifRoom" />
+
+
+    <item android:title="의류" >
+        <menu>
+            <item
+                android:id="@+id/itemShoppingTotalProduct"
+                android:icon="@drawable/circle_20px"
+                android:title="전체상품" />
+            <item
+                android:id="@+id/itemShoppingCap"
+                android:icon="@drawable/circle_20px"
+                android:title="모자"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/itemShoppingTop"
+                android:icon="@drawable/circle_20px"
+                android:title="상의"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/itemShoppingBottoms"
+                android:icon="@drawable/circle_20px"
+                android:title="하의"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/itemShoppingShoes"
+                android:icon="@drawable/circle_20px"
+                android:title="신발"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+
+    <item android:title="캠핑 용품" >
+        <menu>
+            <item
+                android:id="@+id/itemShoppingTent"
+                android:icon="@drawable/circle_20px"
+                android:title="텐트" />
+            <item
+                android:id="@+id/itemShoppingStove"
+                android:icon="@drawable/circle_20px"
+                android:title="난로"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/itemShoppingFireWood"
+                android:icon="@drawable/circle_20px"
+                android:title="장작"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/itemShoppingContainer"
+                android:icon="@drawable/circle_20px"
+                android:title="그릇"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+</menu>

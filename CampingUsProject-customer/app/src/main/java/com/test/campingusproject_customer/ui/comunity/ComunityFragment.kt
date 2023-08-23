@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.ui.comunity
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,9 +14,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentComunityBinding
 import com.test.campingusproject_customer.databinding.HeaderNavigationBinding
@@ -59,6 +62,17 @@ class ComunityFragment : Fragment() {
                 drawerLayoutComunity.open()
             }
         }
+
+        floatingActionButtonComunityAddBoard.run {
+            // 플로팅 액션 버튼 아이콘의 색상을 변경
+            val fab: FloatingActionButton = findViewById(R.id.floatingActionButtonComunityAddBoard)
+            fab.setColorFilter(ContextCompat.getColor(mainActivity, R.color.highLightColor), PorterDuff.Mode.SRC_IN)
+
+            setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.POST_WRITE_FRAGMENT,true,false,null)
+            }
+        }
+
         navigationViewComunity.run {
             // 헤더설정
             val headerBinding = HeaderNavigationBinding.inflate(inflater)
@@ -142,7 +156,7 @@ class ComunityFragment : Fragment() {
                 textViewRowBoardComment = rowComunityBinding.textViewRowBoardComment
 
                 rowComunityBinding.root.setOnClickListener {
-
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,false,null)
                 }
             }
         }
@@ -167,7 +181,7 @@ class ComunityFragment : Fragment() {
             holder.textViewRowBoardTitle.text = "강현구 = 차은우"
             holder.textViewRowBoardWriter.text = "강현구"
             holder.textViewRowBoardLike.text = "${100 - position}"
-            holder.textVewRowBoardWriteDate.text = "2023-08-23"
+            holder.textVewRowBoardWriteDate.text = "2023-08-23 14:50"
             holder.textViewRowBoardComment.text = "${100 - position}"
         }
     }

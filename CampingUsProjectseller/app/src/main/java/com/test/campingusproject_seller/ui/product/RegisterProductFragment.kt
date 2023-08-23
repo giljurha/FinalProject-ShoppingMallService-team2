@@ -46,11 +46,6 @@ class RegisterProductFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
 
-    val productCountList = arrayOf(
-        "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
-        "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"
-    )
-
     var productImageList = mutableListOf<Uri>()
 
     override fun onCreateView(
@@ -71,7 +66,7 @@ class RegisterProductFragment : Fragment() {
 
             //spinner 목록 셋팅
             spinnerRegisterProductCount.run {
-                val a1 = ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, productCountList)
+                val a1 = ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, MainActivity.productCountList)
                 a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                 adapter = a1

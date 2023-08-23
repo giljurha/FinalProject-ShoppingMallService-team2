@@ -20,8 +20,8 @@
         android:id="@+id/imageButtonRowDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/highLightColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/remove_24px" />
+        app:srcCompat="@drawable/remove_24px"
+        app:tint="@color/highLightColor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

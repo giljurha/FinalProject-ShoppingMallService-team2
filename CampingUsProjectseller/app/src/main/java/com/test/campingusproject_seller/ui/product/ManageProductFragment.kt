@@ -1,14 +1,12 @@
 package com.test.campingusproject_seller.ui.product
 
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -21,6 +19,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_seller.R
@@ -87,7 +86,7 @@ class ManageProductFragment : Fragment() {
                                 ProductRepository.removeProduct(productId){
                                     ProductRepository.removeImages(productImage){
                                         productViewModel.getAllProductData(ProductRepository.getSellerId())
-                                        Snackbar.make(fragmentManageProductBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                        Snackbar.make(mainActivity.activityMainBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
                             }
@@ -123,6 +122,15 @@ class ManageProductFragment : Fragment() {
                 mainActivity.replaceFragment(MainActivity.REGISTER_PRODUCT_FRAGMENT, true, true, null)
             }
 
+            checkBoxManageProductSelectAll.setOnCheckedChangeListener { compoundButton: CompoundButton, checked: Boolean ->
+                for(idx in 0 until recyclerViewManageProduct.childCount){
+                    val itemView = recyclerViewManageProduct.getChildAt(idx)
+                    val itemCheckBox = itemView.findViewById<CheckBox>(R.id.checkBoxRowProduct)
+
+                    itemCheckBox.isChecked = checked
+                }
+            }
+
         }
 
         return fragmentManageProductBinding.root
@@ -148,10 +156,13 @@ class ManageProductFragment : Fragment() {
 
                 //아이템 클릭 시 수정 화면으로 전환
                 rowProductItemBinding.root.setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, null)
+                    val newBundle = Bundle()
+                    newBundle.putInt("adapterPosition", adapterPosition)
+                    mainActivity.replaceFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT, true, true, newBundle)
                 }
 
                 checkBoxRowProduct.setOnCheckedChangeListener { compoundButton, b ->
+                    setParentCheckBoxState()
                     if(b){
                         productCheckedList[adapterPosition] = b
                     }
@@ -209,4 +220,38 @@ class ManageProductFragment : Fragment() {
     fun printSellingStatus(sellingStatus : Boolean) : String{
         return if(sellingStatus) "판매중" else "매진"
     }
+
+    fun setParentCheckBoxState(){
+        fragmentManageProductBinding.run{
+
+            // 체크박스의 개수를 구한다.
+            val checkBoxCount = productViewModel.productList.value?.size!!
+            // 체크되어 있는 체크박스의 개수
+            var checkedCount = 0
+
+            // 체크 되어 있는 체크박스의 개수를 구한다.
+            for(idx in 0 until checkBoxCount){
+                val itemView = recyclerViewManageProduct.getChildAt(idx)
+                val itemCheckBox = itemView.findViewById<CheckBox>(R.id.checkBoxRowProduct)
+
+                if(itemCheckBox.isChecked){
+                    checkedCount++
+                }
+            }
+
+            // 만약 체크되어 있는 것이 없다면
+            if(checkedCount == 0){
+                checkBoxManageProductSelectAll.checkedState = MaterialCheckBox.STATE_UNCHECKED
+            }
+            // 모두 체크되어 있다면
+            else if(checkedCount == checkBoxCount){
+                checkBoxManageProductSelectAll.checkedState = MaterialCheckBox.STATE_CHECKED
+            }
+            // 일부만 체크되어 있다면
+            else {
+                checkBoxManageProductSelectAll.checkedState = MaterialCheckBox.STATE_INDETERMINATE
+            }
+        }
+    }
+
 }
