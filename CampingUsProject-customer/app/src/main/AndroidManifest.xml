@@ -28,6 +28,10 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <!--네이버 지도 아이디-->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="4z4bi8b5cl" />
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

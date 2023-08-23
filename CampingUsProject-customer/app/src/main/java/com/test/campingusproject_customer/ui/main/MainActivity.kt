@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
+        val CAMPSITE_FRAGMENT = "CampsiteFragment"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                     //캠핑장 클릭
                     R.id.menuItemCamping->{
 //                        replaceFragment(CAMPING_FRAGMENT, true, false, null)
+                        replaceFragment(CAMPSITE_FRAGMENT,true,false,null)
                         it.isChecked = true
                     }
                     //쇼핑 클릭
@@ -73,10 +76,12 @@ class MainActivity : AppCompatActivity() {
         // 새로운 Fragment를 담을 변수
         var newFragment = when(name){
             HOME_FRAGMENT -> HomeFragment()
+            CAMPSITE_FRAGMENT->CampsiteFragment()
 //            CAMPING_FRAGMENT -> CampingFragment()
 //            SHOPPING_FRAGMENT -> ShoppingFragment()
 //            COMUNITY_FRAGMENT -> ComunityFragment()
 //            MYPROFILE_FRAGMENT -> MyProfileFragment()
+
             else -> Fragment()
         }
 
