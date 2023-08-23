@@ -68,8 +68,13 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
     //지도객체가 callback되면 호출되는 메서드
     override fun onMapReady(p0: NaverMap) {
         naverMap = p0
+        //내 위치 맵에 설정
         naverMap.locationSource = locationSource
-        naverMap.uiSettings.isLocationButtonEnabled = true
+        //확대 축소 버튼 안보이게
+        naverMap.uiSettings.isZoomControlEnabled=false
+        //내 위치 버튼 위치 커스텀
+        val locationButton = fragmentCampsiteBinding.buttonMyLocation
+        locationButton.map=naverMap
 
         //권한 확인 및 승인되지 않은 경우 요청
         if (ContextCompat.checkSelfPermission(mainActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
