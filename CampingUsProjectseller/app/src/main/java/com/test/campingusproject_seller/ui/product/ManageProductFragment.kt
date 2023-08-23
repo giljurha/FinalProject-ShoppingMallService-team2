@@ -86,7 +86,7 @@ class ManageProductFragment : Fragment() {
                                 ProductRepository.removeProduct(productId){
                                     ProductRepository.removeImages(productImage){
                                         productViewModel.getAllProductData(ProductRepository.getSellerId())
-                                        Snackbar.make(fragmentManageProductBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                        Snackbar.make(mainActivity.activityMainBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
                             }
