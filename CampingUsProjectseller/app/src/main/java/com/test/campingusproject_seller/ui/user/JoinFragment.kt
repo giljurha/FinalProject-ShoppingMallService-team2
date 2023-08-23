@@ -34,7 +34,7 @@ class JoinFragment : Fragment() {
             toolbarLogin.run {
                 setNavigationIcon(R.drawable.arrow_back_24px)
                 setNavigationOnClickListener {
-                    //뒤로가기 버튼 눌렀을 때 로그인으로 이동
+                    mainActivity.removeFragment(MainActivity.JOIN_FRAGMENT)
                 }
             }
 

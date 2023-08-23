@@ -53,8 +53,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        activityMainBinding.bottomNavigationViewMain.visibility= View.VISIBLE
-        //로그인한적 없으면 로그인 화면으로
+        //로그인한적 없으면 로그인 화면으로 넘어가고 바텀 네비게이션 안보이게
         if(!UserInfoRepository.checkPref(this)){
             replaceFragment(LOGIN_FRAGMENT,false,false,null)
             activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
