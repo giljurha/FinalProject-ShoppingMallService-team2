@@ -1,12 +1,8 @@
 package com.test.campingusproject_seller.ui.product
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -105,13 +101,53 @@ class ModifyProductFragment : Fragment() {
                 //등록 아이콘 클릭 이벤트
                 setOnMenuItemClickListener {
                     if(it.itemId == R.id.menuItemSubmit){
+
                         val productCount = spinnerModifyProductCount.selectedItem.toString().toLong()
+
+                        //제품 이름 입력 검사
                         val productName = textInputEditTextModifyProductName.text.toString()
-                        val productPrice = textInputEditTextModifyProductPrice.text.toString().toLong()
+                        if(productName.isEmpty()){
+                            textInputLayoutEmptyError(textInputLayoutModifyProductName, "제품 이름을 입력하세요")
+                            return@setOnMenuItemClickListener true
+                        }else{
+                            textInputLayoutModifyProductName.error = null
+                        }
+
+                        //제품 가격 입력 검사
+                        val productPrice = try{
+                            textInputEditTextModifyProductPrice.text.toString().toLong()
+                        }catch(e:NumberFormatException){
+                            textInputLayoutEmptyError(textInputLayoutModifyProductPrice, "제품 가격을 입력하세요")
+                            return@setOnMenuItemClickListener true
+                        }
+                        textInputLayoutModifyProductPrice.error = null
+
+                        //제품 정보 입력 검사
                         val productInfo = textInputEditTextModifyProductExplanation.text.toString()
-                        val productDiscountRate = textInputEditTextModifyProductDiscountRate.text.toString().toLong()
+                        if(productInfo.isEmpty()){
+                            textInputLayoutEmptyError(textInputLayoutModifyProductExplanation, "제품 설명을 입력하세요")
+                            return@setOnMenuItemClickListener true
+                        }else{
+                            textInputLayoutModifyProductExplanation.error = null
+                        }
+
+                        //할인율 입력 검사
+                        val productDiscountRate = if(switchModifyProductRegistDiscount.isChecked){
+                            try{
+                                textInputEditTextModifyProductDiscountRate.text.toString().toLong()
+                            }catch(e:NumberFormatException){
+                                textInputLayoutEmptyError(textInputLayoutModifyProductDiscountRate, "할인율을 입력해주세요")
+                                return@setOnMenuItemClickListener true
+                            }
+                        }else{
+                            0
+                        }
+                        textInputLayoutModifyProductDiscountRate.error = null
+
+                        //상품 수량에 따라 판매 상태 값 결정
                         val productSellingStatus = if(productCount!=0L) true else false
 
+                        //해당 상품의 원래 정보를 따라야하는 값들 설정
                         val currentProduct = productViewModel.productList.value?.get(productIdx)!!
                         val productSellerId = currentProduct.productSellerId
                         val productImage = currentProduct.productImage
@@ -123,7 +159,8 @@ class ModifyProductFragment : Fragment() {
 
                         ProductRepository.modifyProduct(product){
                             //저장 메시지 스낵바
-                            Snackbar.make(fragmentModifyProductBinding.root, "수정되었습니다.", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(mainActivity.activityMainBinding.root, "수정되었습니다.", Snackbar.LENGTH_SHORT).show()
+                            mainActivity.removeFragment(MainActivity.MODIFY_PRODUCT_FRAGMENT)
                         }
                     }
                     false
@@ -160,11 +197,6 @@ class ModifyProductFragment : Fragment() {
                 layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
             }
 
-//            if(productViewModel.productDiscountRate.value == 0L){
-//                switchModifyProductRegistDiscount.isChecked = false
-//            }else{
-//                switchModifyProductRegistDiscount.isChecked = true
-//            }
         }
 
         return fragmentModifyProductBinding.root
@@ -191,41 +223,11 @@ class ModifyProductFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ModifyProductViewHolder, position: Int) {
-            //bitmap factory option 사용해 비트맵 크기 줄임
-//            val option = BitmapFactory.Options()
-//            option.inSampleSize = 4
-//
-//            Log.d("productImageUri", productImages[position].toString())
-//            val inputStream = mainActivity.contentResolver.openInputStream(productImages[position])
-//            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-
             //글라이드 라이브러리로 recycler view에 이미지 출력
             Glide.with(mainActivity).load(productImages[position])
                 .override(600, 600)
                 .into(holder.imageViewRowProductImage)
         }
-    }
-
-    //이미지 회전 상태값 구하는 함수
-    fun getOrientationOfImage(uri:Uri): Int{
-        val inputStream = mainActivity.contentResolver.openInputStream(uri)
-        val exif : ExifInterface? = try{
-            ExifInterface(inputStream!!)
-        }catch (e: IOException){
-            Log.e("exifError", e.toString())
-            return -1
-        }
-        inputStream.close()
-
-        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-        if(orientation != -1){
-            when(orientation){
-                ExifInterface.ORIENTATION_ROTATE_90 -> return 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> return 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> return 270
-            }
-        }
-        return 0
     }
 
     //textInputLayout 입력 검사 오류 처리 함수
