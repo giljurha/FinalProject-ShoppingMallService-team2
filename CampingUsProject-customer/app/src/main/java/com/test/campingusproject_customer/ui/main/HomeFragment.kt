@@ -1,5 +1,6 @@
 package com.test.campingusproject_customer.ui.main
 
+import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,7 @@ import com.test.campingusproject_customer.databinding.RowRealtimerankBinding
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
+    lateinit var callback: OnBackPressedCallback
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -231,6 +234,20 @@ class HomeFragment : Fragment() {
             holder.textVewRowBoardWriteDate.text = "2023-08-23"
             holder.textViewRowBoardComment.text = "${100 - position}"
         }
+    }
 
+    //뒤로가기 버튼 눌렀을 때 동작할 코드 onDetech까지
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

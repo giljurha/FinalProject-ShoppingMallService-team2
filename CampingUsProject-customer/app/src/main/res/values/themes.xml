@@ -14,7 +14,7 @@
         <item name="colorControlNormal">@color/subColor</item>
         <!-- 위젯 터치등의 액션 발생 시 나타나는 색상 -->
         <item name="colorControlHighlight">@color/highLightColor</item>
-        <item name="android:textCursorDrawable">@color/highLightColor</item>  // cursor 색.
+        <item name="android:textCursorDrawable">@color/highLightColor</item>
         <!--bottom nav style 설정 -->
         <item name = "bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
@@ -29,6 +29,7 @@
         <item name="postSplashScreenTheme">@style/Theme.CampingUsProjectcustomer</item>
         <item name="windowSplashScreenAnimationDuration">0</item>
     </style>
+
 
     <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectcustomer">

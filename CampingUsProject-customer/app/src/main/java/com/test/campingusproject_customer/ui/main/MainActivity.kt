@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
 import com.test.campingusproject_customer.ui.camping.CampingFragment
+import com.test.campingusproject_customer.ui.comunity.PostWriteFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
+        val POST_WRITE_FRAGMENT = "PostWriteFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +82,7 @@ class MainActivity : AppCompatActivity() {
             SHOPPING_FRAGMENT -> ShoppingFragment()
             COMUNITY_FRAGMENT -> ComunityFragment()
             MYPROFILE_FRAGMENT -> MyprofileFragment()
+            POST_WRITE_FRAGMENT -> PostWriteFragment()
             else -> Fragment()
         }
 
