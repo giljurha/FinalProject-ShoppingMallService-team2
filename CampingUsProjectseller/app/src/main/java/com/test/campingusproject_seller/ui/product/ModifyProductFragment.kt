@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +26,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentModifyProductBinding
 import com.test.campingusproject_seller.databinding.RowProductImageBinding
+import com.test.campingusproject_seller.dataclassmodel.ProductModel
+import com.test.campingusproject_seller.repository.ProductRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
 import com.test.campingusproject_seller.viewmodel.ProductViewModel
 import java.io.IOException
@@ -37,7 +40,7 @@ class ModifyProductFragment : Fragment() {
 
     lateinit var productViewModel: ProductViewModel
 
-    var productImageList = mutableListOf<Uri>()
+    var productImages = mutableListOf<Uri>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +49,6 @@ class ModifyProductFragment : Fragment() {
 
         fragmentModifyProductBinding = FragmentModifyProductBinding.inflate(inflater)
         mainActivity = activity as MainActivity
-
-        //앨범 런처 초기화
-        albumLauncher = albumSetting()
 
         //상품 뷰모델 객체 생성
         productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
@@ -59,9 +59,10 @@ class ModifyProductFragment : Fragment() {
             productPrice.observe(mainActivity){
                 fragmentModifyProductBinding.textInputEditTextModifyProductPrice.setText(it.toString())
             }
-//            productImage.observe(mainActivity){
-//                Log.d("productImageDir", it)
-//            }
+            productImageList.observe(mainActivity){ uriList->
+                productImages = uriList
+                fragmentModifyProductBinding.recyclerViewModifyProductImage.adapter?.notifyDataSetChanged()
+            }
             productInfo.observe(mainActivity){
                 fragmentModifyProductBinding.textInputEditTextModifyProductExplanation.setText(it)
             }
@@ -101,9 +102,29 @@ class ModifyProductFragment : Fragment() {
 
                 inflateMenu(R.menu.menu_submit)
 
+                //등록 아이콘 클릭 이벤트
                 setOnMenuItemClickListener {
                     if(it.itemId == R.id.menuItemSubmit){
-                        //등록 아이템 클릭 처리
+                        val productCount = spinnerModifyProductCount.selectedItem.toString().toLong()
+                        val productName = textInputEditTextModifyProductName.text.toString()
+                        val productPrice = textInputEditTextModifyProductPrice.text.toString().toLong()
+                        val productInfo = textInputEditTextModifyProductExplanation.text.toString()
+                        val productDiscountRate = textInputEditTextModifyProductDiscountRate.text.toString().toLong()
+                        val productSellingStatus = if(productCount!=0L) true else false
+
+                        val currentProduct = productViewModel.productList.value?.get(productIdx)!!
+                        val productSellerId = currentProduct.productSellerId
+                        val productImage = currentProduct.productImage
+                        val productRecommendationCount = currentProduct.productRecommendationCount
+                        val productId = currentProduct.productId
+
+                        val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
+                            productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount)
+
+                        ProductRepository.modifyProduct(product){
+                            //저장 메시지 스낵바
+                            Snackbar.make(fragmentModifyProductBinding.root, "수정되었습니다.", Snackbar.LENGTH_SHORT).show()
+                        }
                     }
                     false
                 }
@@ -116,14 +137,6 @@ class ModifyProductFragment : Fragment() {
                 adapter = a1
                 //기본값 0으로 설정
                 setSelection(0)
-            }
-
-            imageButtonModifyProductImage.setOnClickListener {
-                val albumIntent = Intent(Intent.ACTION_PICK)
-                albumIntent.setType("image/*")
-
-                albumIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                albumLauncher.launch(albumIntent)
             }
 
             switchModifyProductRegistDiscount.setOnCheckedChangeListener { compoundButton, b ->
@@ -141,7 +154,10 @@ class ModifyProductFragment : Fragment() {
             }
 
             recyclerViewModifyProductImage.run {
-                adapter
+                adapter = ModifyProductAdapter()
+
+                //recycler view 가로로 확장되게 함
+                layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
             }
 
 //            if(productViewModel.productDiscountRate.value == 0L){
@@ -158,16 +174,9 @@ class ModifyProductFragment : Fragment() {
         inner class ModifyProductViewHolder (rowProductImageBinding: RowProductImageBinding) :
                 RecyclerView.ViewHolder (rowProductImageBinding.root){
                     var imageViewRowProductImage : ImageView
-                    var imageButtonRowDelete : ImageButton
 
                     init {
                         imageViewRowProductImage = rowProductImageBinding.imageViewRowProductImage
-                        imageButtonRowDelete = rowProductImageBinding.imageButtonRowDelete
-
-                        imageButtonRowDelete.setOnClickListener {
-                            productImageList.removeAt(adapterPosition)
-                            fragmentModifyProductBinding.recyclerViewModifyProductImage.adapter?.notifyDataSetChanged()
-                        }
                     }
                 }
 
@@ -178,20 +187,21 @@ class ModifyProductFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return productImageList.size
+            return productImages.size
         }
 
         override fun onBindViewHolder(holder: ModifyProductViewHolder, position: Int) {
             //bitmap factory option 사용해 비트맵 크기 줄임
-            val option = BitmapFactory.Options()
-            option.inSampleSize = 4
-
-            val inputStream = mainActivity.contentResolver.openInputStream(productImageList[position])
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+//            val option = BitmapFactory.Options()
+//            option.inSampleSize = 4
+//
+//            Log.d("productImageUri", productImages[position].toString())
+//            val inputStream = mainActivity.contentResolver.openInputStream(productImages[position])
+//            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
 
             //글라이드 라이브러리로 recycler view에 이미지 출력
-            Glide.with(mainActivity).load(bitmap)
-                .override(500, 500)
+            Glide.with(mainActivity).load(productImages[position])
+                .override(600, 600)
                 .into(holder.imageViewRowProductImage)
         }
     }
@@ -225,42 +235,6 @@ class ModifyProductFragment : Fragment() {
             setErrorIconDrawable(R.drawable.error_24px)
             requestFocus()
         }
-    }
-
-    //앨범 설정 함수
-    fun albumSetting() : ActivityResultLauncher<Intent>{
-        //앨범에서 이미지 가져오기
-        val albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-
-            //이미지 가져오기 성공
-            if(it.resultCode == RESULT_OK){
-
-                //사진 여러장 선택한 경우
-                if(it.data?.clipData != null){
-                    val count = it.data?.clipData?.itemCount
-
-                    for(idx in 0 until count!!){
-                        val imageUri = it.data?.clipData?.getItemAt(idx)?.uri
-
-                        productImageList.add(imageUri!!)
-                    }
-                }
-                //한장 선택한 경우
-                else{
-                    it.data?.data?.let { uri ->
-                        val imageUri = uri
-
-                        if(imageUri != null){
-                            productImageList.add(imageUri)
-                        }
-                    }
-                }
-
-                //recycler view 갱신
-                fragmentModifyProductBinding.recyclerViewModifyProductImage.adapter?.notifyDataSetChanged()
-            }
-        }
-        return albumLauncher
     }
 
 }

@@ -1,5 +1,6 @@
 package com.test.campingusproject_seller.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.test.campingusproject_seller.repository.ProductRepository
 
 class ProductViewModel() : ViewModel() {
     val productList = MutableLiveData<MutableList<ProductModel>>()
+    val productImageList = MutableLiveData<MutableList<Uri>>()
 
     val productName = MutableLiveData<String>()
     val productPrice = MutableLiveData<Long>()
@@ -55,6 +57,18 @@ class ProductViewModel() : ViewModel() {
                 productInfo.value = c1.child("productInfo").value as String
                 productCount.value = c1.child("productCount").value as Long
                 productDiscountRate.value = c1.child("productDiscountRate").value as Long
+
+                productImageList.value?.clear()
+                ProductRepository.getProductImages(productImage.value.toString()){storageRef->
+                    storageRef.downloadUrl.addOnCompleteListener{
+                        if(it.isSuccessful){
+                            val downloadUrl = it.result
+                            val updatedList = productImageList.value?: mutableListOf()
+                            updatedList.add(downloadUrl)
+                            productImageList.value = updatedList
+                        }
+                    }
+                }
             }
         }
     }
