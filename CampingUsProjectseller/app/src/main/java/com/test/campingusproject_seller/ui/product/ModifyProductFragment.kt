@@ -206,9 +206,12 @@ class ModifyProductFragment : Fragment() {
         inner class ModifyProductViewHolder (rowProductImageBinding: RowProductImageBinding) :
                 RecyclerView.ViewHolder (rowProductImageBinding.root){
                     var imageViewRowProductImage : ImageView
+                    var imageButtonRowDelete : ImageButton
 
                     init {
                         imageViewRowProductImage = rowProductImageBinding.imageViewRowProductImage
+                        imageButtonRowDelete = rowProductImageBinding.imageButtonRowDelete
+                        imageButtonRowDelete.visibility = View.GONE
                     }
                 }
 
