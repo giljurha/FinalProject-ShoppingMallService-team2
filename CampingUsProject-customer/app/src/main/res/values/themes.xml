@@ -14,7 +14,7 @@
         <item name="colorControlNormal">@color/subColor</item>
         <!-- 위젯 터치등의 액션 발생 시 나타나는 색상 -->
         <item name="colorControlHighlight">@color/highLightColor</item>
-
+        <item name="android:textCursorDrawable">@color/highLightColor</item>  // cursor 색.
         <!--bottom nav style 설정 -->
         <item name = "bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
 
