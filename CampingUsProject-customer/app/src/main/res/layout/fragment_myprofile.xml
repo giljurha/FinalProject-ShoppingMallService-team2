@@ -50,7 +50,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp">
 
                     <ImageView
                         android:id="@+id/imageViewMyProfileMyImage"
@@ -70,6 +74,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="5dp"
                             android:drawableTint="@color/highLightColor"
@@ -94,6 +99,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="5dp"
                             android:drawableTint="@color/highLightColor"
@@ -107,7 +113,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="10dp"
                             android:drawableTint="@color/highLightColor"
                             android:text="TextView"
                             android:textColor="@color/highLightColor"
@@ -121,8 +127,9 @@
                     android:id="@+id/textViewDestinationText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginBottom="5dp"
                     android:drawableTint="@color/highLightColor"
                     android:text="기본 배송지"
@@ -133,9 +140,9 @@
                     android:id="@+id/textViewMyprofileMyDestination"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
                     android:drawableTint="@color/highLightColor"
                     android:text="TextView"
                     android:textColor="@color/highLightColor"
@@ -146,8 +153,8 @@
                 android:id="@+id/textViewMyProfilePurchaseDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:drawableTint="@color/highLightColor"
                 android:text="구매내역"
@@ -158,15 +165,14 @@
                 android:id="@+id/divider3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/textViewMyProfileMyQuestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:drawableTint="@color/highLightColor"
                 android:text="문의내역"
@@ -177,15 +183,14 @@
                 android:id="@+id/divider4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/textViewMyProfileMyPost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:drawableTint="@color/highLightColor"
                 android:text="내가 쓴 글"
@@ -196,15 +201,14 @@
                 android:id="@+id/divider5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/textViewMyProfileLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:drawableTint="@color/highLightColor"
                 android:text="로그아웃"
@@ -215,15 +219,14 @@
                 android:id="@+id/divider6"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/textViewMyProfileSignout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:drawableTint="@color/highLightColor"
                 android:text="회원탈퇴"
