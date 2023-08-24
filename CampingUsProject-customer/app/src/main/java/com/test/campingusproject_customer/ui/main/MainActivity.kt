@@ -15,6 +15,8 @@ import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.comunity.PostReadFragment
 import com.test.campingusproject_customer.ui.inquiry.InquiryFragment
 import com.test.campingusproject_customer.ui.myprofile.ModifyMyprofileFragment
+import com.test.campingusproject_customer.ui.myprofile.MyQuestionDetailFragment
+import com.test.campingusproject_customer.ui.myprofile.MyQuestionListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingPlusFragment
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         val MODIFY_MYPROFILE_FRAGMENT = "ModifyMyprofileFragment"
         val CONTRACT_CAMPSITE_FRAGMENT = "ContractCampsiteFragment"
         val INQUIRY_FRAGMENT = "InquiryFragment"
+        val MY_QUESTION_LIST_FRAGMENT = "MyQuestionListFragment"
+        val MY_QUESTION_DETAIL_FRAGMENT = "MyQuestionDetailFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,7 +132,8 @@ class MainActivity : AppCompatActivity() {
             ORDER_DETAIL_FRAGMENT -> OrderDetailFragment()
             INQUIRY_FRAGMENT -> InquiryFragment()
             MODIFY_MYPROFILE_FRAGMENT -> ModifyMyprofileFragment()
-            
+            MY_QUESTION_LIST_FRAGMENT -> MyQuestionListFragment()
+            MY_QUESTION_DETAIL_FRAGMENT -> MyQuestionDetailFragment()
             else -> Fragment()
         }
 

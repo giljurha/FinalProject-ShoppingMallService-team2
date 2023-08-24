@@ -89,6 +89,11 @@ class MyprofileFragment : Fragment() {
                     }
                 }
             }
+
+            //문의 내역
+            textViewMyProfileMyQuestion.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.MY_QUESTION_LIST_FRAGMENT, true, true, null)
+            }
         }
 
         return fragmentMyprofileBinding.root
