@@ -25,15 +25,34 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutShoppingSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/soft_gray"
+                android:textCursorDrawable="@color/highLightColor"
+                android:transitionGroup="true"
+                app:boxStrokeColor="@drawable/textinputlayout_selector"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor"
+                app:startIconDrawable="@drawable/search_24px">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextShoppingSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:inputType="text|textPersonName"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <com.google.android.material.search.SearchBar
-                    android:id="@+id/searchBarShopping"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -72,18 +91,6 @@
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.google.android.material.search.SearchView
-        android:id="@+id/searchViewPostList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/searchBarShopping">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewShoppingSearchView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.search.SearchView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationViewShopping"
