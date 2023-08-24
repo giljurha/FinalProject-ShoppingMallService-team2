@@ -27,6 +27,9 @@
         <item name="android:editTextStyle">@style/EditTextStyle</item>
         <item name="android:checkboxStyle">@style/CheckBoxStyle</item>
         <item name="android:spinnerStyle">@style/SpinnerStyle</item>
+
+        <!-- radio button style 설정 -->
+        <item name="radioButtonStyle">@style/Widget.App.RadioButton</item>
     </style>
 
     <style name="Theme.CampingUsProjectcustomer" parent="Base.Theme.CampingUsProjectcustomer" />
@@ -82,5 +85,15 @@
         <!-- Icon colors -->
         <item name="colorSurface">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!-- radio button 스타일 커스텀 -->
+    <style name="Widget.App.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.RadioButton</item>
+    </style>
+
+    <style name="ThemeOverlay.App.RadioButton" parent="">
+        <item name="colorOnSurface">@color/highLightColor</item>
+        <item name="colorPrimary">@color/subColor</item>
     </style>
 </resources>
