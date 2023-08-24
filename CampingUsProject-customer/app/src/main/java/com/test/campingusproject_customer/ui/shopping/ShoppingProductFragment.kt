@@ -23,6 +23,7 @@ class ShoppingProductFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         fragmentShoppingProductBinding.run {
+            //툴바
             toolbarShoppingProduct.run {
                 title = "쇼핑"
                 setNavigationIcon(R.drawable.arrow_back_24px)
@@ -30,7 +31,9 @@ class ShoppingProductFragment : Fragment() {
                     mainActivity.removeFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT)
                 }
             }
-            buttonShoppingToCart.run {
+
+            // 장바구니 담기 클릭시 다이얼로그
+            buttonShoppingProductToCart.run {
                 setOnClickListener { // 버튼 클릭시 다이얼로그
                     MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog).run {
                         setTitle("장바구니 담기 완료")
@@ -43,6 +46,20 @@ class ShoppingProductFragment : Fragment() {
                         }
                         show()
                     }
+                }
+            }
+
+            // 구매 버튼 클릭시 이동
+            buttonShoppingProductToBuy.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.PAYMENT_FRAGMENT, true, true, null)
+                }
+            }
+
+            // 플로팅 버튼 클릭시 문의등록 화면 이동
+            floatingActionButtonShoppingProductInquriry.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.INQUIRY_FRAGMENT, true, true, null)
                 }
             }
         }
