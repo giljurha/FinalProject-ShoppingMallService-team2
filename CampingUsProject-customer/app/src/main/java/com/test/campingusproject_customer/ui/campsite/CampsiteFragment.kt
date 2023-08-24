@@ -75,6 +75,8 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         //확대 축소 버튼 안보이게
         naverMap.uiSettings.isZoomControlEnabled=false
+        //나침반 안보이게 삭제
+        naverMap.uiSettings.isCompassEnabled=false
         //내 위치 버튼 위치 커스텀
         val locationButton = fragmentCampsiteBinding.buttonMyLocation
         locationButton.map=naverMap
