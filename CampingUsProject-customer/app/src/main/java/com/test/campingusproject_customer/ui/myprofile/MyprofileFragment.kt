@@ -43,6 +43,10 @@ class MyprofileFragment : Fragment() {
             textViewMyProfileMyPhoneNumber.text = "010-1234-1234"
             textViewMyprofileMyDestination.text = "서울특별시 송파구 올림픽로 300 시그니엘 꼭대기층임ㅋ"
 
+            textViewMyProfileMyPost.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,null)
+            }
+
             //수정
             textViewMyProfileEditMyInfo.run {
                 setOnClickListener {
