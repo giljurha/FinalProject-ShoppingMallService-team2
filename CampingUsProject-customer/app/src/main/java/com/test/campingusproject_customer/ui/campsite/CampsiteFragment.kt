@@ -62,8 +62,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         fragmentCampsiteBinding.buttonContractCampsite.setOnClickListener {
-            mainActivity.removeFragment(MainActivity.CAMPSITE_FRAGMENT)
-            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, false, false, null)
+            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, true, false, null)
         }
 
         return fragmentCampsiteBinding.root
