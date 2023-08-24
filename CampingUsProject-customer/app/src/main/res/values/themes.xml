@@ -74,7 +74,7 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.CheckBox</item>
     </style>
 
-<!--    바텀 네비게이션 클릭 시 아이콘 주변에 색상 변경-->
+    <!-- 바텀 네비게이션 클릭 시 아이콘 주변에 색상 변경-->
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/subColor</item>
     </style>
@@ -95,5 +95,15 @@
     <style name="ThemeOverlay.App.RadioButton" parent="">
         <item name="colorOnSurface">@color/highLightColor</item>
         <item name="colorPrimary">@color/subColor</item>
+    </style>
+
+    <!--다이얼로그 디자인-->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/highLightColor</item>
     </style>
 </resources>

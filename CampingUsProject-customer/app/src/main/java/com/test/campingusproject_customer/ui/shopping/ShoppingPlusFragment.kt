@@ -1,5 +1,6 @@
 package com.test.campingusproject_customer.ui.shopping
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.campingusproject_customer.R
@@ -19,6 +21,7 @@ import com.test.campingusproject_customer.ui.main.MainActivity
 class ShoppingPlusFragment : Fragment() {
     lateinit var fragmentShoppingPlusBinding: FragmentShoppingPlusBinding
     lateinit var mainActivity: MainActivity
+    lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +41,8 @@ class ShoppingPlusFragment : Fragment() {
                     drawerLayoutShopping.open()
                 }
             }
+
+            // 드루어 레이아웃
             navigationViewShoppingPlus.run {
                 //헤더 설정
                 val headerShoppingBinding = HeaderShoppingBinding.inflate(inflater)
@@ -112,6 +117,7 @@ class ShoppingPlusFragment : Fragment() {
                 }
             }
 
+            // 리사이클러뷰
             recyclerViewShoppingPlusProduct.run {
                 adapter = ShoppingPlusProductAdapter()
                 layoutManager = GridLayoutManager(context, 3)
@@ -142,6 +148,10 @@ class ShoppingPlusFragment : Fragment() {
             val rowShoppingPlusBinding = RowShoppingPlusBinding.inflate(layoutInflater)
             val shoppingPlusProductViewHolder = ShoppingPlusProductViewHolder(rowShoppingPlusBinding)
 
+            rowShoppingPlusBinding.root.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.SHOPPING_FRAGMENT, true,true, null)
+            }
+
             rowShoppingPlusBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -160,4 +170,21 @@ class ShoppingPlusFragment : Fragment() {
             holder.textViewShoppingPlusPrice.text = "30000원"
         }
     }
+
+    //뒤로가기 버튼 눌렀을 때 동작할 코드 onDetech까지
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.removeFragment(MainActivity.SHOPPING_PLUS_FRAGMENT)
+                mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemHome
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
+
 }
