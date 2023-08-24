@@ -1,170 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.product.ModifyProductFragment" >
+    tools:context=".ui.product.ModifyProductFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbarRegisterProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.CampingUs.Toolbar" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/materialToolbarRegisterProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Theme.CampingUs.Toolbar" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutRegisterProductName"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                app:boxStrokeColor="@color/highLightColor"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/highLightColor">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextRegisterProductName"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutRegisterProductName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="제품 이름"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    app:boxStrokeColor="@color/highLightColor"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/highLightColor">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutRegisterProductPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                app:boxStrokeColor="@color/highLightColor"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/highLightColor">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEditTextRegisterProductName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="제품 이름"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextRegisterProductPrice"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutRegisterProductPrice"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="가격"
-                    android:inputType="number|numberSigned"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    app:boxStrokeColor="@color/highLightColor"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/highLightColor">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutRegisterProductExplanation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                app:boxStrokeColor="@color/highLightColor"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/highLightColor">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEditTextRegisterProductPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="가격"
+                        android:inputType="number|numberSigned"
+                        android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextRegisterProductExplanation"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutRegisterProductExplanation"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="제품 설명"
-                    android:inputType="text|textMultiLine"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    app:boxStrokeColor="@color/highLightColor"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/highLightColor">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEditTextRegisterProductExplanation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="제품 설명"
+                        android:inputType="text|textMultiLine"
+                        android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/textViewRegisterProductCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="제품 수량"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Spinner
-                    android:id="@+id/spinnerRegisterProductCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="186dp"
-                    android:layout_marginEnd="16dp"
-                    android:dropDownWidth="50dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textViewRegisterProductCount" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:id="@+id/textViewRegisterProductRegistDiscount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="특가 상품으로 등록하기"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Switch
-                    android:id="@+id/switchRegisterProductRegistDiscount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="135dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textViewRegisterProductRegistDiscount" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutRegisterProductDiscountRate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:visibility="gone"
-                app:boxStrokeColor="@color/highLightColor"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/highLightColor">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextRegisterProductDiscountRate"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="할인율"
-                    android:inputType="number|numberDecimal|numberSigned"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewRegisterProductCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="제품 수량"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/spinnerRegisterProductCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="186dp"
+                        android:layout_marginEnd="16dp"
+                        android:dropDownWidth="50dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textViewRegisterProductCount" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewRegisterProductRegistDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="특가 상품으로 등록하기"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:id="@+id/switchRegisterProductRegistDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="135dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textViewRegisterProductRegistDiscount" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutRegisterProductDiscountRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:visibility="gone"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:boxStrokeColor="@color/highLightColor"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/highLightColor">
 
-            <ImageButton
-                android:id="@+id/imageButtonRegisterProductImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_image_button"
-                android:src="@drawable/photo_camera_24px" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEditTextRegisterProductDiscountRate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="할인율"
+                        android:inputType="number|numberDecimal|numberSigned"
+                        android:textCursorDrawable="@drawable/shape_text_input_edit_text"
+                        android:visibility="gone" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewRegisterProductImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                <ImageButton
+                    android:id="@+id/imageButtonRegisterProductImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_image_button"
+                    android:src="@drawable/add_a_photo_24px" />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewRegisterProductImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
