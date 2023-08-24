@@ -14,8 +14,7 @@
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:menu="@menu/menu_cart"
-        />
+        app:menu="@menu/menu_cart" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -60,7 +59,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,7 +123,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:nestedScrollingEnabled="false"
-                android:overScrollMode="never"/>
+                android:overScrollMode="never" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
