@@ -61,6 +61,9 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         //OnMapReadyCallback등록
         mapFragment.getMapAsync(this)
 
+        fragmentCampsiteBinding.buttonContractCampsite.setOnClickListener {
+            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, true, false, null)
+        }
 
         return fragmentCampsiteBinding.root
     }

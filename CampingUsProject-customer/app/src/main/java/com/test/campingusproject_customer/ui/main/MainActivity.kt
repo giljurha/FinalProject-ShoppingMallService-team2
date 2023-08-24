@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
 import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
+import com.test.campingusproject_customer.ui.campsite.ContractCampsiteFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
-import com.test.campingusproject_customer.ui.camping.CampingFragment
 import com.test.campingusproject_customer.ui.comunity.PostWriteFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.comunity.PostReadFragment
@@ -22,11 +22,11 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val HOME_FRAGMENT = "HomeFragment"
-        val CAMPING_FRAGMENT = "CampingFragment"
         val SHOPPING_FRAGMENT = "ShoppingFragment"
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
         val CAMPSITE_FRAGMENT = "CampsiteFragment"
+        val CONTRACT_CAMPSITE_FRAGMENT="ContractCampsiteFragment"
         val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
         val POST_WRITE_FRAGMENT = "PostWriteFragment"
         val SHOPPING_PLUS_FRAGMENT = "ShoppingPlusFragment"
@@ -95,12 +95,12 @@ class MainActivity : AppCompatActivity() {
         // 새로운 Fragment를 담을 변수
         var newFragment = when (name) {
             HOME_FRAGMENT -> HomeFragment()
-            CAMPING_FRAGMENT -> CampingFragment()
             SHOPPING_FRAGMENT -> ShoppingFragment()
             SHOPPING_PRODUCT_FRAGMENT -> ShoppingProductFragment()
             COMUNITY_FRAGMENT -> ComunityFragment()
             MYPROFILE_FRAGMENT -> MyprofileFragment()
             CAMPSITE_FRAGMENT->CampsiteFragment()
+            CONTRACT_CAMPSITE_FRAGMENT->ContractCampsiteFragment()
             POST_WRITE_FRAGMENT -> PostWriteFragment()
             POST_READ_FRAGMENT -> PostReadFragment()
             SHOPPING_PLUS_FRAGMENT -> ShoppingPlusFragment()

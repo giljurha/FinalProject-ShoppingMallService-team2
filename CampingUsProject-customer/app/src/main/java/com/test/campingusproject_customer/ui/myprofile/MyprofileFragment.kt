@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.test.campingusproject_customer.R
-import com.test.campingusproject_customer.databinding.FragmentCampingBinding
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
 
