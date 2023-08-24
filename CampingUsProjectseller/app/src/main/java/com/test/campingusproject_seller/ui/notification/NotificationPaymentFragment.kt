@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.campingusproject_seller.databinding.FragmentNotificationPaymentBinding
+import com.test.campingusproject_seller.databinding.RowNotificationPaymentBinding
 import com.test.campingusproject_seller.ui.main.MainActivity
 
 class NotificationPaymentFragment : Fragment() {
@@ -43,7 +44,7 @@ class NotificationPaymentFragment : Fragment() {
         inner class PaymentViewHolder(rowNotificationPaymentBinding: RowNotificationPaymentBinding) :RecyclerView.ViewHolder(rowNotificationPaymentBinding.root) {
             val imageViewRowNotificationPayment: ImageView
             val textViewRowNotificationPaymentContent:TextView
-            val buttonRowNotificationPaymentToSellStateDetail: Button
+            val buttonRowNotificationPaymentToSellStateDetail: TextView
             init {
                 imageViewRowNotificationPayment = rowNotificationPaymentBinding.imageViewRowNotificationPayment
                 textViewRowNotificationPaymentContent = rowNotificationPaymentBinding.textViewRowNotificationPaymentContent

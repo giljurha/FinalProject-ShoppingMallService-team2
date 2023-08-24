@@ -141,7 +141,9 @@ class ProductRepository {
                     a1.ref.child("productInfo").setValue(productModel.productInfo)
                     a1.ref.child("productName").setValue(productModel.productName)
                     a1.ref.child("productPrice").setValue(productModel.productPrice)
-                    a1.ref.child("productSellingStatus").setValue(productModel.productSellingStatus).addOnCompleteListener(callback1)
+                    a1.ref.child("productSellingStatus").setValue(productModel.productSellingStatus)
+                    a1.ref.child("productBrand").setValue(productModel.productBrand)
+                    a1.ref.child("productKeywordList").setValue(productModel.productKeywordList).addOnCompleteListener(callback1)
                 }
             }
         }
