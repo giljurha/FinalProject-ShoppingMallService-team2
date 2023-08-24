@@ -80,6 +80,98 @@
                     android:textCursorDrawable="@drawable/shape_text_input_edit_text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutModifyProductBrand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextModifyProductBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="브랜드"
+                    android:inputType="text|textMultiLine"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="키워드 설정" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupModifyProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+                    app:chipSpacingHorizontal="2dp"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductBeach"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="해변" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductValley"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:text="계곡" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductLake"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="호수" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductMountain"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="산" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductRiver"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="강" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipModifyProductForest"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="숲" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
