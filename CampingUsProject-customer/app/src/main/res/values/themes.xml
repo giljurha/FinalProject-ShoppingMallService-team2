@@ -20,6 +20,13 @@
 
         <!-- check box style 설정 -->
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
+
+        <!-- 위젯 폰트 적용-->
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:checkboxStyle">@style/CheckBoxStyle</item>
+        <item name="android:spinnerStyle">@style/SpinnerStyle</item>
     </style>
 
     <style name="Theme.CampingUsProjectcustomer" parent="Base.Theme.CampingUsProjectcustomer" />
