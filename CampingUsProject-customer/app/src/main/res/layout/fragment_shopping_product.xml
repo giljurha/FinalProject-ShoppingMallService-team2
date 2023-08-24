@@ -8,7 +8,7 @@
     tools:context=".ui.shopping.ShoppingProductFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+        android:id="@+id/toolbarShoppingProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -285,9 +285,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="32dp"
                     android:gravity="center"
                     android:text="떼잉 쯔쯪 생각보다 텐트가 별루네요~"
                     android:textSize="@dimen/text_size_2"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductReviewTitle" />
