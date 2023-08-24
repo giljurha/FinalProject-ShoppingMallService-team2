@@ -61,9 +61,9 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         //OnMapReadyCallback등록
         mapFragment.getMapAsync(this)
 
+        //제휴 캠핑장 클릭 시
         fragmentCampsiteBinding.buttonContractCampsite.setOnClickListener {
-            mainActivity.removeFragment(MainActivity.CAMPSITE_FRAGMENT)
-            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, false, false, null)
+            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, true, false, null)
         }
 
         return fragmentCampsiteBinding.root
