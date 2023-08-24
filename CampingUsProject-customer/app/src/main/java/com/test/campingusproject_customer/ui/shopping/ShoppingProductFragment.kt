@@ -30,7 +30,7 @@ class ShoppingProductFragment : Fragment() {
                     mainActivity.removeFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT)
                 }
             }
-            buttonShoppingToCart.run {
+            buttonShoppingProductToCart.run {
                 setOnClickListener { // 버튼 클릭시 다이얼로그
                     MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog).run {
                         setTitle("장바구니 담기 완료")
@@ -43,6 +43,12 @@ class ShoppingProductFragment : Fragment() {
                         }
                         show()
                     }
+                }
+            }
+
+            buttonShoppingProductToBuy.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.PAYMENT_FRAGMENT, true, true, null)
                 }
             }
         }
