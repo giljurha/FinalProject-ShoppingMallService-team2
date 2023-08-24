@@ -30,6 +30,11 @@
         <item name="windowSplashScreenAnimationDuration">0</item>
     </style>
 
+    <!-- 툴바 설정 -->
+    <style name="Theme.CampingUs.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/highLightColor</item>
+    </style>
 
     <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectcustomer">
