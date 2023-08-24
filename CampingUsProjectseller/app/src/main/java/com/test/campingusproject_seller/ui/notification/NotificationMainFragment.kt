@@ -11,15 +11,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentNotificationMainBinding
+import com.test.campingusproject_seller.ui.main.MainActivity
 
 class NotificationMainFragment : Fragment() {
     lateinit var fragmentNotificationMainBinding: FragmentNotificationMainBinding
+    lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         fragmentNotificationMainBinding = FragmentNotificationMainBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
 
         fragmentNotificationMainBinding.run {
             toolbarNotification.run {
@@ -27,10 +30,16 @@ class NotificationMainFragment : Fragment() {
 
                 // 백버튼
                 setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.NOTIFICATION_MAIN_FRAGMENT)
+                }
             }
 
             // 뷰페이저
             viewPager2Notification.run {
+                val adapter = ViewPagerAdapter(mainActivity)
+                viewPager2Notification.adapter = adapter
+
                 TabLayoutMediator(tabLayoutNotification, viewPager2Notification) { tab, position ->
                     when(position) {
                         0 -> tab.text = "결제"
@@ -46,8 +55,13 @@ class NotificationMainFragment : Fragment() {
 
     // 뷰페이저 어댑터
     inner class ViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+        val fragments: List<Fragment>
+        init {
+            fragments= listOf(NotificationPaymentFragment(), NotificationReviewFragment(), NotificationInquiryFragment())
+        }
+
         override fun getItemCount(): Int {
-            return 3
+            return fragments.size
         }
 
         override fun createFragment(position: Int): Fragment {
