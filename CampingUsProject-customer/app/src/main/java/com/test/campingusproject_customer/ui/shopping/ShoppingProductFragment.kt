@@ -39,7 +39,7 @@ class ShoppingProductFragment : Fragment() {
                             mainActivity.removeFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT)
                         }
                         setNegativeButton("장바구니로 이동") { dialogInterface: DialogInterface, i: Int ->
-
+                            mainActivity.replaceFragment(MainActivity.CART_FRAGMENT, true, true, null)
                         }
                         show()
                     }
