@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
                 title = "CampingUs"
                 setOnMenuItemClickListener {
                     //장바구니로 가기
-                    title = "장바구니로 가기"
+                    mainActivity.replaceFragment(MainActivity.CART_FRAGMENT, true, false, null)
                     true
                 }
             }

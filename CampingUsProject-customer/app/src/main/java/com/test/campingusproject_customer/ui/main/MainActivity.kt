@@ -19,6 +19,9 @@ import com.test.campingusproject_customer.ui.shopping.ShoppingPlusFragment
 import com.test.campingusproject_customer.ui.user.AuthFragment
 import com.test.campingusproject_customer.ui.user.JoinFragment
 import com.test.campingusproject_customer.ui.user.LoginFragment
+import com.test.campingusproject_customer.ui.payment.CartFragment
+import com.test.campingusproject_customer.ui.payment.OrderDetailFragment
+import com.test.campingusproject_customer.ui.payment.PaymentFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -37,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         val LOGIN_FRAGMENT = "LoginFragment"
         val JOIN_FRAGMENT = "JoinFragment"
         val AUTH_FRAGMENT = "AuthFragment"
+        val CART_FRAGMENT = "CartFragment"
+        val PAYMENT_FRAGMENT = "PaymentFragment"
+        val ORDER_DETAIL_FRAGMENT = "OrderDetailFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +119,10 @@ class MainActivity : AppCompatActivity() {
             LOGIN_FRAGMENT -> LoginFragment()
             JOIN_FRAGMENT -> JoinFragment()
             AUTH_FRAGMENT -> AuthFragment()
+            CART_FRAGMENT -> CartFragment()
+            PAYMENT_FRAGMENT -> PaymentFragment()
+            ORDER_DETAIL_FRAGMENT -> OrderDetailFragment()
+
             else -> Fragment()
         }
 
