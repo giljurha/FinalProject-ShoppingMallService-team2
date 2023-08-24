@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.search.SearchView
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingBinding
 import com.test.campingusproject_customer.databinding.HeaderShoppingBinding
@@ -40,6 +41,8 @@ class ShoppingFragment : Fragment() {
                     drawerLayoutShopping.open()
                 }
             }
+
+            // 드루어 레이아웃
             navigationViewShopping.run {
                 //헤더 설정
                 val headerShoppingBinding = HeaderShoppingBinding.inflate(inflater)
@@ -114,6 +117,14 @@ class ShoppingFragment : Fragment() {
                 }
             }
 
+            // 더보기 클릭시 이동
+            buttonShoppingToPlus.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
+                }
+            }
+
+            // 리사이클러뷰
             recyclerViewShoppingProduct.run {
                 adapter = ShoppingProductAdapter()
                 layoutManager = GridLayoutManager(context, 3)
@@ -145,6 +156,10 @@ class ShoppingFragment : Fragment() {
             val rowShoppingBinding = RowShoppingBinding.inflate(layoutInflater)
             val shoppingProductViewHolder = ShoppingProductViewHolder(rowShoppingBinding)
 
+            rowShoppingBinding.root.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT, true,true, null)
+            }
+
             rowShoppingBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -156,7 +171,7 @@ class ShoppingFragment : Fragment() {
             return 9
         }
 
-        override fun onBindViewHolder(holder: ShoppingProductViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: ShoppingProductAdapter.ShoppingProductViewHolder, position: Int) {
             holder.imageViewShoppingImage.setImageResource(R.drawable.ic_launcher_foreground)
             holder.textViewShoppingName.text = "운동화"
             holder.textViewShoppingSize.text = "250"

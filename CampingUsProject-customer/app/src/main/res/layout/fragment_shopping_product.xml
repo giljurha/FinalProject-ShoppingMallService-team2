@@ -8,7 +8,7 @@
     tools:context=".ui.shopping.ShoppingProductFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+        android:id="@+id/toolbarShoppingProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -115,11 +115,11 @@
                     android:text="구매"
                     android:textColor="#000000"
                     android:textSize="@dimen/text_size_2"
-                    app:layout_constraintRight_toLeftOf="@id/buttonShoppingToCart"
+                    app:layout_constraintRight_toLeftOf="@id/buttonShoppingProductToCart"
                     app:layout_constraintTop_toBottomOf="@id/lineShoppingProduct" />
 
                 <Button
-                    android:id="@+id/buttonShoppingToCart"
+                    android:id="@+id/buttonShoppingProductToCart"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                     app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductInfoTitle">
 
                     <TextView
-                        android:id="@+id/textViewSellerTitle"
+                        android:id="@+id/textViewShoppingProductSellerTitle"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="100dp"
@@ -189,7 +189,7 @@
                     app:layout_constraintTop_toBottomOf="@id/linearLayoutShoppingProductSeller">
 
                     <TextView
-                        android:id="@+id/textViewProductCategoryTitle"
+                        android:id="@+id/textViewShoppingProductCategoryTitle"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="100dp"
@@ -225,7 +225,7 @@
                         android:text="상품 설명" />
 
                     <Button
-                        android:id="@+id/buttonToggleShoppingReview"
+                        android:id="@+id/buttonToggleShoppingProductReview"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -285,9 +285,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="32dp"
                     android:gravity="center"
                     android:text="떼잉 쯔쯪 생각보다 텐트가 별루네요~"
                     android:textSize="@dimen/text_size_2"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewShoppingProductReviewTitle" />
