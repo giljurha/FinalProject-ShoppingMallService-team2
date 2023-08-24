@@ -67,8 +67,6 @@ class SellStateFragment : Fragment() {
                 // 안쪽 주문내역 리사이클러뷰 호출
                 rowSellStateOrderHistoryBinding.recyclerViewSellStateOrder.adapter = OrderHistoryAdapter()
                 rowSellStateOrderHistoryBinding.recyclerViewSellStateOrder.layoutManager = LinearLayoutManager(mainActivity)
-
-
             }
         }
 
