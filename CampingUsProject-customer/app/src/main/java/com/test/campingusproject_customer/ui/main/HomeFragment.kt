@@ -43,10 +43,10 @@ class HomeFragment : Fragment() {
             //인기특가 recyclreView
             recyclerViewPopularSale.run {
                 adapter = PopularSaleAdapter()
-                layoutManager = GridLayoutManager(mainActivity,3)
+                layoutManager = LinearLayoutManager(mainActivity,LinearLayoutManager.HORIZONTAL,false)
 
                 //구분선 추가
-                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.VERTICAL)
+                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.HORIZONTAL)
                 divider.run {
                     setDividerColorResource(mainActivity, R.color.subColor)
                     dividerInsetStart = 30
@@ -58,10 +58,10 @@ class HomeFragment : Fragment() {
             //실시간 랭킹 recyclreView
             recyclerViewRealTimeRank.run {
                 adapter = RealTimeRankAdapter()
-                layoutManager = GridLayoutManager(mainActivity,3)
+                layoutManager = LinearLayoutManager(mainActivity,LinearLayoutManager.HORIZONTAL,false)
 
                 //구분선 추가
-                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.VERTICAL)
+                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.HORIZONTAL)
                 divider.run {
                     setDividerColorResource(mainActivity, R.color.subColor)
                     dividerInsetStart = 30
@@ -125,7 +125,7 @@ class HomeFragment : Fragment() {
             val rowPopularsaleBinding = RowPopularsaleBinding.inflate(layoutInflater)
 
             rowPopularsaleBinding.root.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
@@ -170,7 +170,7 @@ class HomeFragment : Fragment() {
             val rowRealtimerankBinding = RowRealtimerankBinding.inflate(layoutInflater)
 
             rowRealtimerankBinding.root.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
