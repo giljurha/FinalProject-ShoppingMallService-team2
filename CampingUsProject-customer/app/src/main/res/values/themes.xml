@@ -30,7 +30,6 @@
         <item name="windowSplashScreenAnimationDuration">0</item>
     </style>
 
-
     <!-- 글꼴 크키별 스타일 -->
     <style name="Theme.App.Large" parent="Theme.CampingUsProjectcustomer">
         <item name="android:textSize">@dimen/text_size_1</item>
@@ -70,5 +69,15 @@
         <!-- Icon colors -->
         <item name="colorSurface">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!--다이얼로그 디자인-->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/highLightColor</item>
     </style>
 </resources>
