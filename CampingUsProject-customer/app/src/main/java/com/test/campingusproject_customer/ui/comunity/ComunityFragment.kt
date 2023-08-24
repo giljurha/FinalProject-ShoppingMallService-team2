@@ -69,7 +69,7 @@ class ComunityFragment : Fragment() {
             fab.setColorFilter(ContextCompat.getColor(mainActivity, R.color.highLightColor), PorterDuff.Mode.SRC_IN)
 
             setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.POST_WRITE_FRAGMENT,true,false,null)
+                mainActivity.replaceFragment(MainActivity.POST_WRITE_FRAGMENT,true,true,null)
             }
         }
 
@@ -156,7 +156,7 @@ class ComunityFragment : Fragment() {
                 textViewRowBoardComment = rowComunityBinding.textViewRowBoardComment
 
                 rowComunityBinding.root.setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,false,null)
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,null)
                 }
             }
         }

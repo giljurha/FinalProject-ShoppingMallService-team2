@@ -50,7 +50,7 @@ class MyprofileFragment : Fragment() {
             //수정
             textViewMyProfileEditMyInfo.run {
                 setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT,true,false,null)
+                    mainActivity.replaceFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT,true,true,null)
                 }
             }
 

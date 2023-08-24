@@ -13,6 +13,7 @@ import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
 import com.test.campingusproject_customer.ui.comunity.PostWriteFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.comunity.PostReadFragment
+import com.test.campingusproject_customer.ui.myprofile.ModifyMyPostFragment
 import com.test.campingusproject_customer.ui.myprofile.ModifyMyprofileFragment
 import com.test.campingusproject_customer.ui.myprofile.MyPostListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         val MODIFY_MYPROFILE_FRAGMENT = "ModifyMyprofileFragment"
         val CONTRACT_CAMPSITE_FRAGMENT = "ContractCampsiteFragment"
         val MY_POST_LIST_FRAGMENT = "MyPostListFragment"
+        val MODIFY_MY_POST_FRAGMENT = "ModifyMyPostFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         //시작하면 홈으로 가기
-        replaceFragment(HOME_FRAGMENT, false, false, null)
+        replaceFragment(HOME_FRAGMENT, false, true, null)
 
         activityMainBinding.run {
             bottomNavigationViewMain.run {
@@ -70,31 +72,31 @@ class MainActivity : AppCompatActivity() {
                         //홈 클릭
                         R.id.menuItemHome -> {
                             removeFragment(CAMPSITE_FRAGMENT)
-                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                            replaceFragment(HOME_FRAGMENT, false, true, null)
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
-                            replaceFragment(CAMPSITE_FRAGMENT,true,false,null)
+                            replaceFragment(CAMPSITE_FRAGMENT,true,true,null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
                             removeFragment(CAMPSITE_FRAGMENT)
-                            replaceFragment(SHOPPING_FRAGMENT, false, false, null)
+                            replaceFragment(SHOPPING_FRAGMENT, false, true, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
                             removeFragment(CAMPSITE_FRAGMENT)
-                            replaceFragment(COMUNITY_FRAGMENT, false, false, null)
+                            replaceFragment(COMUNITY_FRAGMENT, false, true, null)
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
                             removeFragment(CAMPSITE_FRAGMENT)
-                            replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
+                            replaceFragment(MYPROFILE_FRAGMENT, false, true, null)
                         }
 
                         else -> {
                             removeFragment(CAMPSITE_FRAGMENT)
-                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                            replaceFragment(HOME_FRAGMENT, false, true, null)
                         }
                     }
                     true
@@ -128,6 +130,7 @@ class MainActivity : AppCompatActivity() {
             ORDER_DETAIL_FRAGMENT -> OrderDetailFragment()
             MODIFY_MYPROFILE_FRAGMENT -> ModifyMyprofileFragment()
             MY_POST_LIST_FRAGMENT ->MyPostListFragment()
+            MODIFY_MY_POST_FRAGMENT ->ModifyMyPostFragment()
             else -> Fragment()
         }
 
