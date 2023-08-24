@@ -24,6 +24,8 @@ import com.test.campingusproject_customer.ui.user.LoginFragment
 import com.test.campingusproject_customer.ui.payment.CartFragment
 import com.test.campingusproject_customer.ui.payment.OrderDetailFragment
 import com.test.campingusproject_customer.ui.payment.PaymentFragment
+import com.test.campingusproject_customer.ui.review.ReviewDetailFragment
+import com.test.campingusproject_customer.ui.review.ReviewFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         val MODIFY_MYPROFILE_FRAGMENT = "ModifyMyprofileFragment"
         val CONTRACT_CAMPSITE_FRAGMENT = "ContractCampsiteFragment"
         val INQUIRY_FRAGMENT = "InquiryFragment"
+        val REVIEW_FRAGMENT = "ReviewFragment"
+        val REVIEW_DETAIL_FRAGMENT = "ReviewDetailFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,6 +132,8 @@ class MainActivity : AppCompatActivity() {
             ORDER_DETAIL_FRAGMENT -> OrderDetailFragment()
             INQUIRY_FRAGMENT -> InquiryFragment()
             MODIFY_MYPROFILE_FRAGMENT -> ModifyMyprofileFragment()
+            REVIEW_FRAGMENT -> ReviewFragment()
+            REVIEW_DETAIL_FRAGMENT -> ReviewDetailFragment()
             
             else -> Fragment()
         }
