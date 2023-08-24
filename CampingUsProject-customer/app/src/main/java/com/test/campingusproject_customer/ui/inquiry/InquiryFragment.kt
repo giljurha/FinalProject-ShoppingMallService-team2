@@ -18,9 +18,18 @@ class InquiryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         fragmentInquiryBinding = FragmentInquiryBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
 
         fragmentInquiryBinding.run {
+            toolbarInquiry.run {
+                title = "상품 문의 등록"
 
+                // 백버튼
+                setNavigationIcon(R.drawable.arrow_back_24px)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.INQUIRY_FRAGMENT)
+                }
+            }
         }
 
         return fragmentInquiryBinding.root
