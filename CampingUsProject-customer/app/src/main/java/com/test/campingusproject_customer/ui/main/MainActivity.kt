@@ -46,29 +46,38 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationViewMain.run {
                 this.selectedItemId = R.id.menuItemHome
                 setOnItemSelectedListener {
+                    //선택된 메뉴를 다시 클릭할 때 선택을 넘기는 조건문
+                    if (it.itemId == selectedItemId){
+                        return@setOnItemSelectedListener false
+                    }
                     when (it.itemId) {
                         //홈 클릭
                         R.id.menuItemHome -> {
+                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(HOME_FRAGMENT, false, false, null)
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
-                            replaceFragment(CAMPSITE_FRAGMENT,false,false,null)
+                            replaceFragment(CAMPSITE_FRAGMENT,true,false,null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
+                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(SHOPPING_FRAGMENT, false, false, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
+                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(COMUNITY_FRAGMENT, false, false, null)
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
+                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
                         }
 
                         else -> {
+                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(HOME_FRAGMENT, false, false, null)
                         }
                     }
