@@ -96,4 +96,14 @@
         <item name="colorOnSurface">@color/highLightColor</item>
         <item name="colorPrimary">@color/subColor</item>
     </style>
+
+    <!--다이얼로그 디자인-->
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/highLightColor</item>
+    </style>
 </resources>

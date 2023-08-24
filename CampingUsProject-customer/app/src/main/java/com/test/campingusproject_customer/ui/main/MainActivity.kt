@@ -13,6 +13,7 @@ import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
 import com.test.campingusproject_customer.ui.comunity.PostWriteFragment
 import com.test.campingusproject_customer.ui.comunity.ComunityFragment
 import com.test.campingusproject_customer.ui.comunity.PostReadFragment
+import com.test.campingusproject_customer.ui.myprofile.ModifyMyprofileFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingPlusFragment
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val COMUNITY_FRAGMENT = "ComunityFragment"
         val MYPROFILE_FRAGMENT = "MyProfileFragment"
         val CAMPSITE_FRAGMENT = "CampsiteFragment"
-        val CONTRACT_CAMPSITE_FRAGMENT="ContractCampsiteFragment"
         val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
         val POST_WRITE_FRAGMENT = "PostWriteFragment"
         val SHOPPING_PLUS_FRAGMENT = "ShoppingPlusFragment"
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         val CART_FRAGMENT = "CartFragment"
         val PAYMENT_FRAGMENT = "PaymentFragment"
         val ORDER_DETAIL_FRAGMENT = "OrderDetailFragment"
+        val MODIFY_MYPROFILE_FRAGMENT = "ModifyMyprofileFragment"
+        val CONTRACT_CAMPSITE_FRAGMENT = "ContractCampsiteFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,8 +113,8 @@ class MainActivity : AppCompatActivity() {
             SHOPPING_PRODUCT_FRAGMENT -> ShoppingProductFragment()
             COMUNITY_FRAGMENT -> ComunityFragment()
             MYPROFILE_FRAGMENT -> MyprofileFragment()
-            CAMPSITE_FRAGMENT->CampsiteFragment()
-            CONTRACT_CAMPSITE_FRAGMENT->ContractCampsiteFragment()
+            CAMPSITE_FRAGMENT-> CampsiteFragment()
+            CONTRACT_CAMPSITE_FRAGMENT-> ContractCampsiteFragment()
             POST_WRITE_FRAGMENT -> PostWriteFragment()
             POST_READ_FRAGMENT -> PostReadFragment()
             SHOPPING_PLUS_FRAGMENT -> ShoppingPlusFragment()
@@ -123,6 +125,7 @@ class MainActivity : AppCompatActivity() {
             PAYMENT_FRAGMENT -> PaymentFragment()
             ORDER_DETAIL_FRAGMENT -> OrderDetailFragment()
 
+            MODIFY_MYPROFILE_FRAGMENT -> ModifyMyprofileFragment()
             else -> Fragment()
         }
 
