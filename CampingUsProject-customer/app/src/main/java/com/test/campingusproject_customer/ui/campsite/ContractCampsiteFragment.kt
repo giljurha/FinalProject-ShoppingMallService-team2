@@ -18,6 +18,7 @@ import com.test.campingusproject_customer.ui.main.MainActivity
 class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
     lateinit var fragmentContractCampsiteBinding: FragmentContractCampsiteBinding
     lateinit var mainActivity: MainActivity
+    lateinit var callback: OnBackPressedCallback
     lateinit var contractNaverMap: NaverMap
 
     override fun onCreateView(
@@ -26,14 +27,6 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         fragmentContractCampsiteBinding = FragmentContractCampsiteBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
-
-        //툴바 설정
-        fragmentContractCampsiteBinding.toolbarContractCampsite.run {
-            setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
-            setNavigationOnClickListener {
-                mainActivity.removeFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT)
-            }
-        }
 
 
         //비동기로 네이버 객체를 얻어온다
@@ -53,17 +46,22 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
         Log.d("testt", "제휴캠핑장")
     }
 
+    //뒤로가기 버튼 눌렀을 때 동작할 코드 onDetech까지
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        //해당 프래그먼트가 액티비티에 붙을때 바텀네비게이션 삭제
-        val main=activity as MainActivity
-        main.activityMainBinding.bottomNavigationViewMain.visibility=View.GONE
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.removeFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT)
+                mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId =
+                    R.id.menuItemHome
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onDetach() {
         super.onDetach()
-        //해당 프래그먼트가 액티비티에서 떨어질 때 바텀네비게이션 생성
-        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility=View.VISIBLE
+        callback.remove()
         //프래그먼트 종료시 내부 맵 프래그먼트의 getMapAsync도 종료시키기 위해 제휴 맵 프래그먼트 수동 종료
         val mapFragment =
             mainActivity.supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
