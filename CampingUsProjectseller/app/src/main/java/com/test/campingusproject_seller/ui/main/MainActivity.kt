@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
             "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
             "55", "60", "65", "70", "75", "80", "85", "90", "95", "100"
         )
+
+        val productCategoryList = arrayOf(
+            "텐트 / 타프", "침낭 / 매트", "테이블 / 의자", "랜턴 / 조명" , "화로 / 그릴" , "계절용품", "수납" , "키친"
+        )
     }
 
     val permissionList = arrayOf(

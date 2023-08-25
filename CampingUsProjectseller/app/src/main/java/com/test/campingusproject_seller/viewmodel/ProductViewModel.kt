@@ -18,6 +18,7 @@ class ProductViewModel() : ViewModel() {
     val productCount = MutableLiveData<Long>()
     val productDiscountRate = MutableLiveData<Long>()
     val productBrand = MutableLiveData<String>()
+    val productCategory = MutableLiveData<String>()
 
     val productKeywordList = MutableLiveData<HashMap<String, Boolean>>()
 
@@ -42,10 +43,11 @@ class ProductViewModel() : ViewModel() {
                 val productRecommendationCount = c1.child("productRecommendationCount").value as Long
                 val productBrand = c1.child("productBrand").value as String
                 val productKeyword = c1.child("productKeywordList").value as HashMap<String, Boolean>
+                val productCategory = c1.child("productCategory").value as String
 
                 val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
                     productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount,
-                    productBrand, productKeyword)
+                    productBrand, productKeyword, productCategory)
 
                 tempList.add(product)
             }
@@ -65,6 +67,7 @@ class ProductViewModel() : ViewModel() {
                 productDiscountRate.value = c1.child("productDiscountRate").value as Long
                 productBrand.value = c1.child("productBrand").value as String
                 productKeywordList.value = c1.child("productKeywordList").value as HashMap<String, Boolean>
+                productCategory.value = c1.child("productCategory").value as String
 
                 productImageList.value?.clear()
                 ProductRepository.getProductImages(productImage.value.toString()){storageRef->
