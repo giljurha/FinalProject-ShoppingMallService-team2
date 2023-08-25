@@ -2,9 +2,14 @@ package com.test.campingusproject_customer.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
 import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
@@ -30,6 +35,7 @@ import com.test.campingusproject_customer.ui.payment.OrderDetailFragment
 import com.test.campingusproject_customer.ui.payment.PaymentFragment
 import com.test.campingusproject_customer.ui.review.ReviewDetailFragment
 import com.test.campingusproject_customer.ui.review.ReviewFragment
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
@@ -174,5 +180,15 @@ class MainActivity : AppCompatActivity() {
     // Fragment를 BackStack에서 제거한다.
     fun removeFragment(name: String) {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    //editText뷰에 포커스주고 키보드 생성
+    fun focusOnView(textInputEditText: TextInputEditText){
+        textInputEditText.requestFocus()
+        thread {
+            SystemClock.sleep(500)
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(textInputEditText, 0)
+        }
     }
 }
