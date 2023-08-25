@@ -15,102 +15,204 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Theme.CampingUs.Toolbar" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutJoinName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="30dp"
-        app:boxStrokeColor="@color/highLightColor"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/highLightColor">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextJoinName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textAppearance="@style/Theme.App.Large"
-            android:textColor="@color/highLightColor" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutJoinId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:boxStrokeColor="@color/highLightColor"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/highLightColor">
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:text="회원 정보 입력"
+                android:textSize="@dimen/text_size_1" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextJoinId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="아이디"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textAppearance="@style/Theme.App.Large"
-            android:textColor="@color/highLightColor" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutJoinPw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:boxStrokeColor="@color/highLightColor"
-        app:endIconMode="password_toggle"
-        app:hintTextColor="@color/highLightColor">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="이름"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColor="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextJoinPw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호"
-            android:inputType="text|textPassword"
-            android:singleLine="true"
-            android:textAppearance="@style/Theme.App.Large"
-            android:textColorHint="@color/highLightColor" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutJoinPwCheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:boxStrokeColor="@color/highLightColor"
-        app:endIconMode="password_toggle"
-        app:hintTextColor="@color/highLightColor">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="아이디"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColor="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditTextJoinPwCheck"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호 확인"
-            android:inputType="text|textPassword"
-            android:singleLine="true"
-            android:textAppearance="@style/Theme.App.Large"
-            android:textColorHint="@color/highLightColor" />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinPw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/highLightColor">
 
-    <Button
-        android:id="@+id/buttonJoinSubmit"
-        style="@style/Widget.Material3.Button.TonalButton.Icon"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/subColor"
-        android:text="회원가입"
-        app:icon="@drawable/add_24px" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinPw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호"
+                    android:inputType="text|textPassword"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColorHint="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinPwCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="password_toggle"
+                app:hintTextColor="@color/highLightColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinPwCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호 확인"
+                    android:inputType="text|textPassword"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColorHint="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:text="기본 배송지 입력"
+                android:textSize="@dimen/text_size_1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinShipRecipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinShipRecipient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="받는사람"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColor="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinShipContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinShipContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="연락처"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColorHint="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutJoinShipAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                app:boxStrokeColor="@color/highLightColor"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/highLightColor">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInputEditTextJoinShipAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="주소"
+                    android:inputType="text"
+                    android:singleLine="false"
+                    android:textAppearance="@style/Theme.App.Large"
+                    android:textColorHint="@color/highLightColor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/buttonJoinSubmit"
+                style="@style/Widget.Material3.Button.TonalButton.Icon"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/subColor"
+                android:text="회원가입"
+                android:textSize="@dimen/text_size_2"
+                app:icon="@drawable/add_24px" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </LinearLayout>
