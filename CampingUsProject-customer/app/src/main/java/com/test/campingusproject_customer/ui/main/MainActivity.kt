@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
+
                             replaceFragment(SHOPPING_FRAGMENT, false, false, null)
                         }
                         //커뮤니티 클릭
