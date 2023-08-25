@@ -21,6 +21,7 @@ import com.test.campingusproject_seller.ui.product.ModifyProductFragment
 import com.test.campingusproject_seller.ui.product.RegisterProductFragment
 import com.test.campingusproject_seller.ui.sellstate.SellStateFragment
 import com.test.campingusproject_seller.ui.sellstatedetail.SellStateDetailFragment
+import com.test.campingusproject_seller.ui.updatemyinfo.UpdateMyInfoFragment
 import com.test.campingusproject_seller.ui.user.AuthFragment
 import com.test.campingusproject_seller.ui.user.JoinFragment
 import com.test.campingusproject_seller.ui.user.LoginFragment
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         val MY_INFO_FRAGMENT="MyInfoFragment"
         val INQUIRY_FRAGMENT = "InquiryFragment"
         val INQUIRY_DETAIL_FRAGMENT = "InquiryDetailFragment"
+        val UPDATE_MY_INFO_FRAGMENT = "UpdateMyInfoFragment"
 
         val productCountList = arrayOf(
             "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50",
@@ -122,6 +124,7 @@ class MainActivity : AppCompatActivity() {
             INQUIRY_FRAGMENT -> InquiryFragment()
             INQUIRY_DETAIL_FRAGMENT -> InquiryDetailFragment()
             MY_INFO_FRAGMENT->MyInfoFragment()
+            UPDATE_MY_INFO_FRAGMENT -> UpdateMyInfoFragment()
             else -> Fragment()
         }
 
