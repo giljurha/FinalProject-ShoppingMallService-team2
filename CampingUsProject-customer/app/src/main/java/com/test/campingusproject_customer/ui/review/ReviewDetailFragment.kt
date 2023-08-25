@@ -22,7 +22,15 @@ class ReviewDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         fragmentReviewDetailBinding.run {
+            materialToolbarReviewDetail.run {
+                title = "상품 리뷰"
 
+                // 백버튼
+                setNavigationIcon(R.drawable.arrow_back_24px)
+                setNavigationOnClickListener {
+                    mainActivity.removeFragment(MainActivity.REVIEW_FRAGMENT)
+                }
+            }
         }
 
         return fragmentReviewDetailBinding.root
