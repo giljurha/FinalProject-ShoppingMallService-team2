@@ -73,7 +73,7 @@ class LoginFragment : Fragment() {
                         return@getUserInfoByUserId
                     } else {
                         for (c1 in it.result.children) {
-                            val databaseUserPw = c1.child("userPassword").value as String
+                            val databaseUserPw = c1.child("sellerUserPassword").value as String
 
                             //입력한 비번과 현재 계정의 비번이 다르다면
                             if (userPw != databaseUserPw) {
@@ -88,10 +88,10 @@ class LoginFragment : Fragment() {
                                 }
                             } //입력한 비번과 현재 계정의 비번이 같다면
                             else {
-                                val userName = c1.child("userName").value as String
-                                val userId = c1.child("userId").value as String
-                                val userPassword = c1.child("userPassword").value as String
-                                val userPhoneNumber = c1.child("userPhoneNumber").value as String
+                                val userName = c1.child("sellerUserName").value as String
+                                val userId = c1.child("sellerUserId").value as String
+                                val userPassword = c1.child("sellerUserPassword").value as String
+                                val userPhoneNumber = c1.child("sellerUserPhoneNumber").value as String
 
                                 UserInfoRepository.savePre(mainActivity, UserModel(userName,userId,userPassword,userPhoneNumber))
                                 Snackbar.make(fragmentJoinBinding.root, "로그인 되었습니다", Snackbar.LENGTH_SHORT).show()

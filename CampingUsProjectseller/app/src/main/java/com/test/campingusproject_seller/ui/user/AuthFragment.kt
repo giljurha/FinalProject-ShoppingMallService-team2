@@ -157,7 +157,7 @@ class AuthFragment : Fragment() {
 
                 val userClass = UserModel(joinName, joinId, joinPw, joinPhoneNum)
 
-                UserInfoRepository.checkDuplicationUser(userClass.userPhoneNumber,
+                UserInfoRepository.checkDuplicationUser(userClass.sellerUserPhoneNumber,
                     object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {

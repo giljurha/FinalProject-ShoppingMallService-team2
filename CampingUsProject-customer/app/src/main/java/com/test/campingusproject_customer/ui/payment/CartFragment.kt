@@ -1,6 +1,5 @@
 package com.test.campingusproject_customer.ui.payment
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,12 +9,10 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentCartBinding
 import com.test.campingusproject_customer.databinding.RowCartBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
