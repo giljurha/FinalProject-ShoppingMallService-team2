@@ -2,10 +2,11 @@ package com.test.campingusproject_customer.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.test.campingusproject_customer.dataclassmodel.ProductModel
 import com.test.campingusproject_customer.repository.ProductRepository
 
-class ProductViewModel {
+class ProductViewModel : ViewModel() {
     val productList = MutableLiveData<MutableList<ProductModel>>()
     val productImageList = MutableLiveData<MutableList<Uri>>()
 
@@ -16,6 +17,7 @@ class ProductViewModel {
     val productCount = MutableLiveData<Long>()
     val productDiscountRate = MutableLiveData<Long>()
     val productBrand = MutableLiveData<String>()
+    val productCategory = MutableLiveData<String>()
 
     val productKeywordList = MutableLiveData<HashMap<String, Boolean>>()
 
@@ -23,7 +25,8 @@ class ProductViewModel {
         productList.value = mutableListOf<ProductModel>()
     }
 
-    fun getAllProductData(sellerId : String){
+    // 전체 상품 가져오기
+    fun getAllProductData(){
         val tempList = mutableListOf<ProductModel>()
 
         ProductRepository.getAllProductData {
@@ -40,10 +43,11 @@ class ProductViewModel {
                 val productRecommendationCount = c1.child("productRecommendationCount").value as Long
                 val productBrand = c1.child("productBrand").value as String
                 val productKeyword = c1.child("productKeywordList").value as HashMap<String, Boolean>
+                val productCategory = c1.child("productCategory").value as String
 
                 val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
                     productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount,
-                    productBrand, productKeyword)
+                    productBrand, productKeyword, productCategory)
 
                 tempList.add(product)
             }
@@ -52,6 +56,7 @@ class ProductViewModel {
         }
     }
 
+    // 상품 하나 가져오기
     fun getOneProductData(productId:Long){
         ProductRepository.getOneProductData(productId){
             for(c1 in it.result.children){
@@ -63,6 +68,7 @@ class ProductViewModel {
                 productDiscountRate.value = c1.child("productDiscountRate").value as Long
                 productBrand.value = c1.child("productBrand").value as String
                 productKeywordList.value = c1.child("productKeywordList").value as HashMap<String, Boolean>
+                productCategory.value = c1.child("productCategory").value as String
 
                 productImageList.value?.clear()
                 ProductRepository.getProductImages(productImage.value.toString()){storageRef->

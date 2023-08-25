@@ -1,27 +1,40 @@
 package com.test.campingusproject_customer.ui.shopping
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.search.SearchView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingBinding
 import com.test.campingusproject_customer.databinding.HeaderShoppingBinding
 import com.test.campingusproject_customer.databinding.RowShoppingBinding
+import com.test.campingusproject_customer.repository.ProductRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.ProductViewModel
+import javax.sql.DataSource
 
 class ShoppingFragment : Fragment() {
     lateinit var fragmentShoppingBinding: FragmentShoppingBinding
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
+
+    lateinit var productViewModel: ProductViewModel
+
+    var productCheckedList = mutableListOf<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +42,20 @@ class ShoppingFragment : Fragment() {
     ): View? {
         mainActivity = activity as MainActivity
         fragmentShoppingBinding = FragmentShoppingBinding.inflate(layoutInflater)
+
+        // 상품 뷰모델 객체 생성
+        productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
+
+        productViewModel.run {
+            productList.observe(mainActivity) {
+                fragmentShoppingBinding.recyclerViewShoppingProduct.adapter?.notifyDataSetChanged()
+
+                productCheckedList.clear()
+                for(i in 0 until productList.value?.size!!){
+                    productCheckedList.add(false)
+                }
+            }
+        }
 
         fragmentShoppingBinding.run {
             // 툴바
@@ -133,6 +160,8 @@ class ShoppingFragment : Fragment() {
             }
             // 리사이클러뷰
             recyclerViewShoppingProduct.run {
+                productViewModel.getAllProductData()
+
                 adapter = ShoppingProductAdapter()
                 layoutManager = GridLayoutManager(context, 3)
             }
@@ -144,16 +173,16 @@ class ShoppingFragment : Fragment() {
     // 상품을 보여주는 리사이클러뷰
     inner class ShoppingProductAdapter : RecyclerView.Adapter<ShoppingProductAdapter.ShoppingProductViewHolder>(){
         inner class ShoppingProductViewHolder(rowShoppingBinding: RowShoppingBinding) : RecyclerView.ViewHolder(rowShoppingBinding.root){
+            val progressBarRowShopping: ProgressBar
             val imageViewShoppingImage: ImageView
             val textViewShoppingName: TextView
-            val textViewShoppingSize: TextView
             val textViewShoppingPrice: TextView
             val imageButtonLiked: ImageView
 
             init{
+                progressBarRowShopping = rowShoppingBinding.progressBarRowShopping
                 imageViewShoppingImage = rowShoppingBinding.imageViewShoppingImage
                 textViewShoppingName = rowShoppingBinding.textViewShoppingName
-                textViewShoppingSize = rowShoppingBinding.textViewShoppingSize
                 textViewShoppingPrice = rowShoppingBinding.textViewShoppingPrice
                 imageButtonLiked = rowShoppingBinding.imageButtonLiked
             }
@@ -175,14 +204,45 @@ class ShoppingFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 9
+            return productViewModel.productList.value?.size!!
         }
 
         override fun onBindViewHolder(holder: ShoppingProductAdapter.ShoppingProductViewHolder, position: Int) {
-            holder.imageViewShoppingImage.setImageResource(R.drawable.ic_launcher_foreground)
-            holder.textViewShoppingName.text = "운동화"
-            holder.textViewShoppingSize.text = "250"
-            holder.textViewShoppingPrice.text = "30000원"
+            //상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
+            ProductRepository.getProductFirstImage(productViewModel.productList.value?.get(position)?.productImage!!){ uri->
+                //글라이드 라이브러리로 이미지 표시
+                //이미지 로딩 완료되거나 실패하기 전까지 프로그래스바 활성화
+                Glide.with(mainActivity).load(uri.result)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            holder.progressBarRowShopping.visibility = View.GONE
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: com.bumptech.glide.load.DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            holder.progressBarRowShopping.visibility = View.GONE
+                            return false
+                        }
+                    })
+                        // 이미지 크기
+                    .override(200, 200)
+                        // 사용할 뷰
+                    .into(holder.imageViewShoppingImage)
+            }
+            holder.textViewShoppingName.text = productViewModel.productList.value?.get(position)?.productName
+            holder.textViewShoppingPrice.text =
+                " ${ productViewModel.productList.value?.get(position)?.productPrice.toString() } 원"
         }
     }
 

@@ -12,4 +12,6 @@ class ProductModel (
     var productDiscountRate : Long,                     //상품 할인율
     var productRecommendationCount : Long,              //상품 추천 수
     var productBrand : String,                          //상품 브랜드 명
-    var productKeywordList : HashMap<String, Boolean>)  //상품 키워드 목록
+    var productKeywordList : HashMap<String, Boolean>,  //상품 키워드 목록
+    var productCategory : String                        //상품 카테고리
+)
