@@ -49,81 +49,66 @@ class ShoppingFragment : Fragment() {
                 headerShoppingBinding.textViewShoppingHeaderUserName.text = "김민우 님"
                 addHeaderView(headerShoppingBinding.root)
 
+                // 쇼핑 화면에 들어왔을 시 전체 상품을 보여줌
+                menu.findItem(R.id.itemShoppingTotalProduct).setIcon(R.drawable.circle_black_20px)
+
                 // 항목 선택 시 동작 리스너
                 setNavigationItemSelectedListener {
                     when(it.itemId) {
                         // 특별
                         R.id.itemShoppingRealTimeRanking -> { // 실시간 랭킹
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "실시간 랭킹"
+                            menu.findItem(R.id.itemShoppingRealTimeRanking).setIcon(R.drawable.circle_black_20px)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingPopularitySale -> { // 인기특가
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "인기특가"
                             drawerLayoutShopping.close()
                         }
 
                         // 상품
                         R.id.itemShoppingTotalProduct -> { // 전체 상품
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "전체 상품"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingCap -> { // 모자
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "모자"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingTop -> { // 상의
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "상의"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingBottoms -> { // 하의
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "하의"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingShoes -> { // 신발
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "신발"
                             drawerLayoutShopping.close()
                         }
 
                         // 캠핑용품
                         R.id.itemShoppingTent -> { // 텐트
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "텐트"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingStove -> { // 난로
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "난로"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingFireWood -> { // 장작
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "장작"
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingContainer -> { // 용기
-                            mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
                             toolbarShopping.title = "용기"
                             drawerLayoutShopping.close()
                         }
                     }
-                    false
+                    true
                 }
             }
-
-            // 더보기 클릭시 이동
-            buttonShoppingToPlus.run {
-                setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.SHOPPING_PLUS_FRAGMENT, false, true, null)
-                }
-            }
-
             // 리사이클러뷰
             recyclerViewShoppingProduct.run {
                 adapter = ShoppingProductAdapter()
