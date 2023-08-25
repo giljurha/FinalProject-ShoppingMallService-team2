@@ -90,6 +90,13 @@ class ModifyProductFragment : Fragment() {
                     }
                 }
             }
+            productCategory.observe(mainActivity){
+                for(idx in 0 until MainActivity.productCategoryList.size){
+                    if(MainActivity.productCategoryList[idx] == it){
+                        fragmentModifyProductBinding.spinnerModifyProductCategory.setSelection(idx)
+                    }
+                }
+            }
         }
 
         //bundle로 받은 상품 리스트 순서값
@@ -118,6 +125,7 @@ class ModifyProductFragment : Fragment() {
                     if(it.itemId == R.id.menuItemSubmit){
 
                         val productCount = spinnerModifyProductCount.selectedItem.toString().toLong()
+                        val productCategory = spinnerModifyProductCategory.selectedItem.toString()
 
                         //제품 이름 입력 검사
                         val productName = textInputEditTextModifyProductName.text.toString()
@@ -180,7 +188,7 @@ class ModifyProductFragment : Fragment() {
 
                         val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
                             productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount,
-                            productBrand, productViewModel.productKeywordList.value!!)
+                            productBrand, productViewModel.productKeywordList.value!!, productCategory)
 
                         ProductRepository.modifyProduct(product){
                             //저장 메시지 스낵바
@@ -198,6 +206,14 @@ class ModifyProductFragment : Fragment() {
 
                 adapter = a1
                 //기본값 0으로 설정
+                setSelection(0)
+            }
+
+            spinnerModifyProductCategory.run {
+                val a1 = ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, MainActivity.productCategoryList)
+                a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+                adapter = a1
                 setSelection(0)
             }
 
