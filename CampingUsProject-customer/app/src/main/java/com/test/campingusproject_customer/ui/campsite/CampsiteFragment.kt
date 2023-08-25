@@ -2,7 +2,7 @@ package com.test.campingusproject_customer.ui.campsite
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
@@ -28,16 +29,13 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.test.campingusproject_customer.R
+import com.test.campingusproject_customer.databinding.DialogMarkerBinding
 import com.test.campingusproject_customer.databinding.FragmentCampsiteBinding
-import com.test.campingusproject_customer.databinding.RowPostReadBinding
 import com.test.campingusproject_customer.databinding.RowSearchedCampsiteBinding
 import com.test.campingusproject_customer.dataclassmodel.CampsiteInfo
 import com.test.campingusproject_customer.dataclassmodel.Response
-import com.test.campingusproject_customer.ui.comunity.PostReadFragment
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.CampsiteViewModel
-import org.w3c.dom.Text
-import java.io.Closeable
 
 class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener {
     lateinit var fragmentCampsiteBinding: FragmentCampsiteBinding
@@ -219,6 +217,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
             marker.position= LatLng(info.위도.toDouble(),info.경도.toDouble())
             marker.tag=info
             marker.map=naverMap
+            marker.setOnClickListener(this)
             Log.d("testt","마커 추가 중")
         }
     }
@@ -294,6 +293,27 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
     }
 
     override fun onClick(p0: Overlay): Boolean {
-        TODO("Not yet implemented")
+        val dialogBinding=DialogMarkerBinding.inflate(layoutInflater)
+        if (p0 is Marker){
+            val marker=p0.tag as CampsiteInfo
+            val builder = MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog).apply{
+                setView(dialogBinding.root)
+                setTitle("캠핑장 정보")
+                dialogBinding.textViewCampsiteName.text=marker.캠핑장이름
+                dialogBinding.textViewCampsiteAddress.text=marker.주소
+                dialogBinding.textViewCampsiteNumber.text=marker.전화번호
+                dialogBinding.textViewCampsiteDetail.text=marker.시설소개
+                dialogBinding.textViewCampsiteEnv.text=marker.주변환경
+                dialogBinding.textViewCampsiteForm.text=marker.형태
+                dialogBinding.textViewCampsiteFacilities.text=marker.편의시설
+                dialogBinding.textViewCampsiteFun.text=marker.놀거리
+                dialogBinding.textViewCampsiteAnimal.text=marker.애완동물여부
+                dialogBinding.textViewCampsiteUrl.text=marker.홈페이지
+                dialogBinding.textViewCampsiteUrl.setTextColor(Color.BLUE)
+                setPositiveButton("닫기", null)
+            }
+            builder.show()
+        }
+        return false
     }
 }
