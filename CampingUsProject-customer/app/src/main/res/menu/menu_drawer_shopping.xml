@@ -4,56 +4,43 @@
 
     <item
         android:id="@+id/itemShoppingRealTimeRanking"
-        android:icon="@drawable/circle_20px"
-        android:title="실시간 랭킹"
-        app:showAsAction="ifRoom" />
+        android:enabled="true"
+        android:title="실시간 랭킹" />
     <item
         android:id="@+id/itemShoppingPopularitySale"
-        android:icon="@drawable/circle_20px"
-        android:title="인기 특가"
-        app:showAsAction="ifRoom" />
+        android:enabled="true"
+        android:title="인기 특가" />
 
-    <item android:title="캠핑 용품" >
-        <menu>
-            <item
-                android:id="@+id/itemShoppingTentAndTarp"
-                android:icon="@drawable/circle_20px"
-                android:title="텐트 / 타프" />
-            <item
-                android:id="@+id/itemShoppingSleepingBagAndMat"
-                android:icon="@drawable/circle_20px"
-                android:title="침낭 / 매트"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingTableAndChair"
-                android:icon="@drawable/circle_20px"
-                android:title="테이블 / 의자"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingLanternAndLight"
-                android:icon="@drawable/circle_20px"
-                android:title="랜턴 / 조명"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingKitchen"
-                android:icon="@drawable/circle_20px"
-                android:title="키친"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingBrazierAndGrill"
-                android:icon="@drawable/circle_20px"
-                android:title="화로 / 그릴"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingSeasonalItems"
-                android:icon="@drawable/circle_20px"
-                android:title="계절용품"
-                app:showAsAction="ifRoom" />
-            <item
-                android:id="@+id/itemShoppingContainer"
-                android:icon="@drawable/circle_20px"
-                android:title="용기"
-                app:showAsAction="ifRoom" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/itemShoppingTentAndTarp"
+        android:enabled="true"
+        android:title="텐트 / 타프" />
+    <item
+        android:id="@+id/itemShoppingSleepingBagAndMat"
+        android:enabled="true"
+        android:title="침낭 / 매트" />
+    <item
+        android:id="@+id/itemShoppingTableAndChair"
+        android:enabled="true"
+        android:title="테이블 / 의자" />
+    <item
+        android:id="@+id/itemShoppingLanternAndLight"
+        android:enabled="true"
+        android:title="랜턴 / 조명" />
+    <item
+        android:id="@+id/itemShoppingKitchen"
+        android:enabled="true"
+        android:title="키친" />
+    <item
+        android:id="@+id/itemShoppingBrazierAndGrill"
+        android:enabled="true"
+        android:title="화로 / 그릴" />
+    <item
+        android:id="@+id/itemShoppingSeasonalItems"
+        android:enabled="true"
+        android:title="계절용품" />
+    <item
+        android:id="@+id/itemShoppingContainer"
+        android:enabled="true"
+        android:title="용기" />
 </menu>
