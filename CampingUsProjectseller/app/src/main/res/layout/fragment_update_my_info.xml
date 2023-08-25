@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.updatemyinfo.UpdateMyInfoFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbarMyInfoUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+
+        <TextView
+            android:id="@+id/textViewMyInfoUpdateToolbarName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="내 정보 수정"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutMyInfoUpdateUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/highLightColor"
+        app:hintTextColor="@color/highLightColor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextMyInfoUpdateUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="이름"
+            android:textColor="@color/highLightColor"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutMyInfoUpdatePw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/highLightColor"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/highLightColor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextMyInfoUpdatePw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
+            android:textColor="@color/highLightColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutMyInfoUpdatePwCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/highLightColor"
+        app:endIconMode="password_toggle"
+        app:hintTextColor="@color/highLightColor">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditTextMyInfoUpdatePwCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호 확인"
+            android:inputType="textPassword"
+            android:textColor="@color/highLightColor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonMyInfoUpdateFix"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="수정하기" />
+
+</LinearLayout>
