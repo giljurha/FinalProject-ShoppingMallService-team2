@@ -56,6 +56,14 @@ class ShoppingProductFragment : Fragment() {
                 }
             }
 
+            // 리뷰버튼 클릭시 화면 이동
+            buttonToggleShoppingProductReview.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.REVIEW_FRAGMENT, true, true, null)
+                }
+            }
+
+
             // 플로팅 버튼 클릭시 문의등록 화면 이동
             floatingActionButtonShoppingProductInquriry.run {
                 setOnClickListener {
