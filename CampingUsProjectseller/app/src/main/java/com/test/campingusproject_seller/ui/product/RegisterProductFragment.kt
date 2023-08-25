@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_seller.R
@@ -47,6 +48,9 @@ class RegisterProductFragment : Fragment() {
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
 
     var productImageList = mutableListOf<Uri>()
+
+    var keywordList : HashMap<String, Boolean> = hashMapOf("해변" to false, "계곡" to false, "호수" to false,
+        "산" to false, "강" to false, "숲" to false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -129,6 +133,15 @@ class RegisterProductFragment : Fragment() {
                             // userId 값 임시 지정
                             val productSellerId = "jieun"
 
+                            //브랜드명 입력 검사
+                            val productBrand = textInputEditTextRegisterProductBrand.text.toString()
+                            if(productBrand.isEmpty()){
+                                textInputLayoutEmptyError(textInputLayoutRegisterProductBrand, "브랜드를 입력해주세요")
+                                return@getProductId
+                            }else{
+                                textInputLayoutRegisterProductBrand.error = null
+                            }
+
                             //할인율 입력 검사
                             //특가 등록 상태이면 값 받아오고 아니면 0 반환
                             //값 받아올때 입력 안된 상태면 toLong()에서 NumberFormatException 발생하는 것 이용해 입력 오류 출력
@@ -159,7 +172,7 @@ class RegisterProductFragment : Fragment() {
                             //상품 객체 생성
                             val product = ProductModel(productId, productSellerId, productName,
                                 productPrice, fileDir, productInfo, productCount, productSellingStatus,
-                                productDiscountRate, 0L)
+                                productDiscountRate, 0L, productBrand, keywordList)
 
                             //제품 등록
                             ProductRepository.addProductInfo(product){
@@ -208,6 +221,15 @@ class RegisterProductFragment : Fragment() {
                 //recycler view 가로로 확장되게 함
                 layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
             }
+
+            //키워드 칩 체크 상태 변경 설정
+            chipCheckStatusChanged(chipRegisterProductForest)
+            chipCheckStatusChanged(chipRegisterProductBeach)
+            chipCheckStatusChanged(chipRegisterProductLake)
+            chipCheckStatusChanged(chipRegisterProductMountain)
+            chipCheckStatusChanged(chipRegisterProductRiver)
+            chipCheckStatusChanged(chipRegisterProductValley)
+
         }
 
         return fragmentRegisterProductBinding.root
@@ -322,5 +344,13 @@ class RegisterProductFragment : Fragment() {
             }
         }
         return albumLauncher
+    }
+
+    //chip의 체크 상태 변경에 따라 hashmap에 체크상태를 저장하는 함수
+    fun chipCheckStatusChanged(chip: Chip){
+        chip.setOnCheckedChangeListener { compoundButton, checked ->
+            keywordList[compoundButton.text.toString()] = checked
+            //Log.d("chipchecked", "${compoundButton.text}_${keywordList[compoundButton.text.toString()]}")
+        }
     }
 }

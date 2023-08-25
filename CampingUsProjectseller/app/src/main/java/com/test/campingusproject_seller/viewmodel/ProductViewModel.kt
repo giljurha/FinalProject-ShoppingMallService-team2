@@ -17,6 +17,9 @@ class ProductViewModel() : ViewModel() {
     val productInfo = MutableLiveData<String>()
     val productCount = MutableLiveData<Long>()
     val productDiscountRate = MutableLiveData<Long>()
+    val productBrand = MutableLiveData<String>()
+
+    val productKeywordList = MutableLiveData<HashMap<String, Boolean>>()
 
     init {
         productList.value = mutableListOf<ProductModel>()
@@ -37,9 +40,12 @@ class ProductViewModel() : ViewModel() {
                 val productSellingStatus = c1.child("productSellingStatus").value as Boolean
                 val productDiscountRate = c1.child("productDiscountRate").value as Long
                 val productRecommendationCount = c1.child("productRecommendationCount").value as Long
+                val productBrand = c1.child("productBrand").value as String
+                val productKeyword = c1.child("productKeywordList").value as HashMap<String, Boolean>
 
                 val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
-                    productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount)
+                    productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount,
+                    productBrand, productKeyword)
 
                 tempList.add(product)
             }
@@ -57,6 +63,8 @@ class ProductViewModel() : ViewModel() {
                 productInfo.value = c1.child("productInfo").value as String
                 productCount.value = c1.child("productCount").value as Long
                 productDiscountRate.value = c1.child("productDiscountRate").value as Long
+                productBrand.value = c1.child("productBrand").value as String
+                productKeywordList.value = c1.child("productKeywordList").value as HashMap<String, Boolean>
 
                 productImageList.value?.clear()
                 ProductRepository.getProductImages(productImage.value.toString()){storageRef->
@@ -71,5 +79,11 @@ class ProductViewModel() : ViewModel() {
                 }
             }
         }
+    }
+
+    fun updateKeywordStatus(keyword:String, isChecked:Boolean){
+        val currentMap = productKeywordList.value ?:HashMap()
+        currentMap[keyword] = isChecked
+        productKeywordList.value = currentMap
     }
 }
