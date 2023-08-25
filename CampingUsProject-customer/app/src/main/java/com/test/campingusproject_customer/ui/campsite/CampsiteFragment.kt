@@ -7,9 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -17,7 +22,11 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentCampsiteBinding
+import com.test.campingusproject_customer.databinding.RowPostReadBinding
+import com.test.campingusproject_customer.databinding.RowSearchedCampsiteBinding
+import com.test.campingusproject_customer.ui.comunity.PostReadFragment
 import com.test.campingusproject_customer.ui.main.MainActivity
+import org.w3c.dom.Text
 
 class CampsiteFragment : Fragment(), OnMapReadyCallback {
     lateinit var fragmentCampsiteBinding: FragmentCampsiteBinding
@@ -61,9 +70,29 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         //OnMapReadyCallback등록
         mapFragment.getMapAsync(this)
 
-        fragmentCampsiteBinding.buttonContractCampsite.setOnClickListener {
-            mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, true, false, null)
+        fragmentCampsiteBinding.run {
+            //제휴 캠핑장 플로팅 바 클릭시
+            buttonContractCampsite.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT, false, false, null)
+            }
+            //서치바 리사이클러뷰 설정
+            recyclerViewCampListResult.run {
+                adapter=SearchedCampsiteAdapter()
+                layoutManager = LinearLayoutManager(mainActivity)
+
+                //구분선 추가
+                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.VERTICAL)
+                divider.run {
+                    setDividerColorResource(mainActivity, R.color.subColor)
+                    dividerInsetStart = 30
+                    dividerInsetEnd = 30
+                }
+                addItemDecoration(divider)
+            }
+
         }
+
+
 
         return fragmentCampsiteBinding.root
     }
@@ -74,15 +103,19 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         //내 위치 맵에 설정
         naverMap.locationSource = locationSource
         //확대 축소 버튼 안보이게
-        naverMap.uiSettings.isZoomControlEnabled=false
+        naverMap.uiSettings.isZoomControlEnabled = false
         //나침반 안보이게 삭제
-        naverMap.uiSettings.isCompassEnabled=false
+        naverMap.uiSettings.isCompassEnabled = false
         //내 위치 버튼 위치 커스텀
         val locationButton = fragmentCampsiteBinding.buttonMyLocation
-        locationButton.map=naverMap
+        locationButton.map = naverMap
 
         //권한 확인 및 승인되지 않은 경우 요청
-        if (ContextCompat.checkSelfPermission(mainActivity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                mainActivity,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -117,6 +150,46 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback {
         mapFragment?.let {
             mainActivity.supportFragmentManager.beginTransaction().remove(it).commit()
         }
+
     }
 
+    inner class SearchedCampsiteAdapter : RecyclerView.Adapter<SearchedCampsiteAdapter.SearchedCampsiteViewHolder>(){
+        inner class SearchedCampsiteViewHolder(rowSearchedCampsiteBinding: RowSearchedCampsiteBinding) : RecyclerView.ViewHolder(rowSearchedCampsiteBinding.root) {
+            val imageViewCampsite:ImageView
+            val textViewCampsiteName:TextView
+            val textViewCampsiteAdress:TextView
+            init {
+                imageViewCampsite=rowSearchedCampsiteBinding.imageViewSearchedCampsite
+                textViewCampsiteName=rowSearchedCampsiteBinding.textViewSearchedCampsiteName
+                textViewCampsiteAdress=rowSearchedCampsiteBinding.textViewSearchedCampsiteAdress
+
+            }
+        }
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int,
+        ): SearchedCampsiteViewHolder {
+            val rowSearchedCampsiteBinding=RowSearchedCampsiteBinding.inflate(layoutInflater)
+            val searchedCampsiteViewHolder=SearchedCampsiteViewHolder(rowSearchedCampsiteBinding)
+
+            rowSearchedCampsiteBinding.root.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            return searchedCampsiteViewHolder
+        }
+
+        override fun getItemCount(): Int {
+            return 33
+        }
+
+        override fun onBindViewHolder(holder: SearchedCampsiteViewHolder, position: Int) {
+            holder.imageViewCampsite.setImageResource(R.drawable.camping_24px)
+            holder.textViewCampsiteName.text="강현구의 캠핑장"
+            holder.textViewCampsiteAdress.text="인천 서구 명가골로 34번길 7-2 1층"
+        }
+
+
+    }
 }

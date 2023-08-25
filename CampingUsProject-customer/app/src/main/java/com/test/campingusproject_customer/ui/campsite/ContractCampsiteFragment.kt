@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentContractCampsiteBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
@@ -19,6 +20,7 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
     lateinit var fragmentContractCampsiteBinding: FragmentContractCampsiteBinding
     lateinit var mainActivity: MainActivity
     lateinit var contractNaverMap: NaverMap
+    lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +32,14 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
         fragmentContractCampsiteBinding.toolbarContractCampsite.run {
             setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
             setNavigationOnClickListener {
-                mainActivity.removeFragment(MainActivity.CONTRACT_CAMPSITE_FRAGMENT)
+
+                //프래그먼트 종료시 내부 맵 프래그먼트의 getMapAsync도 종료시키기 위해 제휴 맵 프래그먼트 수동 종료
+                val mapFragment =
+                    mainActivity.supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+                mapFragment?.let {
+                    mainActivity.supportFragmentManager.beginTransaction().remove(it).commit()
+                }
+                mainActivity.replaceFragment(MainActivity.CAMPSITE_FRAGMENT,false,false,null)
             }
         }
 
@@ -56,18 +65,34 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
         super.onAttach(context)
         val main=activity as MainActivity
         main.activityMainBinding.bottomNavigationViewMain.visibility=View.GONE
+
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                //프래그먼트 종료시 내부 맵 프래그먼트의 getMapAsync도 종료시키기 위해 제휴 맵 프래그먼트 수동 종료
+                val mapFragment =
+                    main.supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+                mapFragment?.let {
+                    main.supportFragmentManager.beginTransaction().remove(it).commit()
+                }
+                main.replaceFragment(MainActivity.CAMPSITE_FRAGMENT,false,false,null)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+
     }
 
     override fun onDetach() {
         super.onDetach()
+        callback.remove()
         //해당 프래그먼트가 액티비티에서 떨어져 나갈 때 바텀 네비 다시 생성
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility=View.VISIBLE
 
-        //프래그먼트 종료시 내부 맵 프래그먼트의 getMapAsync도 종료시키기 위해 제휴 맵 프래그먼트 수동 종료
-        val mapFragment =
-            mainActivity.supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
-        mapFragment?.let {
-            mainActivity.supportFragmentManager.beginTransaction().remove(it).commit()
-        }
+//        //프래그먼트 종료시 내부 맵 프래그먼트의 getMapAsync도 종료시키기 위해 제휴 맵 프래그먼트 수동 종료
+//        val mapFragment =
+//            mainActivity.supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+//        mapFragment?.let {
+//            mainActivity.supportFragmentManager.beginTransaction().remove(it).commit()
+//        }
+
     }
 }
