@@ -42,7 +42,7 @@ class ProductRepository {
             }
         }
 
-        //상품의 대표이미지만 가져오는 함수
+        // 상품의 대표 이미지만 가져오는 함수
         fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
             val storage = FirebaseStorage.getInstance()
             val fileName = fileDir + "1.png"
