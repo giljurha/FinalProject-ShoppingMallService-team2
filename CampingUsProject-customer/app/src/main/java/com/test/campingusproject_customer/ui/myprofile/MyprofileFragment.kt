@@ -30,6 +30,10 @@ class MyprofileFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentMyprofileBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
+        //테스트를 위한 화면 전환
+        //로그인 여부 검사해야함
+        mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+
         fragmentMyprofileBinding.run {
             materialToolbarMyProfile.run {
                 title = "내정보"
