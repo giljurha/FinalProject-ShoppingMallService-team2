@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.test.campingusproject_customer.dataclassmodel.PostModel
 
@@ -24,6 +25,7 @@ class PostRepository {
             val postIdxRef = database.getReference("PostIdx")
             postIdxRef.get().addOnCompleteListener(callback1)
         }
+
         // 게시글 번호를 저장한다.
         fun setPostIdx(postIdx:Long, callback1: (Task<Void>) -> Unit){
             val database = FirebaseDatabase.getInstance()
@@ -33,6 +35,14 @@ class PostRepository {
                 it.result.ref.setValue(postIdx).addOnCompleteListener(callback1)
             }
         }
+
+        // 게시글 정보를 가져온다.
+        fun getPostInfo(postIdx:Double, callback1 : (Task<DataSnapshot>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val postDataRef = database.getReference("PostData")
+            postDataRef.orderByChild("postIdx").equalTo(postIdx).get().addOnCompleteListener(callback1)
+        }
+
         // 게시글 이미지들을 저장한다.
         fun uploadImages(uploadUriList : MutableList<Uri>, postImagePath : String, callback1: (Task<UploadTask.TaskSnapshot>) -> Unit){
             val storage = FirebaseStorage.getInstance()
@@ -43,6 +53,24 @@ class PostRepository {
                 val imageRef = storage.reference.child(fileName)
                 imageRef.putFile(uploadUriList[idx]).addOnCompleteListener(callback1)
             }
+        }
+
+        //게시글 이미지 가져오기
+        fun getPostImages(fileDir: String, callback1: (StorageReference) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+
+            val filePath = fileDir.substring(0, fileDir.length-1)
+            val fileDirRef = storage.reference.child(filePath)
+
+            //listAll 메서드로 해당 디렉토리 하위에 있는 모든 항목을 순회
+            fileDirRef.listAll()
+                .addOnCompleteListener { task->
+                    if(task.isSuccessful){
+                        task.result.items.forEach {
+                            callback1(it)
+                        }
+                    }
+                }
         }
     }
 }
