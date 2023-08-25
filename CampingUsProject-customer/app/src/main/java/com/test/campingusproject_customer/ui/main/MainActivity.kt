@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
 import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
@@ -28,7 +26,6 @@ import com.test.campingusproject_customer.ui.myprofile.MyPostListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.myprofile.PurchaseHistoryFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
-import com.test.campingusproject_customer.ui.shopping.ShoppingPlusFragment
 import com.test.campingusproject_customer.ui.user.AuthFragment
 import com.test.campingusproject_customer.ui.user.JoinFragment
 import com.test.campingusproject_customer.ui.user.LoginFragment
@@ -50,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         val CAMPSITE_FRAGMENT = "CampsiteFragment"
         val SHOPPING_PRODUCT_FRAGMENT = "ShoppingProductFragment"
         val POST_WRITE_FRAGMENT = "PostWriteFragment"
-        val SHOPPING_PLUS_FRAGMENT = "ShoppingPlusFragment"
         val POST_READ_FRAGMENT = "PostReadFragment"
         val LOGIN_FRAGMENT = "LoginFragment"
         val JOIN_FRAGMENT = "JoinFragment"
@@ -140,7 +136,6 @@ class MainActivity : AppCompatActivity() {
             CONTRACT_CAMPSITE_FRAGMENT-> ContractCampsiteFragment()
             POST_WRITE_FRAGMENT -> PostWriteFragment()
             POST_READ_FRAGMENT -> PostReadFragment()
-            SHOPPING_PLUS_FRAGMENT -> ShoppingPlusFragment()
             LOGIN_FRAGMENT -> LoginFragment()
             JOIN_FRAGMENT -> JoinFragment()
             AUTH_FRAGMENT -> AuthFragment()
