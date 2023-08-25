@@ -3,6 +3,7 @@ package com.test.campingusproject_customer.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
@@ -185,13 +186,13 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-    //editText뷰에 포커스주고 키보드 생성
-    fun focusOnView(textInputEditText: TextInputEditText){
-        textInputEditText.requestFocus()
+    //인자로 전달된 뷰에 포커스주고 키보드 생성
+    fun focusOnView(view:View){
+        view.requestFocus()
         thread {
             SystemClock.sleep(500)
             val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(textInputEditText, 0)
+            imm.showSoftInput(view, 0)
         }
     }
 }

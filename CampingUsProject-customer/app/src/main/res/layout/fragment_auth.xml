@@ -78,22 +78,23 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="인증 번호 입력"
-        android:textColor="@color/highLightColor"
-        android:textSize="@dimen/text_size_2" />
-
     <LinearLayout
+        android:id="@+id/linearLayoutAuthCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="인증 번호 입력"
+            android:textColor="@color/highLightColor"
+            android:textSize="@dimen/text_size_2" />
 
         <EditText
             android:id="@+id/editTextAuthNumber"
@@ -102,18 +103,19 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="인증 번호를 입력하세요"
-            android:inputType="text"
+            android:inputType="number"
             android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/buttonAuthSubmit"
+            style="@style/Widget.Material3.Button.TonalButton.Icon"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/subColor"
+            android:text="인증 완료"
+            app:icon="@drawable/login_24px" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonAuthSubmit"
-        style="@style/Widget.Material3.Button.TonalButton.Icon"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/subColor"
-        android:text="인증 완료"
-        app:icon="@drawable/login_24px" />
 </LinearLayout>
