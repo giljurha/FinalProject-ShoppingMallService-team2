@@ -3,6 +3,7 @@ package com.test.campingusproject_seller.ui.product
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_seller.R
@@ -72,6 +74,19 @@ class ModifyProductFragment : Fragment() {
                         textInputEditTextModifyProductDiscountRate.setText("")
                     }else{
                         textInputEditTextModifyProductDiscountRate.setText(discountRate.toString())
+                    }
+                }
+            }
+            productBrand.observe(mainActivity){
+                fragmentModifyProductBinding.textInputEditTextModifyProductBrand.setText(it)
+            }
+            productKeywordList.observe(mainActivity){
+                for(i in 0 until fragmentModifyProductBinding.chipGroupModifyProduct.childCount){
+                    val chip = fragmentModifyProductBinding.chipGroupModifyProduct.getChildAt(i) as Chip
+                    val chipText = chip.text.toString()
+
+                    if(it.containsKey(chipText)){
+                        chip.isChecked = it[chipText]!!
                     }
                 }
             }
@@ -131,6 +146,15 @@ class ModifyProductFragment : Fragment() {
                             textInputLayoutModifyProductExplanation.error = null
                         }
 
+                        //브랜드명 입력 검사
+                        val productBrand = textInputEditTextModifyProductBrand.text.toString()
+                        if(productBrand.isEmpty()){
+                            textInputLayoutEmptyError(textInputLayoutModifyProductBrand, "브랜드를 입력해주세요")
+                            return@setOnMenuItemClickListener true
+                        }else{
+                            textInputLayoutModifyProductBrand.error = null
+                        }
+
                         //할인율 입력 검사
                         val productDiscountRate = if(switchModifyProductRegistDiscount.isChecked){
                             try{
@@ -155,7 +179,8 @@ class ModifyProductFragment : Fragment() {
                         val productId = currentProduct.productId
 
                         val product = ProductModel(productId, productSellerId, productName, productPrice, productImage,
-                            productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount)
+                            productInfo, productCount, productSellingStatus, productDiscountRate, productRecommendationCount,
+                            productBrand, productViewModel.productKeywordList.value!!)
 
                         ProductRepository.modifyProduct(product){
                             //저장 메시지 스낵바
@@ -196,6 +221,13 @@ class ModifyProductFragment : Fragment() {
                 //recycler view 가로로 확장되게 함
                 layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
             }
+
+            chipCheckStatusChanged(chipModifyProductBeach)
+            chipCheckStatusChanged(chipModifyProductForest)
+            chipCheckStatusChanged(chipModifyProductLake)
+            chipCheckStatusChanged(chipModifyProductMountain)
+            chipCheckStatusChanged(chipModifyProductRiver)
+            chipCheckStatusChanged(chipModifyProductValley)
 
         }
 
@@ -239,6 +271,13 @@ class ModifyProductFragment : Fragment() {
             error = errorMessage
             setErrorIconDrawable(R.drawable.error_24px)
             requestFocus()
+        }
+    }
+
+    //chip의 체크 상태 변경에 따라 hashmap에 체크상태를 저장하는 함수
+    fun chipCheckStatusChanged(chip: Chip){
+        chip.setOnCheckedChangeListener { compoundButton, checked ->
+            productViewModel.updateKeywordStatus(compoundButton.text.toString(), checked)
         }
     }
 

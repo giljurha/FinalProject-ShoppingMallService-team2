@@ -26,6 +26,9 @@ class SellStateFragment : Fragment() {
         fragmentSellStateBinding = FragmentSellStateBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        //하단 nav bar 보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+
         fragmentSellStateBinding.run {
             toolbarSellState.run {
                 title = "판매현황"
@@ -67,8 +70,6 @@ class SellStateFragment : Fragment() {
                 // 안쪽 주문내역 리사이클러뷰 호출
                 rowSellStateOrderHistoryBinding.recyclerViewSellStateOrder.adapter = OrderHistoryAdapter()
                 rowSellStateOrderHistoryBinding.recyclerViewSellStateOrder.layoutManager = LinearLayoutManager(mainActivity)
-
-
             }
         }
 
