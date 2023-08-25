@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentOrderDetailBinding
 import com.test.campingusproject_customer.databinding.RowPaymentBinding
 import com.test.campingusproject_customer.ui.main.MainActivity

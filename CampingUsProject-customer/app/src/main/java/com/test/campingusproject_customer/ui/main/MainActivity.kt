@@ -25,6 +25,7 @@ import com.test.campingusproject_customer.ui.myprofile.MyQuestionDetailFragment
 import com.test.campingusproject_customer.ui.myprofile.MyQuestionListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyPostListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
+import com.test.campingusproject_customer.ui.myprofile.PurchaseHistoryFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingPlusFragment
 import com.test.campingusproject_customer.ui.user.AuthFragment
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         val MY_QUESTION_DETAIL_FRAGMENT = "MyQuestionDetailFragment"
         val MY_POST_LIST_FRAGMENT = "MyPostListFragment"
         val MODIFY_MY_POST_FRAGMENT = "ModifyMyPostFragment"
+        val PURCHASE_HISTORY_FRAGMENT = "PurchaseHistoryFragment"
         val REVIEW_FRAGMENT = "ReviewFragment"
         val REVIEW_DETAIL_FRAGMENT = "ReviewDetailFragment"
     }
@@ -150,6 +152,7 @@ class MainActivity : AppCompatActivity() {
             MY_QUESTION_DETAIL_FRAGMENT -> MyQuestionDetailFragment()
             MY_POST_LIST_FRAGMENT ->MyPostListFragment()
             MODIFY_MY_POST_FRAGMENT ->ModifyMyPostFragment()
+            PURCHASE_HISTORY_FRAGMENT -> PurchaseHistoryFragment()
             REVIEW_FRAGMENT -> ReviewFragment()
             REVIEW_DETAIL_FRAGMENT -> ReviewDetailFragment()
 

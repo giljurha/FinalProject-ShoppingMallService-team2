@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/imageViewRowPurchaseHistoryItemProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="상품 이름"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRowPurchaseHistoryItemProduct"
+            app:layout_constraintTop_toTopOf="@+id/imageViewRowPurchaseHistoryItemProduct" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="가격"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRowPurchaseHistoryItemProduct"
+            app:layout_constraintTop_toBottomOf="@id/textViewRowPurchaseHistoryItemName" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="갯수"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/imageViewRowPurchaseHistoryItemProduct"
+            app:layout_constraintTop_toBottomOf="@id/textViewRowPurchaseHistoryItemPrice" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:text="배송중"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/highLightColor"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewRowPurchaseHistoryItemName" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemStateDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:text="배송 완료"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/highLightColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewRowPurchaseHistoryItemName" />
+
+        <TextView
+            android:id="@+id/textViewRowPurchaseHistoryItemReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="리뷰 작성하기"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/highLightColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewRowPurchaseHistoryItemStateDone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+
+</LinearLayout>

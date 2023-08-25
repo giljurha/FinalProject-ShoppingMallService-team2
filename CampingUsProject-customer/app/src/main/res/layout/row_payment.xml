@@ -62,6 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:layout_weight="1"
+                    android:maxLines="2"
                     android:ellipsize="end"
                     android:text="Supporting line text lorem ipsum dolor sit amet, consectetur."
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />

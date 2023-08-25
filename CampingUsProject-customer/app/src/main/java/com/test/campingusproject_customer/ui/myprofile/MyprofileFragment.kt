@@ -39,7 +39,7 @@ class MyprofileFragment : Fragment() {
                 title = "내정보"
                 //장바구니 가는 버튼
                 setOnMenuItemClickListener {
-                    title = "장바구니"
+                    mainActivity.replaceFragment(MainActivity.CART_FRAGMENT, true, true, null)
                     true
                 }
             }
@@ -55,6 +55,13 @@ class MyprofileFragment : Fragment() {
             textViewMyProfileEditMyInfo.run {
                 setOnClickListener {
                     mainActivity.replaceFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT,true,true,null)
+                }
+            }
+
+            // 구매내역
+            textViewMyProfilePurchaseDetails.run {
+                setOnClickListener {
+                    mainActivity.replaceFragment(MainActivity.PURCHASE_HISTORY_FRAGMENT, true, true, null)
                 }
             }
 
