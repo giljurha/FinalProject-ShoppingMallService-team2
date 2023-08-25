@@ -56,12 +56,21 @@
                 android:hint="내용"
                 android:inputType="textMultiLine" />
 
-            <TextView
-                android:id="@+id/textViewPostWriteSave"
+            <Button
+                android:id="@+id/buttonPostWriteSave"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="저장" />
+                android:text="저장"
+                android:textColor="@color/highLightColor"
+                app:strokeColor="@color/highLightColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPostWriteImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
