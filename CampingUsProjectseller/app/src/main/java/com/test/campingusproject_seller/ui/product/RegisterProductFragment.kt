@@ -78,6 +78,14 @@ class RegisterProductFragment : Fragment() {
                 setSelection(0)
             }
 
+            spinnerRegisterProductCategory.run {
+                val a1 = ArrayAdapter<String>(mainActivity, android.R.layout.simple_spinner_item, MainActivity.productCategoryList)
+                a1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+                adapter = a1
+                setSelection(0)
+            }
+
             //이미지 추가 버튼 클릭 이벤트 - 앨범 이동
             imageButtonRegisterProductImage.setOnClickListener{
                 val albumIntent = Intent(Intent.ACTION_PICK)
@@ -101,6 +109,7 @@ class RegisterProductFragment : Fragment() {
                         ProductRepository.getProductId {
                             var productId = it.result.value as Long
                             val productCount = spinnerRegisterProductCount.selectedItem.toString().toLong()
+                            val productCategory = spinnerRegisterProductCategory.selectedItem.toString()
 
                             //제품 이름 입력 검사
                             val productName = textInputEditTextRegisterProductName.text.toString()
@@ -172,7 +181,7 @@ class RegisterProductFragment : Fragment() {
                             //상품 객체 생성
                             val product = ProductModel(productId, productSellerId, productName,
                                 productPrice, fileDir, productInfo, productCount, productSellingStatus,
-                                productDiscountRate, 0L, productBrand, keywordList)
+                                productDiscountRate, 0L, productBrand, keywordList, productCategory)
 
                             //제품 등록
                             ProductRepository.addProductInfo(product){
