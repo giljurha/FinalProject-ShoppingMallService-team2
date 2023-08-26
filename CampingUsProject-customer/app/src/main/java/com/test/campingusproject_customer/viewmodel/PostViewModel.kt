@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.test.campingusproject_customer.dataclassmodel.PostModel
@@ -24,7 +25,7 @@ class PostViewModel() : ViewModel() {
 
     init {
         postDataList.value = mutableListOf<PostModel>()
-
+        postImageList.value = mutableListOf<Uri>()
     }
 
     // 게시글 읽기 화면
@@ -46,20 +47,25 @@ class PostViewModel() : ViewModel() {
                 postLiked.value = c1.child("postLiked").value as Long
                 // 댓글 수
                 postCommentCount.value = c1.child("postCommentCount").value as Long
+                //이미지 경로
+                postImagePath.value = c1.child("postImagePath").value as String
 
                 // 이미지가 있다면
                 if (postImagePath.value != "null") {
+                    postImageList.value?.clear()
                     PostRepository.getPostImages(postImagePath.value.toString()) { storageRef ->
                         storageRef.downloadUrl.addOnCompleteListener {
                             if (it.isSuccessful) {
                                 val downloadUrl = it.result
-                                postImageList.value?.add(downloadUrl)
-//                                val updatedList = postImageList.value ?: mutableListOf()
-//                                updatedList.add(0,downloadUrl)
-//                                postImageList.value = updatedList
+                                val updatedList = postImageList.value ?: mutableListOf()
+                                updatedList.add(0,downloadUrl)
+                                postImageList.value = updatedList
                             }
                         }
                     }
+                }
+                else{
+
                 }
             }
         }

@@ -79,7 +79,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPostReadImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
