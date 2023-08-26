@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -90,11 +91,14 @@ class CampsiteViewModel: ViewModel() {
                                 campSites.value=response.body()?.response?.body?.items
                             }else{
                                 Log.d("testt","통신은 성공했지만 데이터를 불러오진 못했습니다")
+
                             }
                         }
 
                         override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                            Log.d("testt","통신 자체를 실패했습니다")
+//                            Log.d("testt","통신 자체를 실패했습니다")
+                            campsiteLoadError.value =""
+
                         }
 
                     })
@@ -110,7 +114,7 @@ class CampsiteViewModel: ViewModel() {
     }
 
     fun onError(message: String){
-        campsiteLoadError.value = message
+
 //        loading.value = false
     }
     fun resetData(){

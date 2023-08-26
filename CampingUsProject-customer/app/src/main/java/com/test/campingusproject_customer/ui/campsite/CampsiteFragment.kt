@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -109,6 +110,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                         addMaker()
                     }
                 }catch (e:java.lang.Exception){
+                    Toast.makeText(mainActivity,"텍스트를 입력하세요!",Toast.LENGTH_SHORT).show()
                     Log.d("testt","에러 방지중2")
                 }
 
@@ -150,6 +152,9 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                     Log.d("testt","에러방지중")
                 }
 
+            }
+            campsiteLoadError.observe(mainActivity){
+                Toast.makeText(mainActivity,"일치하는 검색 결과가 없습니다",Toast.LENGTH_SHORT).show()
             }
 
         }
