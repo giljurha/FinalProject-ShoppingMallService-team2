@@ -1,9 +1,6 @@
 package com.test.campingusproject_customer.ui.comunity
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
@@ -12,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -23,11 +19,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentPostReadBinding
-import com.test.campingusproject_customer.databinding.RowBoardBinding
-import com.test.campingusproject_customer.databinding.RowPostImageBinding
 import com.test.campingusproject_customer.databinding.RowPostReadBinding
 import com.test.campingusproject_customer.databinding.RowReadPostImageListBinding
-import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.PostViewModel
 
@@ -36,6 +29,7 @@ class PostReadFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
     lateinit var postViewModel: PostViewModel
+    var imageList = mutableListOf<Uri>()
 
     //게시판 종류
     val boardTypeList = arrayOf(
@@ -73,6 +67,7 @@ class PostReadFragment : Fragment() {
                 fragmentPostReadBinding.materialToolbarPostRead.title = boardTypeList[it.toInt()]
             }
             postImageList.observe(mainActivity){uriList->
+                imageList = uriList
                 fragmentPostReadBinding.recyclerViewPostReadImage.adapter?.notifyDataSetChanged()
             }
         }
@@ -119,14 +114,6 @@ class PostReadFragment : Fragment() {
             recyclerViewPostReadImage.run {
                 adapter = PhotoAdapter()
                 layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
-                //구분선 추가
-                val divider = MaterialDividerItemDecoration(mainActivity, LinearLayoutManager.VERTICAL)
-                divider.run {
-                    setDividerColorResource(mainActivity, R.color.subColor)
-                    dividerInsetStart = 30
-                    dividerInsetEnd = 30
-                }
-                addItemDecoration(divider)
             }
         }
         return fragmentPostReadBinding.root
@@ -148,27 +135,12 @@ class PostReadFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return postViewModel.postImageList.value?.size!!
+            return imageList.size
         }
 
         override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-            //bitmap factory option 사용해 비트맵 크기 줄임
-            val option = BitmapFactory.Options()
-            option.inSampleSize = 4
-
-            val inputStream = mainActivity.contentResolver.openInputStream(postViewModel.postImageList.value?.get(position)!!)
-            val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
-
-            //회전 각도값을 가져옴
-            val degree = getDegree(postViewModel.postImageList.value?.get(position)!!)
-
-            //회전 이미지를 생성한다
-            val matrix = Matrix()
-            matrix.postRotate(degree.toFloat())
-            val rotateBitmap = Bitmap.createBitmap(bitmap!!, 0, 0, bitmap.width, bitmap.height, matrix, false)
-
             //글라이드 라이브러리로 recycler view에 이미지 출력
-            Glide.with(mainActivity).load(rotateBitmap)
+            Glide.with(mainActivity).load(imageList[position])
                 .override(500, 500)
                 .into(holder.imageViewRowPostImage)
         }
