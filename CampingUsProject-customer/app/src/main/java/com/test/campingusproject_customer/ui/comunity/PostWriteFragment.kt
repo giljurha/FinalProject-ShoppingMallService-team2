@@ -189,7 +189,6 @@ class PostWriteFragment : Fragment() {
 
                         // 게시글 인덱스 번호
                         PostRepository.getPostIdx {
-                            Log.d("aaaa","${it.result.value}")
                             postIdx = it.result.value as Long
                             //게시글 인덱스 증가
                             postIdx++
@@ -222,17 +221,19 @@ class PostWriteFragment : Fragment() {
                             //게시글 저장
                             PostRepository.addPostInfo(postModel){
                                 PostRepository.setPostIdx(postIdx){
-                                    if(postImagePath != "null"){
+                                    if(postImagePath != "null") {
+                                        PostRepository.uploadImages(postImageList, postImagePath) {
+                                            mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
+                                            val newBundle = Bundle()
+                                            newBundle.putLong("PostIdx", postIdx)
+                                            mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT, true, true, newBundle)
+                                        }
+                                    }
+                                    else{
                                         mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
                                         val newBundle = Bundle()
                                         newBundle.putLong("PostIdx", postIdx)
-                                        mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,newBundle)
-                                    }
-                                    else{
-                                        PostRepository.uploadImages(postImageList,postImagePath){
-//                                        Snackbar.make(fragmentPostWriteBinding.root, "저장되었습니다", Snackbar.LENGTH_SHORT).show()
-                                            mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
-                                    }
+                                        mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT, true, true, newBundle)
                                     }
                                 }
                             }
