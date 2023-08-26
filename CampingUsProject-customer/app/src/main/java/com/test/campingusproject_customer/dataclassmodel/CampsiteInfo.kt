@@ -13,7 +13,9 @@ data class CampsiteInfo(
     @SerializedName("induty") var 형태: String,//캠핑장 형태(야영장 카라반 등)
     @SerializedName("sbrsEtc") var 편의시설: String,//캠핑장 시설(전기,온수 등)
     @SerializedName("posblFcltyCl") var 놀거리: String,//캠핑장 시설(전기,온수 등)
-    @SerializedName("animalCmgCl") var 애완동물여부: String//애완동물가능여부(가능(소형견))
+    @SerializedName("animalCmgCl") var 애완동물여부: String,//애완동물가능여부(가능(소형견))
+    @SerializedName("firstImageUrl") var 사진: String,//사진URI
+    @SerializedName("addr1") var 주소: String//사진URI
 )
 
 data class ApiResponse(
