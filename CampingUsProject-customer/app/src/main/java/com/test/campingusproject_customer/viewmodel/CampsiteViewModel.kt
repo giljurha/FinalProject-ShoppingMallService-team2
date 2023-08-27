@@ -79,7 +79,7 @@ class CampsiteViewModel: ViewModel() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             try {
                 withContext(Dispatchers.Main) {
-                    val call = campingService.getCampSiteSearch(100,page,"AND","CampingUs","hojdaAj28uKSvkkT5O01VLlmsMbVDxwWfk5norTQMAdtVK6+18evQogPO5ix63vdVPoPG6hGVUGv2iZ3nKzJvA==","json",inputKeyWord)
+                    val call = campingService.getCampSiteSearch(3000,page,"AND","CampingUs","hojdaAj28uKSvkkT5O01VLlmsMbVDxwWfk5norTQMAdtVK6+18evQogPO5ix63vdVPoPG6hGVUGv2iZ3nKzJvA==","json",inputKeyWord)
                     call.enqueue(object :retrofit2.Callback<ApiResponse>{
                         override fun onResponse(
                             call: Call<ApiResponse>,

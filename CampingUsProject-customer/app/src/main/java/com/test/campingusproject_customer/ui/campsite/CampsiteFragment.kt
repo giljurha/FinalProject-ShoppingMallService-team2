@@ -52,7 +52,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
     //캠핑장 데이터 리스트
     var campList = mutableListOf<CampsiteInfo>()
 
-    //불러온 데이터의 특징
+    //불러온 데이터의 정보
     lateinit var dataState: Response
 
     //현재 내가 갖고있는 데이터 갯수
@@ -155,6 +155,9 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
             }
             campsiteLoadError.observe(mainActivity){
                 Toast.makeText(mainActivity,"일치하는 검색 결과가 없습니다",Toast.LENGTH_SHORT).show()
+                val adapter=fragmentCampsiteBinding.recyclerViewCampListResult.adapter as SearchedCampsiteAdapter
+                adapter.notifyDataSetChanged()
+
             }
 
         }
