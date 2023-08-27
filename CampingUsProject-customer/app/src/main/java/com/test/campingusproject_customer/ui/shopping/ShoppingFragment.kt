@@ -3,6 +3,7 @@ package com.test.campingusproject_customer.ui.shopping
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -26,7 +27,6 @@ import com.test.campingusproject_customer.databinding.RowShoppingBinding
 import com.test.campingusproject_customer.repository.ProductRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.ProductViewModel
-import javax.sql.DataSource
 
 class ShoppingFragment : Fragment() {
     lateinit var fragmentShoppingBinding: FragmentShoppingBinding
@@ -38,7 +38,7 @@ class ShoppingFragment : Fragment() {
     var productCheckedList = mutableListOf<Boolean>()
 
     // 드루어 레이아웃에 나오는 카테고리 아이템 메뉴
-    val categoryList = arrayOf(
+    val categoryIdList = arrayOf(
         R.id.itemShoppingRealTimeRanking,
         R.id.itemShoppingPopularitySale,
         R.id.itemShoppingTentAndTarp,
@@ -100,52 +100,63 @@ class ShoppingFragment : Fragment() {
                         // 특별
                         R.id.itemShoppingRealTimeRanking -> { // 실시간 랭킹
                             toolbarShopping.title = "실시간 랭킹"
+                            getProductRealTimeRankingData()
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingPopularitySale -> { // 인기특가
                             toolbarShopping.title = "인기특가"
+                            getProductDisCountData()
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
+
                         // 캠핑용품
                         R.id.itemShoppingTentAndTarp -> { // 텐트 / 타프
                             toolbarShopping.title = "텐트 / 타프"
+                            getProductCategoryData("텐트 / 타프")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingSleepingBagAndMat -> { // 침낭 / 매트
                             toolbarShopping.title = "침낭 / 매트"
+                            getProductCategoryData("침낭 / 매트")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingTableAndChair -> { // 테이블 / 의자
                             toolbarShopping.title = "테이블 / 의자"
+                            getProductCategoryData("테이블 / 의자")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingLanternAndLight -> { // 랜턴 / 조명
                             toolbarShopping.title = "랜턴 / 조명"
+                            getProductCategoryData("랜턴 / 조명")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingKitchen -> { // 키친
                             toolbarShopping.title = "키친"
+                            getProductCategoryData("키친")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingBrazierAndGrill -> { // 화로 / 그릴
                             toolbarShopping.title = "화로 / 그릴"
+                            getProductCategoryData("화로 / 그릴")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingSeasonalItems -> { // 계절용품
                             toolbarShopping.title = "계절용품"
+                            getProductCategoryData("계절용품")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
                         R.id.itemShoppingContainer -> { // 용기
                             toolbarShopping.title = "용기"
+                            getProductCategoryData("용기")
                             setNavigationIcon(it)
                             drawerLayoutShopping.close()
                         }
@@ -155,10 +166,7 @@ class ShoppingFragment : Fragment() {
             }
             // 리사이클러뷰
             recyclerViewShoppingProduct.run {
-                productViewModel.getAllProductData()
-
-                adapter = ShoppingProductAdapter()
-                layoutManager = GridLayoutManager(context, 3)
+                getProductCategoryData("실시간 랭킹")
             }
         }
 
@@ -236,19 +244,66 @@ class ShoppingFragment : Fragment() {
                     .into(holder.imageViewShoppingImage)
             }
             holder.textViewShoppingName.text = productViewModel.productList.value?.get(position)?.productName
-            holder.textViewShoppingPrice.text =
-                " ${ productViewModel.productList.value?.get(position)?.productPrice.toString() } 원"
+
+            if(productViewModel.productList.value?.get(position)?.productSellingStatus == false) {
+                holder.textViewShoppingPrice.text = "품절"
+            } else if (productViewModel.productList.value?.get(position)!!.productDiscountRate != 0L) {
+                // 할인율 계산
+                var discountRate = productViewModel.productList.value?.get(position)!!.productDiscountRate * 0.01
+
+                val result = (productViewModel.productList.value!!.get(position).productPrice * discountRate).toInt().toString()
+
+                holder.textViewShoppingPrice.text = " ${ result } 원"
+            } else {
+                holder.textViewShoppingPrice.text = " ${ productViewModel.productList.value?.get(position)?.productPrice.toString() } 원"
+            }
         }
     }
 
     // 카테고리 클릭시 아이콘 변경
     fun setNavigationIcon(menuItem: MenuItem) {
-        for(item in categoryList){
+        for(item in categoryIdList){
             if(item == menuItem.itemId){
                 menuItem.setIcon(R.drawable.circle_20px)
             }
             else{
                 fragmentShoppingBinding.navigationViewShopping.menu.findItem(item).setIcon(null)
+            }
+        }
+    }
+
+    // 실시간 랭킹 상품 정보 가져오기
+    fun getProductRealTimeRankingData() {
+        fragmentShoppingBinding.run {
+            recyclerViewShoppingProduct.run {
+                productViewModel.getAllProductRecommendationCountData()
+
+                adapter = ShoppingProductAdapter()
+                layoutManager = GridLayoutManager(context, 3)
+            }
+        }
+    }
+
+    // 인기특가 상품 정보 가져오기
+    fun getProductDisCountData() {
+        fragmentShoppingBinding.run {
+            recyclerViewShoppingProduct.run {
+                productViewModel.getAllProductDiscountData()
+
+                adapter = ShoppingProductAdapter()
+                layoutManager = GridLayoutManager(context, 3)
+            }
+        }
+    }
+
+    // 카테고리별 상품 정보 가져오기
+    fun getProductCategoryData(category: String) {
+        fragmentShoppingBinding.run {
+            recyclerViewShoppingProduct.run {
+                productViewModel.getAllProductCategoryData(category)
+
+                adapter = ShoppingProductAdapter()
+                layoutManager = GridLayoutManager(context, 3)
             }
         }
     }

@@ -17,31 +17,6 @@ class ProductRepository {
             productRef.orderByChild("productId").get().addOnCompleteListener(callback1)
         }
 
-        // 하나의 상품 정보 가져오는 함수
-        fun getOneProductData(productId:Long, callback1: (Task<DataSnapshot>) -> Unit){
-            val database = FirebaseDatabase.getInstance()
-
-            val productRef = database.getReference("ProductData")
-            productRef.orderByChild("productId").equalTo(productId.toDouble()).get().addOnCompleteListener(callback1)
-        }
-
-        // 해당하는 상품 이미지 전부 가져오는 함수
-        fun getProductImages(fileDir: String, callback1: (StorageReference) -> Unit){
-            val storage = FirebaseStorage.getInstance()
-
-            val filePath = fileDir.substring(0, fileDir.length-1)
-            val fileDirRef = storage.reference.child(filePath)
-
-            //listAll 메서드로 해당 디렉토리 하위에 있는 모든 항목을 순회
-            fileDirRef.listAll().addOnCompleteListener { task->
-                if(task.isSuccessful){
-                    task.result.items.forEach {
-                        callback1(it)
-                    }
-                }
-            }
-        }
-
         // 상품의 대표 이미지만 가져오는 함수
         fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
             val storage = FirebaseStorage.getInstance()
@@ -50,6 +25,5 @@ class ProductRepository {
             val imageRef = storage.reference.child(fileName)
             imageRef.downloadUrl.addOnCompleteListener(callback1)
         }
-
     }
 }
