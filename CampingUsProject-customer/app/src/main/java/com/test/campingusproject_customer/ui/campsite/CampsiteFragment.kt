@@ -71,7 +71,6 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
     var markerList = mutableListOf<Marker>()
     var searchTask = false
 
-
     //권한 코드
     companion object {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
@@ -112,7 +111,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                         mydataNum = 0
                         cloudDataNum = -1
                         page = 1
-                        searchTask=false
+                        searchTask = false
                         markerList.clear()
                         //마커 찍기
                         addMaker()
@@ -121,7 +120,6 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                     Toast.makeText(mainActivity, "텍스트를 입력하세요!", Toast.LENGTH_SHORT).show()
                     Log.d("testt", "에러 방지중2")
                 }
-
             }
             dataInfo.observe(mainActivity) {
                 try {
@@ -148,30 +146,20 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                         } else {//이작업이 검색작업이라면
                             campsiteViewModel.fetchSearchedCampsites(page, "가평")
                         }
-
-
-                    } else {
-//                    Log.d("testt","여기서 마크 추가할건데..")
-//                    addMaker()
-//                    isAlldata=true
                     }
 
                 } catch (e: Exception) {
                     Log.d("testt", "에러방지중")
                 }
-
             }
             campsiteLoadError.observe(mainActivity) {
                 try {
                     val adapter =
                         fragmentCampsiteBinding.recyclerViewCampListResult.adapter as SearchedCampsiteAdapter
                     adapter.notifyDataSetChanged()
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     //앱 터지는 것 받지
                 }
-
-
-
             }
 
         }
@@ -213,12 +201,10 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                         deleteMarker()
                         campList.clear()
                         campsiteViewModel.fetchSearchedCampsites(1, text.toString())
-
                         true
                     }
                 }
             }
-
 
             //서치바 리사이클러뷰 설정
             recyclerViewCampListResult.run {
@@ -235,9 +221,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                 }
                 addItemDecoration(divider)
             }
-
         }
-
         return fragmentCampsiteBinding.root
     }
 
@@ -254,8 +238,6 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
         naverMap.uiSettings.isCompassEnabled = false
         //내 위치 버튼 위치 커스텀
         val locationButton = fragmentCampsiteBinding.buttonMyLocation
-
-
         locationButton.map = naverMap
 
         //권한 확인 및 승인되지 않은 경우 요청
@@ -274,28 +256,24 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                     myLongitude = location.longitude.toString()
                     //데이터 1차 호출
                     campsiteViewModel.fetchCampsites(page, myLatitude, myLongitude)
-                } else {
-                    //위도 경도 정보를 불러오지 못했을 때
                 }
             }
-
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
         }
-
-
         naverMap.addOnLocationChangeListener { location ->
             naverMap.locationTrackingMode
         }
     }
 
+    //마커 추가 메서드
     fun addMaker() {
         for (info in campList) {
             val marker = Marker()
             marker.position = LatLng(info.위도.toDouble(), info.경도.toDouble())
             marker.tag = info
             marker.map = naverMap
-            marker.zIndex=1
+            marker.zIndex = 1
             markerList.add(marker)
             marker.setOnClickListener(this)
             Log.d("testt", "마커 추가 중")
@@ -356,14 +334,15 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                 rowSearchedCampsiteBinding.root.setOnClickListener {
                     val searchView = fragmentCampsiteBinding.searchViewCampList
 
-                    Log.d("testt","클릭:")
+                    Log.d("testt", "클릭:")
                     //마커 색깔 변경
-                    markerList[adapterPosition].icon=MarkerIcons.BLACK
-                    markerList[adapterPosition].iconTintColor=Color.RED
-                    markerList[adapterPosition].zIndex=2
-                    val tagInfo=markerList[adapterPosition].tag as CampsiteInfo
+                    markerList[adapterPosition].icon = MarkerIcons.BLACK
+                    markerList[adapterPosition].iconTintColor = Color.RED
+                    markerList[adapterPosition].zIndex = 2
+                    val tagInfo = markerList[adapterPosition].tag as CampsiteInfo
                     //카메라 이동
-                    val cameraUpdate=CameraUpdate.scrollTo(LatLng(tagInfo.위도.toDouble(),tagInfo.경도.toDouble()))
+                    val cameraUpdate =
+                        CameraUpdate.scrollTo(LatLng(tagInfo.위도.toDouble(), tagInfo.경도.toDouble()))
                     naverMap.moveCamera(cameraUpdate)
 
                     naverMap.run {
@@ -373,15 +352,13 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                         // 원하는 줌 레벨로 이동하기
                         val newZoom = currentZoom + 3.0f // 예시로 1단계씩 증가시킴
                         val cameraUpdate2 = CameraUpdate.scrollTo(cameraPosition.target)
-                            zoomTo(newZoom)
+                        zoomTo(newZoom)
                         moveCamera(cameraUpdate2)
                     }
 
                     fragmentCampsiteBinding.root2.requestFocus()
                     searchView.hide()
-
                 }
-
             }
         }
 
@@ -408,13 +385,11 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                 holder.imageViewCampsite.setImageResource(R.drawable.camping_24px)
                 holder.textViewCampsiteName.text = campList[position].캠핑장이름
                 holder.textViewCampsiteAdress.text = campList[position].주소
-            }catch (e:java.lang.Exception){
-                Log.d("testt","오류방지")
+            } catch (e: java.lang.Exception) {
+                Log.d("testt", "오류방지")
             }
 
         }
-
-
     }
 
     override fun onClick(p0: Overlay): Boolean {
