@@ -2,6 +2,7 @@ package com.test.campingusproject_customer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.test.campingusproject_customer.dataclassmodel.CustomerUserModel
 
 class CustomerUserViewModel : ViewModel() {
     val verificationCompleted = MutableLiveData<Boolean>()
