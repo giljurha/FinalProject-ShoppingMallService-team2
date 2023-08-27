@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import kotlin.concurrent.thread
 
@@ -30,9 +31,17 @@ class MyprofileFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentMyprofileBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
-        //테스트를 위한 화면 전환
-        //로그인 여부 검사해야함
-        mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        if(CustomerUserRepository.checkLoginStatus(sharedPreferences)){
+            fragmentMyprofileBinding.run {
+                textViewMyProfileMyName.text = sharedPreferences.getString("customerUserName", null).toString()
+                textViewMyProfileMyPhoneNumber.text = sharedPreferences.getString("customerUserPhoneNumber", null).toString()
+                textViewMyprofileMyDestination.text = sharedPreferences.getString("customerUserShipAddress", null).toString()
+            }
+        }else{
+            mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+        }
 
         fragmentMyprofileBinding.run {
             materialToolbarMyProfile.run {
@@ -43,9 +52,7 @@ class MyprofileFragment : Fragment() {
                     true
                 }
             }
-            textViewMyProfileMyName.text = "강현구"
-            textViewMyProfileMyPhoneNumber.text = "010-1234-1234"
-            textViewMyprofileMyDestination.text = "서울특별시 송파구 올림픽로 300 시그니엘 꼭대기층임ㅋ"
+
 
             textViewMyProfileMyPost.setOnClickListener {
                 mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,null)

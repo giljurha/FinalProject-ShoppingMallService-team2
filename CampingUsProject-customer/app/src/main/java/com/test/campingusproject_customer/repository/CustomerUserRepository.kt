@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.repository
 
 import android.app.Activity
+import android.content.SharedPreferences
 import android.provider.ContactsContract.Data
 import android.util.Log
 import com.google.android.gms.tasks.Task
@@ -93,6 +94,49 @@ class CustomerUserRepository() {
             val customerUserRef = database.getReference("CustomerUsers")
             customerUserRef.orderByChild("customerUserPhoneNumber").equalTo(customerUserPhoneNumber)
                 .addValueEventListener(listener)
+        }
+
+        //서버에서 유저 ID 찾는 함수
+        fun getRegisteredID(
+            customerUserId : String,
+            callback: (Task<DataSnapshot>) -> Unit
+        ){
+            val database = FirebaseDatabase.getInstance()
+
+            val customerUserRef = database.getReference("CustomerUsers")
+            customerUserRef.orderByChild("customerUserId").equalTo(customerUserId)
+                .get().addOnCompleteListener(callback)
+        }
+
+        fun saveUserInfo(sharedPreferences: SharedPreferences, customerUser: CustomerUserModel){
+            val editor = sharedPreferences.edit()
+
+            editor.putString("customerUserName", customerUser.customerUserName)
+            editor.putString("customerUserId", customerUser.customerUserId)
+            editor.putString("customerUserPw", customerUser.customerUserPw)
+            editor.putString("customerUserShipRecipient", customerUser.customerUserShipRecipient)
+            editor.putString("customerUserShipContact", customerUser.customerUserShipContact)
+            editor.putString("customerUserShipAddress", customerUser.customerUserShipAddress)
+            editor.putString("customerUserPhoneNumber", customerUser.customerUserPhoneNumber)
+            editor.putString("customerUserProfileImage", customerUser.customerUserProfileImage)
+
+            editor.apply()
+        }
+
+        fun checkLoginStatus(sharedPreferences: SharedPreferences): Boolean{
+
+            val customerUserName = sharedPreferences.getString("customerUserName", null)
+            val customerUserId = sharedPreferences.getString("customerUserId", null)
+            val customerUserPw = sharedPreferences.getString("customerUserPw", null)
+            val customerUserShipRecipient = sharedPreferences.getString("customerUserShipRecipient", null)
+            val customerUserShipContact = sharedPreferences.getString("customerUserShipContact", null)
+            val customerUserShipAddress = sharedPreferences.getString("customerUserShipAddress", null)
+            val customerUserPhoneNumber = sharedPreferences.getString("customerUserPhoneNumber", null)
+            val customerUserProfileImage = sharedPreferences.getString("customerUserProfileImage", null)
+
+            return !(customerUserName == null || customerUserId == null || customerUserPw == null ||
+                    customerUserShipRecipient == null || customerUserShipContact == null ||
+                    customerUserShipAddress == null || customerUserPhoneNumber == null || customerUserProfileImage == null)
         }
     }
 }
