@@ -1,8 +1,10 @@
 package com.test.campingusproject_customer.ui.campsite
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import androidx.core.view.ViewCompat.animate
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -402,6 +405,7 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
             ).apply {
                 setView(dialogBinding.root)
                 setTitle("캠핑장 정보")
+                Glide.with(mainActivity).load(marker.사진).error(R.drawable.ic_launcher_background).into(dialogBinding.imageViewCampsite)
                 dialogBinding.textViewCampsiteName.text = marker.캠핑장이름
                 dialogBinding.textViewCampsiteAddress.text = marker.주소
                 dialogBinding.textViewCampsiteNumber.text = marker.전화번호
@@ -411,8 +415,14 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                 dialogBinding.textViewCampsiteFacilities.text = marker.편의시설
                 dialogBinding.textViewCampsiteFun.text = marker.놀거리
                 dialogBinding.textViewCampsiteAnimal.text = marker.애완동물여부
-                dialogBinding.textViewCampsiteUrl.text = marker.홈페이지
-                dialogBinding.textViewCampsiteUrl.setTextColor(Color.BLUE)
+                dialogBinding.textViewCampsiteUrl.run {
+                    text = marker.홈페이지
+                    setTextColor(Color.BLUE)
+                    setOnClickListener {
+                        val intent= Intent(Intent.ACTION_VIEW, Uri.parse(marker.홈페이지))
+                        startActivity(intent)
+                    }
+                }
                 setPositiveButton("닫기", null)
             }
             builder.show()
