@@ -28,7 +28,7 @@ class ContractCampsiteFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         fragmentContractCampsiteBinding = FragmentContractCampsiteBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
-
+        
         fragmentContractCampsiteBinding.toolbarContractCampsite.run {
             setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
             setNavigationOnClickListener {

@@ -76,6 +76,12 @@
                 android:text="TextView"
                 android:textSize="18sp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPostReadImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,8 +141,9 @@
                     android:id="@+id/textInputEditTextPostReadInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text|textPersonName"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+                    android:maxLength="50"
+                    android:textCursorDrawable="@drawable/shape_text_input_edit_text"
+                    android:inputType="text|textPersonName"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -153,14 +160,15 @@
                     android:text="( 0 / 50 )"
                     android:textColor="@color/gray" />
 
-                <TextView
-                    android:id="@+id/textViewPostReadCommentsSave"
+                <Button
+                    android:id="@+id/buttonPostReadSaveButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
                     android:text="저장"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/highLightColor"
+                    app:strokeColor="@color/highLightColor" />
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

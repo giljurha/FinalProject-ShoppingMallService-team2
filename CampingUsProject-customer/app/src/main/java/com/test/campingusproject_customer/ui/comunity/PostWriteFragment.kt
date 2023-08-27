@@ -34,6 +34,7 @@ import com.test.campingusproject_customer.databinding.RowPostImageBinding
 import com.test.campingusproject_customer.dataclassmodel.PostModel
 import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -188,7 +189,6 @@ class PostWriteFragment : Fragment() {
 
                         // 게시글 인덱스 번호
                         PostRepository.getPostIdx {
-                            Log.d("aaaa","${it.result.value}")
                             postIdx = it.result.value as Long
                             //게시글 인덱스 증가
                             postIdx++
@@ -221,14 +221,19 @@ class PostWriteFragment : Fragment() {
                             //게시글 저장
                             PostRepository.addPostInfo(postModel){
                                 PostRepository.setPostIdx(postIdx){
-                                    if(postImagePath == "null"){
-                                        mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
+                                    if(postImagePath != "null") {
+                                        PostRepository.uploadImages(postImageList, postImagePath) {
+                                            mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
+                                            val newBundle = Bundle()
+                                            newBundle.putLong("PostIdx", postIdx)
+                                            mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT, true, true, newBundle)
+                                        }
                                     }
                                     else{
-                                        PostRepository.uploadImages(postImageList,postImagePath){
-//                                        Snackbar.make(fragmentPostWriteBinding.root, "저장되었습니다", Snackbar.LENGTH_SHORT).show()
-                                            mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
-                                    }
+                                        mainActivity.removeFragment(MainActivity.POST_WRITE_FRAGMENT)
+                                        val newBundle = Bundle()
+                                        newBundle.putLong("PostIdx", postIdx)
+                                        mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT, true, true, newBundle)
                                     }
                                 }
                             }
@@ -280,7 +285,7 @@ class PostWriteFragment : Fragment() {
         override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
             //bitmap factory option 사용해 비트맵 크기 줄임
             val option = BitmapFactory.Options()
-            option.inSampleSize = 4
+            option.inSampleSize = 8
 
             val inputStream = mainActivity.contentResolver.openInputStream(postImageList[position])
             val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
@@ -304,7 +309,6 @@ class PostWriteFragment : Fragment() {
     fun albumSetting() : ActivityResultLauncher<Intent>{
         //앨범에서 이미지 가져오기
         val albumLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-
             //이미지 가져오기 성공
             if(it.resultCode == Activity.RESULT_OK){
                 //사진 여러장 선택한 경우

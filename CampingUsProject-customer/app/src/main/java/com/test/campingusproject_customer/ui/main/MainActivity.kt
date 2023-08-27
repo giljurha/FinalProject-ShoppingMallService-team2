@@ -25,6 +25,7 @@ import com.test.campingusproject_customer.ui.myprofile.MyQuestionListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyPostListFragment
 import com.test.campingusproject_customer.ui.myprofile.MyprofileFragment
 import com.test.campingusproject_customer.ui.myprofile.PurchaseHistoryFragment
+import com.test.campingusproject_customer.ui.myprofile.ReviewWriteFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingFragment
 import com.test.campingusproject_customer.ui.user.AuthFragment
 import com.test.campingusproject_customer.ui.user.JoinFragment
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val PURCHASE_HISTORY_FRAGMENT = "PurchaseHistoryFragment"
         val REVIEW_FRAGMENT = "ReviewFragment"
         val REVIEW_DETAIL_FRAGMENT = "ReviewDetailFragment"
+        val REVIEW_WRITE_FRAGMENT = "ReviewWriteFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,31 +88,26 @@ class MainActivity : AppCompatActivity() {
                     when (it.itemId) {
                         //홈 클릭
                         R.id.menuItemHome -> {
-                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(HOME_FRAGMENT, false, false, null)
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
-                            replaceFragment(CAMPSITE_FRAGMENT,true,false,null)
+                            replaceFragment(CAMPSITE_FRAGMENT,false,false,null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
-                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(SHOPPING_FRAGMENT, false, false, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
-                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(COMUNITY_FRAGMENT, false, false, null)
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
-                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
                         }
 
                         else -> {
-                            removeFragment(CAMPSITE_FRAGMENT)
                             replaceFragment(HOME_FRAGMENT, false, false, null)
                         }
                     }
@@ -151,6 +148,7 @@ class MainActivity : AppCompatActivity() {
             PURCHASE_HISTORY_FRAGMENT -> PurchaseHistoryFragment()
             REVIEW_FRAGMENT -> ReviewFragment()
             REVIEW_DETAIL_FRAGMENT -> ReviewDetailFragment()
+            REVIEW_WRITE_FRAGMENT -> ReviewWriteFragment()
 
             else -> Fragment()
         }
