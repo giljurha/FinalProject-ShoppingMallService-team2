@@ -128,4 +128,9 @@ class CartFragment : Fragment() {
         return (this * scale + 0.5f).toInt()
     }
 
+    override fun onStop() {
+        super.onStop()
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+    }
+
 }
