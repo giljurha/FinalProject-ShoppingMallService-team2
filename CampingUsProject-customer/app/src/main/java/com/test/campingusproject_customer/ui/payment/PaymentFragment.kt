@@ -101,4 +101,9 @@ class PaymentFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+    }
+
 }
