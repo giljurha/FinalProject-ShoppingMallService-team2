@@ -66,7 +66,7 @@ class ComunityFragment : Fragment() {
         // 게시판 타입 번호를 전달하여 게시글 정보를 가져온다.
         postViewModel.getPostAll(postType)
         postViewModel.resetImageList()
-    fragmentComunityBinding.run {
+        fragmentComunityBinding.run {
         materialToolbarComunityFragment.run {
             textViewToolbarTitle.text = boardTypeList[postType.toInt()]
             setNavigationIcon(R.drawable.menu_24px)
