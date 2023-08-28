@@ -66,16 +66,17 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
+        requestPermissions(permissionList, 0)
+
         //로그인한적 없으면 로그인 화면으로 넘어가고 바텀 네비게이션 안보이게
         if(!UserInfoRepository.checkPref(this)){
-            replaceFragment(LOGIN_FRAGMENT,false,false,null)
+            replaceFragment(MainActivity.LOGIN_FRAGMENT,false,false,null)
             activityMainBinding.bottomNavigationViewMain.visibility= View.GONE
         }else{
-            replaceFragment(SELL_STATE_FRAGMENT, false, false, null)
+            replaceFragment(MainActivity.SELL_STATE_FRAGMENT, false, false, null)
+            //하단 nav bar 보이게
+            activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
         }
-
-
-        requestPermissions(permissionList, 0)
 
         activityMainBinding.run {
             bottomNavigationViewMain.menu.findItem(R.id.menuItemSellStatus).setChecked(true)
