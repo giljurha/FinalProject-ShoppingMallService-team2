@@ -18,6 +18,7 @@ class CartViewModel() : ViewModel() {
 
     init {
         cartDataList.value = mutableListOf<CartModel>()
+        cartProductList.value = mutableListOf<CartProductModel>()
     }
 
 
@@ -27,9 +28,9 @@ class CartViewModel() : ViewModel() {
         val tempList = mutableListOf<CartModel>()
         val tempList2 = mutableListOf<CartProductModel>()
 
-        CartRepository.getAllCartData(cartUserId) {
-            if(it.result.exists() == true) {
-                for (c1 in it.result.children) {
+        CartRepository.getAllCartData(cartUserId) { cartData ->
+            if(cartData.result.exists() == true) {
+                for (c1 in cartData.result.children) {
                     val cartUserId = c1.child("cartUserId").value as String
                     val cartProductId = c1.child("cartProductId").value as Long
                     val cartProductCount = c1.child("cartProductCount").value as Long
@@ -37,9 +38,9 @@ class CartViewModel() : ViewModel() {
                     val cartProduct = CartModel(cartUserId, cartProductId, cartProductCount)
                     tempList.add(cartProduct)
 
-                    CartRepository.getProductData(cartProductId) {
-                        if(it.result.exists() == true) {
-                            for (c2 in it.result.children) {
+                    CartRepository.getProductData(cartProductId) { productData->
+                        if(productData.result.exists() == true) {
+                            for (c2 in productData.result.children) {
                                 val productName = c2.child("productName").value as String
                                 val productPrice = c2.child("productPrice").value as Long
                                 val productImage = c2.child("productImage").value as String
