@@ -15,7 +15,17 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:menu="@menu/menu_post_write_camera_album"
-        app:navigationIconTint="@color/highLightColor"/>
+        app:navigationIconTint="@color/highLightColor">
+
+        <TextView
+            android:id="@+id/textViewPostWriteToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="18sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <ScrollView
         android:layout_width="match_parent"
