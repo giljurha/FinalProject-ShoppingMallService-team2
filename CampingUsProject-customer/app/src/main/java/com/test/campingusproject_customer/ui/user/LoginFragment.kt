@@ -31,6 +31,9 @@ class LoginFragment : Fragment() {
         fragmentLoginBinding = FragmentLoginBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         fragmentLoginBinding.run {
             materialToolbarLogin.run {
                 title = "로그인"
@@ -98,7 +101,9 @@ class LoginFragment : Fragment() {
                         Log.d("existId", "존재하지 않는 ID")
 
                         createDialog("아이디 오류", "존재하지 않는 아이디입니다."){
+                            textInputEditTextLoginPw.setText("")
                             textInputEditTextLoginId.setText("")
+                            mainActivity.focusOnView(textInputEditTextLoginId)
                         }
                     }
                 }
