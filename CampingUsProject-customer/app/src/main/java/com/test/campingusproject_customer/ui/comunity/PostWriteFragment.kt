@@ -47,7 +47,7 @@ class PostWriteFragment : Fragment() {
 
     //게시판 종류
     val boardTypeList = arrayOf(
-        "전체게시판","인기게시판", "자유게시판", "캠핑게시판", "유머게시판"
+        "자유게시판", "캠핑게시판", "유머게시판"
     )
     var boardType:Long = 999L
 
@@ -66,7 +66,7 @@ class PostWriteFragment : Fragment() {
 
         fragmentPostWriteBinding.run {
             materialToolbarPostWrite.run {
-                title = "게시글 작성"
+                textViewPostWriteToolbarTitle.text = "게시글 작성"
 
                 setNavigationIcon(R.drawable.arrow_back_24px)
                 setNavigationOnClickListener {
@@ -77,9 +77,6 @@ class PostWriteFragment : Fragment() {
                 }
                 setOnMenuItemClickListener {
                     when(it.itemId){
-                        R.id.menu_item_camera ->{
-                            title = "카메라"
-                        }
                         R.id.menu_item_album ->{
                             //앨범 이동
                             val albumIntent = Intent(Intent.ACTION_PICK)
@@ -98,8 +95,8 @@ class PostWriteFragment : Fragment() {
                     val builder = MaterialAlertDialogBuilder(mainActivity)
                     builder.setTitle("게시판 종류")
                     builder.setItems(boardTypeList){ dialogInterface: DialogInterface, i: Int ->
-                        boardType = i.toLong()
-                        text = boardTypeList[boardType.toInt()]
+                        boardType = i.toLong() + 2
+                        text = boardTypeList[boardType.toInt()-2]
                     }
                     builder.setNegativeButton("취소", null)
                     builder.show()

@@ -25,31 +25,59 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme" />
+                android:theme="?attr/actionBarTheme">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutComunitySearch"
+                <TextView
+                    android:id="@+id/textViewToolbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="TextView"
+                    android:textSize="18sp" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/soft_gray"
-                android:textCursorDrawable="@color/highLightColor"
-                android:transitionGroup="true"
-                app:boxStrokeColor="@drawable/textinputlayout_selector"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/highLightColor"
-                app:startIconDrawable="@drawable/search_24px">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextComunitySearch"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutComunitySearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:inputType="text|textPersonName"
-                    android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="1"
+                    android:textColorHint="@color/soft_gray"
+                    android:textCursorDrawable="@color/highLightColor"
+                    android:transitionGroup="true"
+                    app:boxStrokeColor="@drawable/textinputlayout_selector"
+                    app:endIconMode="clear_text"
+                    app:hintTextColor="@color/highLightColor"
+                    app:startIconDrawable="@drawable/search_24px">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputEditTextComunitySearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/shape_text_input_edit_text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/buttonComunitySearchButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="검색"
+                    android:textColor="@color/highLightColor"
+                    app:strokeColor="@color/highLightColor" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
