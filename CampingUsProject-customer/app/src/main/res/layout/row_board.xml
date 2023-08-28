@@ -63,8 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/favorite_fill_24px"
-                android:gravity="center"
+                android:drawableStart="@drawable/favorite_fill_24px"
                 android:text="TextView"
                 android:textColor="@color/highLightColor"
                 android:textSize="12sp" />
@@ -74,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/chat_24px"
+                android:drawableStart="@drawable/chat_24px"
                 android:text="TextView"
                 android:textColor="@color/highLightColor"
                 android:textSize="12sp" />

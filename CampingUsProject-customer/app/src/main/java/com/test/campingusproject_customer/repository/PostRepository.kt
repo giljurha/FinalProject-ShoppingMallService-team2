@@ -57,20 +57,31 @@ class PostRepository {
 
         //게시글 이미지 가져오기
         fun getPostImages(fileDir: String, callback1: (StorageReference) -> Unit){
-            val storage = FirebaseStorage.getInstance()
-
-            val filePath = fileDir.substring(0, fileDir.length-1)
-            val fileDirRef = storage.reference.child(filePath)
-
-            //listAll 메서드로 해당 디렉토리 하위에 있는 모든 항목을 순회
-            fileDirRef.listAll()
-                .addOnCompleteListener { task->
-                    if(task.isSuccessful){
-                        task.result.items.forEach {
-                            callback1(it)
+            if(fileDir != "null") {
+                val storage = FirebaseStorage.getInstance()
+                val filePath = fileDir.substring(0, fileDir.length - 1)
+                val fileDirRef = storage.reference.child(filePath)
+                //listAll 메서드로 해당 디렉토리 하위에 있는 모든 항목을 순회
+                fileDirRef.listAll()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            task.result.items.forEach {
+                                callback1(it)
+                            }
                         }
                     }
-                }
+            }
+            else{
+                return
+            }
         }
+
+        // 게시글 정보 전체를 가져온다.
+        fun getPostAll(callback1: (Task<DataSnapshot>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val postDataRef = database.getReference("PostData")
+            postDataRef.orderByChild("postIdx").get().addOnCompleteListener(callback1)
+        }
+
     }
 }

@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
 
         fragmentHomeBinding.run {
             materialToolbarHomeFragment.run {
-                title = "CampingUs"
+                textViewHomeToolbarTitle.text = "CampingUs"
                 setOnMenuItemClickListener {
                     //장바구니로 가기
                     mainActivity.replaceFragment(MainActivity.CART_FRAGMENT, true, true, null)
@@ -87,15 +87,15 @@ class HomeFragment : Fragment() {
 
             //인기특가 더보기 눌렀을 때
             textViewHomePopularSaleShowMore.setOnClickListener {
-                materialToolbarHomeFragment.title = "인기특가 더보기"
+                textViewHomeToolbarTitle.text = "인기특가 더보기"
             }
             //실시간랭킹 더보기 눌렀을 때
             textViewHomeRealTimeRankShowMore.setOnClickListener {
-                materialToolbarHomeFragment.title = "실시간랭킹 더보기"
+                textViewHomeToolbarTitle.text = "실시간랭킹 더보기"
             }
             //인기게시판 더보기 눌렀을 때
             textViewHomePopularBoardShowMore.setOnClickListener {
-                materialToolbarHomeFragment.title = "인기게시판 더보기"
+                textViewHomeToolbarTitle.text = "인기게시판 더보기"
             }
         }
 
