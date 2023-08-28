@@ -31,7 +31,6 @@ class MyprofileFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentMyprofileBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
-
         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
         if(CustomerUserRepository.checkLoginStatus(sharedPreferences)){
             fragmentMyprofileBinding.run {
@@ -53,9 +52,12 @@ class MyprofileFragment : Fragment() {
                 }
             }
 
-
+            //내가 쓴 글
             textViewMyProfileMyPost.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,null)
+                val userId =  sharedPreferences.getString("customerUserId", null).toString()
+                val newBundle = Bundle()
+                newBundle.putString("userId",userId)
+                mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,newBundle)
             }
 
             //수정
