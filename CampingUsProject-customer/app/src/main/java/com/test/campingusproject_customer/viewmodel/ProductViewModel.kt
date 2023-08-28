@@ -56,8 +56,8 @@ class ProductViewModel : ViewModel() {
         }
     }
 
-    // 전체 상품 가져오기
-    fun getAllProductRecommendationCountData(){
+    // 실시간 랭킹 상품 정렬해서 가져오기
+    fun getAllProductRealTimeRankingData(){
         val tempList = mutableListOf<ProductModel>()
 
         ProductRepository.getAllProductData {
@@ -127,7 +127,7 @@ class ProductViewModel : ViewModel() {
         val tempList = mutableListOf<ProductModel>()
 
         ProductRepository.getAllProductData {
-            for(c1 in it.result.children){
+            for(c1 in it.result.children) {
                 val productId = c1.child("productId").value as Long
                 val productSellerId = c1.child("productSellerId").value as String
                 val productName = c1.child("productName").value as String

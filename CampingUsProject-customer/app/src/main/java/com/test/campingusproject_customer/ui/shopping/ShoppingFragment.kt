@@ -3,7 +3,6 @@ package com.test.campingusproject_customer.ui.shopping
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -24,6 +23,7 @@ import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingBinding
 import com.test.campingusproject_customer.databinding.HeaderShoppingBinding
 import com.test.campingusproject_customer.databinding.RowShoppingBinding
+import com.test.campingusproject_customer.dataclassmodel.ProductModel
 import com.test.campingusproject_customer.repository.ProductRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.ProductViewModel
@@ -83,6 +83,17 @@ class ShoppingFragment : Fragment() {
                     drawerLayoutShopping.open()
                 }
             }
+
+            // 리사이클러뷰
+            recyclerViewShoppingProduct.run {
+                recyclerViewShoppingProduct.run {
+                    productViewModel.getAllProductData()
+
+                    adapter = ShoppingProductAdapter()
+                    layoutManager = GridLayoutManager(context, 3)
+                }
+            }
+
             // 드루어 레이아웃
             navigationViewShopping.run {
                 itemIconTintList
@@ -90,9 +101,9 @@ class ShoppingFragment : Fragment() {
                 val headerShoppingBinding = HeaderShoppingBinding.inflate(inflater)
                 headerShoppingBinding.textViewShoppingHeaderUserName.text = "김민우 님"
                 addHeaderView(headerShoppingBinding.root)
-
-                // 쇼핑 화면에 들어왔을 시 실시간 랭킹을 보여줌
-                menu.findItem(R.id.itemShoppingRealTimeRanking).setIcon(R.drawable.circle_20px)
+//
+//                // 쇼핑 화면에 들어왔을 시 보여줄 항목
+//                menu.findItem(R.id.itemShoppingRealTimeRanking).setIcon(R.drawable.circle_20px)
 
                 // 항목 선택 시 동작 리스너
                 setNavigationItemSelectedListener {
@@ -164,10 +175,6 @@ class ShoppingFragment : Fragment() {
                     true
                 }
             }
-            // 리사이클러뷰
-            recyclerViewShoppingProduct.run {
-                getProductCategoryData("실시간 랭킹")
-            }
         }
 
         return fragmentShoppingBinding.root
@@ -180,14 +187,14 @@ class ShoppingFragment : Fragment() {
             val imageViewShoppingImage: ImageView
             val textViewShoppingName: TextView
             val textViewShoppingPrice: TextView
-            val imageButtonLiked: ImageView
+            var imageShoppingLiked: ImageView
 
             init{
                 progressBarRowShopping = rowShoppingBinding.progressBarRowShopping
                 imageViewShoppingImage = rowShoppingBinding.imageViewShoppingImage
                 textViewShoppingName = rowShoppingBinding.textViewShoppingName
                 textViewShoppingPrice = rowShoppingBinding.textViewShoppingPrice
-                imageButtonLiked = rowShoppingBinding.imageButtonLiked
+                imageShoppingLiked = rowShoppingBinding.imageShoppingLiked
             }
         }
 
@@ -211,7 +218,8 @@ class ShoppingFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ShoppingProductAdapter.ShoppingProductViewHolder, position: Int) {
-            //상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
+            // 이미지
+            // 상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
             ProductRepository.getProductFirstImage(productViewModel.productList.value?.get(position)?.productImage!!){ uri->
                 //글라이드 라이브러리로 이미지 표시
                 //이미지 로딩 완료되거나 실패하기 전까지 프로그래스바 활성화
@@ -243,19 +251,31 @@ class ShoppingFragment : Fragment() {
                         // 사용할 뷰
                     .into(holder.imageViewShoppingImage)
             }
+            // 상품 이름
             holder.textViewShoppingName.text = productViewModel.productList.value?.get(position)?.productName
 
+            // 상품 가격
             if(productViewModel.productList.value?.get(position)?.productSellingStatus == false) {
                 holder.textViewShoppingPrice.text = "품절"
             } else if (productViewModel.productList.value?.get(position)!!.productDiscountRate != 0L) {
                 // 할인율 계산
                 var discountRate = productViewModel.productList.value?.get(position)!!.productDiscountRate * 0.01
 
-                val result = (productViewModel.productList.value!!.get(position).productPrice * discountRate).toInt().toString()
+                val result = (productViewModel.productList.value?.get(position)!!.productPrice * discountRate).toInt().toString()
 
                 holder.textViewShoppingPrice.text = " ${ result } 원"
             } else {
                 holder.textViewShoppingPrice.text = " ${ productViewModel.productList.value?.get(position)?.productPrice.toString() } 원"
+            }
+
+            // 좋아요 클릭시
+            holder.imageShoppingLiked.run {
+                setOnClickListener {
+                    ProductRepository.likeButtonClicked(productViewModel.productList.value?.get(position)!!.productId, productViewModel.productList.value?.get(position)!!.productRecommendationCount) {
+                        holder.imageShoppingLiked.setImageResource(R.drawable.favorite_fill_24px)
+                    }
+                    true
+                }
             }
         }
     }
@@ -276,7 +296,7 @@ class ShoppingFragment : Fragment() {
     fun getProductRealTimeRankingData() {
         fragmentShoppingBinding.run {
             recyclerViewShoppingProduct.run {
-                productViewModel.getAllProductRecommendationCountData()
+                productViewModel.getAllProductRealTimeRankingData()
 
                 adapter = ShoppingProductAdapter()
                 layoutManager = GridLayoutManager(context, 3)

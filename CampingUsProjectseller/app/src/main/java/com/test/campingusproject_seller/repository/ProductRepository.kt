@@ -132,8 +132,8 @@ class ProductRepository {
         //등록된 상품 데이터를 수정하는 함수
         fun modifyProduct(productModel: ProductModel, callback1: (Task<Void>) -> Unit){
             val database = FirebaseDatabase.getInstance()
-
             val productRef = database.getReference("ProductData")
+
             productRef.orderByChild("productId").equalTo(productModel.productId.toDouble()).get().addOnCompleteListener {
                 for(a1 in it.result.children){
                     a1.ref.child("productCount").setValue(productModel.productCount)
