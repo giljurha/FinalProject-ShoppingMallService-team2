@@ -27,6 +27,9 @@ class OrderDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentOrderDetailBinding = FragmentOrderDetailBinding.inflate(layoutInflater)
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         fragmentOrderDetailBinding.run {
             // 툴바
             toolbarOrderDetail.run {

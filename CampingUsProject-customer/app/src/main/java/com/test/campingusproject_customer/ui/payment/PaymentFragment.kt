@@ -33,6 +33,9 @@ class PaymentFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentPaymentBinding = FragmentPaymentBinding.inflate(layoutInflater)
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         fragmentPaymentBinding.run {
             // 툴바
             toolbarPayment.run {

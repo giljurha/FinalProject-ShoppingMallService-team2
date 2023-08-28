@@ -36,6 +36,9 @@ class CartFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentCartBinding = FragmentCartBinding.inflate(layoutInflater)
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         fragmentCartBinding.run {
 
             // 툴바
