@@ -144,34 +144,6 @@ class PostReadFragment : Fragment() {
         }
     }
 
-    // 이미지 파일에 기록되어 있는 회전 정보를 가져온다.
-    fun getDegree(uri: Uri) : Int{
-        var exifInterface: ExifInterface? = null
-
-        // 사진 파일로 부터 tag 정보를 관리하는 객체를 추출한다.
-        try {
-            val inputStream = mainActivity.contentResolver.openInputStream(uri)
-            if (inputStream != null) {
-                exifInterface = ExifInterface(inputStream)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        var degree = 0
-        if(exifInterface != null){
-            // 각도 값을 가지고온다.
-            val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1)
-
-            when(orientation){
-                ExifInterface.ORIENTATION_ROTATE_90 -> degree = 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> degree = 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> degree = 270
-            }
-        }
-        return degree
-    }
-
     //댓글 리사이클러 뷰
     inner class PostReadAdapter : RecyclerView.Adapter<PostReadFragment.PostReadAdapter.PostReadViewHolder>(){
         inner class PostReadViewHolder(rowPostReadBinding: RowPostReadBinding) : RecyclerView.ViewHolder(rowPostReadBinding.root) {

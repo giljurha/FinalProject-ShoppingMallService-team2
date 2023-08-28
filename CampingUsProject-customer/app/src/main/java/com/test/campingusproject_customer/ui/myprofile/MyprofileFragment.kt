@@ -4,16 +4,22 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
 import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import kotlin.concurrent.thread
 
 class MyprofileFragment : Fragment() {
     lateinit var fragmentMyprofileBinding: FragmentMyprofileBinding
@@ -44,8 +50,12 @@ class MyprofileFragment : Fragment() {
                 }
             }
 
+            //내가 쓴 글
             textViewMyProfileMyPost.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,null)
+                val userId =  sharedPreferences.getString("customerUserId", null).toString()
+                val newBundle = Bundle()
+                newBundle.putString("userId",userId)
+                mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,newBundle)
             }
 
             //수정

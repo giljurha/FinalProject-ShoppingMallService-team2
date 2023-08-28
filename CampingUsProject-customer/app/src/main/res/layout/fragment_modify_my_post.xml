@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:menu="@menu/menu_post_write_camera_album">
+        android:theme="?attr/actionBarTheme">
 
         <TextView
             android:id="@+id/textViewModifyMyPostTitle"
@@ -51,13 +50,23 @@
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
 
-            <TextView
-                android:id="@+id/textViewModifyMyPostSave"
+            <Button
+                android:id="@+id/buttonModifyMyPostSave"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:text="저장"
-                android:textColor="@color/gray" />
+                android:textColor="@color/highLightColor"
+                app:strokeColor="@color/highLightColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPostModifyImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
         </LinearLayout>
     </ScrollView>
 

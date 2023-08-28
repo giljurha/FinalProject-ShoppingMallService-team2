@@ -1,5 +1,6 @@
 package com.test.campingusproject_customer.ui.myprofile
 
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.ListFragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -20,17 +22,31 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyPostListBinding
 import com.test.campingusproject_customer.databinding.RowBoardBinding
+import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.PostViewModel
 
 class MyPostListFragment : Fragment() {
     lateinit var fragmentMyPostListBinding: FragmentMyPostListBinding
     lateinit var mainActivity: MainActivity
+    lateinit var postViewModel: PostViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mainActivity = activity as MainActivity
         fragmentMyPostListBinding = FragmentMyPostListBinding.inflate(layoutInflater)
+
+        postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
+        postViewModel.run {
+            postDataList.observe(mainActivity) {
+                fragmentMyPostListBinding.recyclerViewMytPostList.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        val userId = arguments?.getString("userId").toString()
+        postViewModel.getMyPostList(userId)
+        postViewModel.resetImageList()
 
         fragmentMyPostListBinding.run {
             materialToolbarMyPostList.run {
@@ -85,7 +101,10 @@ class MyPostListFragment : Fragment() {
                 textViewRowMypostListComment = rowMyPostListBinding.textViewRowBoardComment
 
                 rowMyPostListBinding.root.setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,null)
+                    val readPostIdx = postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
+                    val newBundle = Bundle()
+                    newBundle.putLong("PostIdx", readPostIdx!!)
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,newBundle)
                 }
 
                 //길게 눌렀을 때
@@ -94,7 +113,10 @@ class MyPostListFragment : Fragment() {
 
                     //수정
                     contextMenu[0].setOnMenuItemClickListener {
-                        mainActivity.replaceFragment(MainActivity.MODIFY_MY_POST_FRAGMENT,true,true,null)
+                        val postIdx = postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
+                        val newBundle = Bundle()
+                        newBundle.putLong("PostIdx", postIdx!!)
+                        mainActivity.replaceFragment(MainActivity.MODIFY_MY_POST_FRAGMENT,true,true,newBundle)
                         false
                     }
 
@@ -107,10 +129,40 @@ class MyPostListFragment : Fragment() {
                             setTitle("게시글 삭제")
                             setMessage("게시글을 삭제하시겠습니까?")
                             setPositiveButton("예") { dialogInterface: DialogInterface, i: Int ->
-                                fragmentMyPostListBinding.textViewMyPostListTitle.text = "게시글 삭제됨"
+                                val postIdx = postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
+                                val imagePath = postViewModel.postDataList.value?.get(absoluteAdapterPosition)?.postImagePath
+                                PostRepository.removePost(postIdx!!){
+                                    if(imagePath != "null")
+                                        PostRepository.removeImages(imagePath.toString()){
+
+                                            val builder = MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog)
+                                            builder.run{
+                                                setTitle("게시글 삭제")
+                                                setMessage("게시글이 삭제되었습니다.")
+                                                setPositiveButton("닫기") { dialogInterface: DialogInterface, i: Int ->
+                                                }
+                                                show()
+                                            }
+                                            val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                                            val userId =  sharedPreferences.getString("customerUserId", null).toString()
+                                            postViewModel.getMyPostList(userId)
+                                        }
+                                    else{
+                                        val builder = MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog)
+                                        builder.run{
+                                            setTitle("게시글 삭제")
+                                            setMessage("게시글이 삭제되었습니다.")
+                                            setPositiveButton("닫기") { dialogInterface: DialogInterface, i: Int ->
+                                            }
+                                            show()
+                                        }
+                                        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                                        val userId =  sharedPreferences.getString("customerUserId", null).toString()
+                                        postViewModel.getMyPostList(userId)
+                                    }
+                                }
                             }
                             setNegativeButton("아니오") { dialogInterface: DialogInterface, i: Int ->
-                                fragmentMyPostListBinding.textViewMyPostListTitle.text = "게시글 삭제안됨"
                             }
                             show()
                         }
@@ -132,16 +184,16 @@ class MyPostListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 30
+            return postViewModel.postDataList.value?.size!!
         }
 
         override fun onBindViewHolder(holder: MyPostListViewHolder, position: Int) {
             // holder.imageViewRowMypostListWriterImage =
-            holder.textViewRowMypostListTitle.text = "강현구 = 차은우"
-            holder.textViewRowMypostListWriter.text = "강현구"
-            holder.textViewRowMypostListLike.text = "${100 - position}"
-            holder.textVewRowMypostListWriteDate.text = "2023-08-23 14:50"
-            holder.textViewRowMypostListComment.text = "${100 - position}"
+            holder.textViewRowMypostListTitle.text = postViewModel.postDataList.value?.get(position)?.postSubject
+            holder.textViewRowMypostListWriter.text = postViewModel.postDataList.value?.get(position)?.postUserId
+            holder.textViewRowMypostListLike.text = postViewModel.postDataList.value?.get(position)?.postLiked.toString()
+            holder.textVewRowMypostListWriteDate.text = postViewModel.postDataList.value?.get(position)?.postWriteDate
+            holder.textViewRowMypostListComment.text = postViewModel.postDataList.value?.get(position)?.postCommentCount.toString()
         }
     }
 }
