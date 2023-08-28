@@ -9,10 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,14 +24,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentPostWriteBinding
 import com.test.campingusproject_customer.databinding.RowPostImageBinding
 import com.test.campingusproject_customer.dataclassmodel.PostModel
 import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,12 +42,11 @@ class PostWriteFragment : Fragment() {
 
     //게시판 종류
     val boardTypeList = arrayOf(
-        "전체게시판","인기게시판", "자유게시판", "캠핑게시판", "유머게시판"
+        "자유게시판", "캠핑게시판", "유머게시판"
     )
     var boardType:Long = 999L
 
     var postImageList = mutableListOf<Uri>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,7 +60,7 @@ class PostWriteFragment : Fragment() {
 
         fragmentPostWriteBinding.run {
             materialToolbarPostWrite.run {
-                title = "게시글 작성"
+                textViewPostWriteToolbarTitle.text = "게시글 작성"
 
                 setNavigationIcon(R.drawable.arrow_back_24px)
                 setNavigationOnClickListener {
@@ -77,9 +71,6 @@ class PostWriteFragment : Fragment() {
                 }
                 setOnMenuItemClickListener {
                     when(it.itemId){
-                        R.id.menu_item_camera ->{
-                            title = "카메라"
-                        }
                         R.id.menu_item_album ->{
                             //앨범 이동
                             val albumIntent = Intent(Intent.ACTION_PICK)
@@ -98,8 +89,8 @@ class PostWriteFragment : Fragment() {
                     val builder = MaterialAlertDialogBuilder(mainActivity)
                     builder.setTitle("게시판 종류")
                     builder.setItems(boardTypeList){ dialogInterface: DialogInterface, i: Int ->
-                        boardType = i.toLong()
-                        text = boardTypeList[boardType.toInt()]
+                        boardType = i.toLong() + 2
+                        text = boardTypeList[boardType.toInt()-2]
                     }
                     builder.setNegativeButton("취소", null)
                     builder.show()
@@ -108,7 +99,6 @@ class PostWriteFragment : Fragment() {
 
             //저장 눌렀을 떄
             buttonPostWriteSave.run {
-                this.isClickable = true
                 setOnClickListener {
                     var checkTitle = 0 // 제목 체크
                     var checkContents = 0 // 내용 체크
@@ -176,7 +166,8 @@ class PostWriteFragment : Fragment() {
                         var postImagePath = "" // 첨부이미지 파일 이름
 
                         // 게시글 작성자 ID
-                        postUserId = "jin"
+                        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                        postUserId =  sharedPreferences.getString("customerUserId", null).toString()
 
                         // 게시판 종류
                         postType = boardType
@@ -285,7 +276,7 @@ class PostWriteFragment : Fragment() {
         override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
             //bitmap factory option 사용해 비트맵 크기 줄임
             val option = BitmapFactory.Options()
-            option.inSampleSize = 8
+            option.inSampleSize = 4
 
             val inputStream = mainActivity.contentResolver.openInputStream(postImageList[position])
             val bitmap = BitmapFactory.decodeStream(inputStream, null, option)

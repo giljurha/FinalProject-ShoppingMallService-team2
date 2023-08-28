@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.database.FirebaseDatabase
 import com.test.campingusproject_seller.databinding.FragmentUpdateMyInfoBinding
 import com.test.campingusproject_seller.ui.main.MainActivity
 
@@ -35,6 +36,16 @@ class UpdateMyInfoFragment : Fragment() {
             }
 
             buttonMyInfoUpdateFix.setOnClickListener {
+                val inputName = textInputEditTextMyInfoUpdateUserName.text.toString()
+                val inputPw = textInputEditTextMyInfoUpdatePw.text.toString()
+
+                val database = FirebaseDatabase.getInstance()
+                val db = database.getReference("SellerUser")
+
+                db.setValue(mapOf(
+                    "sellerUserName" to "inputName",
+                    "sellerUserPassword" to "inputPw"
+                ))
 
             }
 
