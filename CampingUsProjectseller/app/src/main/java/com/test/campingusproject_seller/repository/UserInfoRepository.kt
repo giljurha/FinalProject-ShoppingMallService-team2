@@ -37,6 +37,17 @@ class UserInfoRepository {
             editor.commit()
         }
 
+        fun deletePre(mainActivity:MainActivity){
+            val pref = mainActivity.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+
+            //데이터 설정
+            val editor=pref.edit()
+            //값 모두 삭제
+           editor.clear()
+
+            editor.commit()
+        }
+
 
         //회원가입 메서드(사용자 정보 저장)
         fun addUserInfo(userClass: UserModel, callback: (Task<Void>) -> Unit) {
