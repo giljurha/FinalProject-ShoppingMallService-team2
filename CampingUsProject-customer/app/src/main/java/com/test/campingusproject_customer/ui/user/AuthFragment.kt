@@ -47,6 +47,9 @@ class AuthFragment : Fragment() {
         fragmentAuthBinding = FragmentAuthBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        //하단 nav bar 안보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
+
         //파이어베이스 인증 객체 생성
         val auth = Firebase.auth
 
