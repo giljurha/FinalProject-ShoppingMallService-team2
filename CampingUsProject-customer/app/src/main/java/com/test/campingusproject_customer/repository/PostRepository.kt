@@ -133,5 +133,18 @@ class PostRepository {
                 }
             }
         }
+
+        //댓글 개수 수정
+        fun modifyPostCommentsCount(postIdx:Long,currentCommentsCount:Long, callback1: (Task<Void>) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            val postDataRef = database.getReference("PostData")
+
+            postDataRef.orderByChild("postIdx").equalTo(postIdx.toDouble()).get()
+                .addOnCompleteListener {
+                    for (a1 in it.result.children) {
+                        a1.ref.child("postCommentCount").setValue(currentCommentsCount+1).addOnCompleteListener(callback1)
+                    }
+                }
+        }
     }
 }

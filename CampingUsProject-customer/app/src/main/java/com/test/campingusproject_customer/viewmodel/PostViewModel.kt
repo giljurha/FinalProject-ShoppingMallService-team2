@@ -28,6 +28,11 @@ class PostViewModel() : ViewModel() {
         postImageList.value = mutableListOf<Uri?>()
     }
 
+    //댓글 수 카운트
+    fun setCommentsCount(count:Long){
+        postCommentCount.value = count
+    }
+
     // 게시글 읽기 화면
     fun getOnePostReadData(postIdx: Double) {
         // 게시글 데이터를 가져온다
