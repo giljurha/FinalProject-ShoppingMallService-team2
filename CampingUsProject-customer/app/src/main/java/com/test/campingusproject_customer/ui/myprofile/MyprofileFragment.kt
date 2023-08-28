@@ -2,22 +2,18 @@ package com.test.campingusproject_customer.ui.myprofile
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
-import kotlin.concurrent.thread
 
 class MyprofileFragment : Fragment() {
     lateinit var fragmentMyprofileBinding: FragmentMyprofileBinding
@@ -30,11 +26,15 @@ class MyprofileFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentMyprofileBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
-        //테스트를 위한 화면 전환
-        //로그인 여부 검사해야함
-        mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+
+        loginStatusCheck(sharedPreferences)
+
+        //하단 nav bar 보이게
+        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
 
         fragmentMyprofileBinding.run {
+
             materialToolbarMyProfile.run {
                 title = "내정보"
                 //장바구니 가는 버튼
@@ -43,9 +43,6 @@ class MyprofileFragment : Fragment() {
                     true
                 }
             }
-            textViewMyProfileMyName.text = "강현구"
-            textViewMyProfileMyPhoneNumber.text = "010-1234-1234"
-            textViewMyprofileMyDestination.text = "서울특별시 송파구 올림픽로 300 시그니엘 꼭대기층임ㅋ"
 
             textViewMyProfileMyPost.setOnClickListener {
                 mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,null)
@@ -66,23 +63,32 @@ class MyprofileFragment : Fragment() {
             }
 
             //로그아웃
-            textViewMyProfileLogout.run {
-                setOnClickListener {
-                    //다이얼로그 생성을 위한 객체를 생성한다
-                    val builder = MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog)
+            textViewMyProfileLogout.setOnClickListener {
 
-                    builder.run {
-                        setTitle("로그아웃")
-                        setMessage("로그아웃 하시겠습니까?")
-                        setPositiveButton("예") { dialogInterface: DialogInterface, i: Int ->
-                            textViewMyProfileLogout.text = "로그아웃 됨"
-                        }
-                        setNegativeButton("아니오") { dialogInterface: DialogInterface, i: Int ->
-                            textViewMyProfileLogout.text = "로그아웃 안됨"
-                        }
-                        show()
+                MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+                    setTitle("로그아웃")
+                    setMessage("로그아웃 하시겠습니까?")
+                    setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+                        //로그아웃된 상태
+
+                        //sharedreferences 값 삭제
+                        val editor = sharedPreferences.edit()
+                        editor.remove("customerUserName")
+                        editor.remove("customerUserId")
+                        editor.remove("customerUserPw")
+                        editor.remove("customerUserShipRecipient")
+                        editor.remove("customerUserShipContact")
+                        editor.remove("customerUserShipAddress")
+                        editor.remove("customerUserPhoneNumber")
+                        editor.remove("customerUserProfileImage")
+                        editor.apply()
+
+                        loginStatusCheck(sharedPreferences)
                     }
+                    setNegativeButton("아니오", null)
+                    show()
                 }
+
             }
 
             //회원탈퇴
@@ -112,6 +118,26 @@ class MyprofileFragment : Fragment() {
         }
 
         return fragmentMyprofileBinding.root
+    }
+
+    fun loginStatusCheck(sharedPreferences: SharedPreferences){
+        if(CustomerUserRepository.checkLoginStatus(sharedPreferences)){
+            fragmentMyprofileBinding.textViewMyProfileMyName.text = sharedPreferences.getString("customerUserName", null).toString()
+            fragmentMyprofileBinding.textViewMyProfileMyPhoneNumber.text = sharedPreferences.getString("customerUserPhoneNumber", null).toString()
+            fragmentMyprofileBinding.textViewMyprofileMyDestination.text = sharedPreferences.getString("customerUserShipAddress", null).toString()
+        }else{
+            fragmentMyprofileBinding.textViewMyProfileMyName.text = ""
+            fragmentMyprofileBinding.textViewMyProfileMyPhoneNumber.text = ""
+            fragmentMyprofileBinding.textViewMyprofileMyDestination.text = ""
+            MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+                setTitle("접근 권한 없음")
+                setMessage("로그인이 필요한 서비스입니다.")
+                setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+                    mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+                }
+                show()
+            }
+        }
     }
 
     //뒤로가기 버튼 눌렀을 때 동작할 코드 onDetech까지

@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".ui.campsite.CampsiteFragment">
 
     <LinearLayout
+        android:id="@+id/root2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -79,13 +82,16 @@
             android:id="@+id/buttonMyLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <com.google.android.material.search.SearchView
         android:id="@+id/searchViewCampList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:focusableInTouchMode="true"
         app:layout_anchor="@id/searchBarCampLocation">
 
         <androidx.recyclerview.widget.RecyclerView

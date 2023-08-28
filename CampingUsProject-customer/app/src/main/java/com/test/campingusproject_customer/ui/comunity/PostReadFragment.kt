@@ -29,7 +29,7 @@ class PostReadFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
     lateinit var postViewModel: PostViewModel
-    var imageList = mutableListOf<Uri>()
+    var imageList = mutableListOf<Uri?>()
 
     //게시판 종류
     val boardTypeList = arrayOf(
@@ -64,10 +64,10 @@ class PostReadFragment : Fragment() {
                 fragmentPostReadBinding.textViewPostReadWriteDate.setText(it)
             }
             postType.observe(mainActivity){
-                fragmentPostReadBinding.materialToolbarPostRead.title = boardTypeList[it.toInt()]
+                fragmentPostReadBinding.textViewPostReadToolbarTitle.text = boardTypeList[it.toInt()]
             }
-            postImageList.observe(mainActivity){uriList->
-                imageList = uriList
+            postImageList.observe(mainActivity){
+                imageList = it
                 fragmentPostReadBinding.recyclerViewPostReadImage.adapter?.notifyDataSetChanged()
             }
         }
@@ -78,8 +78,6 @@ class PostReadFragment : Fragment() {
 
         fragmentPostReadBinding.run {
             materialToolbarPostRead.run {
-                title = "무슨 게시판?"
-
                 setNavigationIcon(R.drawable.arrow_back_24px)
                 setNavigationOnClickListener {
                     // 키보드가 열려있으면 내림

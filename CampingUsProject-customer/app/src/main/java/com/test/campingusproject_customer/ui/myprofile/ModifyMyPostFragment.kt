@@ -29,9 +29,6 @@ class ModifyMyPostFragment : Fragment() {
                 //카메라, 앨벙
                 setOnMenuItemClickListener {
                     when(it.itemId){
-                        R.id.menu_item_camera ->{
-
-                        }
                         R.id.menu_item_album ->{
 
                         }
