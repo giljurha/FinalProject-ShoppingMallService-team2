@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.campingusproject_customer.databinding.FragmentCartBinding
 import com.test.campingusproject_customer.databinding.RowCartBinding
 import com.test.campingusproject_customer.dataclassmodel.CartModel
+import com.test.campingusproject_customer.dataclassmodel.CartProductModel
 import com.test.campingusproject_customer.repository.CartRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.CartViewModel
@@ -29,7 +30,8 @@ class CartFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentCartBinding: FragmentCartBinding
-
+    lateinit var cartList:MutableList<CartModel>
+    lateinit var productList:MutableList<CartProductModel>
     lateinit var cartViewModel: CartViewModel
 
     var countList = arrayOf(
@@ -50,19 +52,27 @@ class CartFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentCartBinding = FragmentCartBinding.inflate(layoutInflater)
 
-        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+
 
         cartViewModel = ViewModelProvider(mainActivity).get(CartViewModel::class.java)
         cartViewModel.run {
             cartDataList.observe(mainActivity) {
-                fragmentCartBinding.recyclerViewCart.adapter?.notifyDataSetChanged()
-                fragmentCartBinding.recyclerViewCart.run {
-//                    cartViewModel.getCartData(sharedPreferences.getString("customerUserId", null).toString())
+                cartList=it
+                cartViewModel.getCProductData()
 
+            }
+            cartProductList.observe(mainActivity){
+                productList = it
+
+            }
+            load.observe(mainActivity){
+                // 리사이클러 뷰
+                fragmentCartBinding.recyclerViewCart.run {
                     adapter = CartAdapter()
                     layoutManager = LinearLayoutManager(mainActivity)
                 }
             }
+
         }
 
         //하단 nav bar 안보이게
@@ -70,7 +80,10 @@ class CartFragment : Fragment() {
 
         fragmentCartBinding.run {
 
+            val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
             cartViewModel.getCartData(sharedPreferences.getString("customerUserId", null).toString())
+
+
 
             // 툴바
             toolbarCart.run {
@@ -81,19 +94,15 @@ class CartFragment : Fragment() {
                 }
             }
 
-//            // 리사이클러 뷰
-//            recyclerViewCart.run {
-//                cartViewModel.getCartData(sharedPreferences.getString("customerUserName", null).toString())
-//
-//                adapter = CartAdapter()
-//                layoutManager = LinearLayoutManager(mainActivity)
-//            }
+
 
             // 구매하기 버튼
             buttonCartBuy.run {
                 setOnClickListener {
-                    newBundle.putParcelableArrayList("checkedItemList", ArrayList(checkedItemList))
-                    mainActivity.replaceFragment(MainActivity.PAYMENT_FRAGMENT, true, true, newBundle)
+//                    newBundle.putParcelableArrayList("checkedItemList", ArrayList(checkedItemList))
+//                    mainActivity.replaceFragment(MainActivity.PAYMENT_FRAGMENT, true, true, newBundle)
+                    Log.d("testt","카트: ${cartList.size}")
+                    Log.d("testt","제품: ${cartList.size}")
                 }
             }
         }
@@ -105,7 +114,7 @@ class CartFragment : Fragment() {
         return fragmentCartBinding.root
     }
 
-    // 카트 어댑터
+
     inner class CartAdapter : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
 
         inner class CartViewHolder(rowCartBinding: RowCartBinding) : RecyclerView.ViewHolder(rowCartBinding.root) {
@@ -152,7 +161,7 @@ class CartFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return cartViewModel.cartDataList.value?.size!!
+            return cartList.size
 
 //            return 10
         }
@@ -160,7 +169,7 @@ class CartFragment : Fragment() {
         override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 //            CartRepository.getProductData(cartViewModel.cartDataList.value?.get(position)?.cartProductId).toString()
 
-            
+
 //            holder.textViewRowCartTitle.text = cartViewModel.cartProductList.value?.get(position)?.productName.toString()
 //            holder.textViewRowCartCost.text = cartViewModel.cartProductList.value?.get(position)?.productPrice.toString()
             holder.spinnerRowCart.run {
