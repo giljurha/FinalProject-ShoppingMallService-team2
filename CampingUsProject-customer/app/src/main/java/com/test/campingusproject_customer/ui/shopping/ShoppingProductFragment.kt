@@ -6,14 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingProductBinding
+import com.test.campingusproject_customer.repository.ProductRepository.Companion.getOneProductData
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.ProductViewModel
+import java.util.Locale.Category
 
 class ShoppingProductFragment : Fragment() {
     lateinit var fragmentShoppingProductBinding: FragmentShoppingProductBinding
     lateinit var mainActivity: MainActivity
+
+    // 상품 뷰모델
+    lateinit var productViewModel: ProductViewModel
+
+    // 다음 화면으로 넘겨줄 번들
+    val newBundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,6 +31,38 @@ class ShoppingProductFragment : Fragment() {
     ): View? {
         fragmentShoppingProductBinding = FragmentShoppingProductBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
+
+        // 상품 뷰모델 객체 생성
+        productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
+
+        // 번들 객체 값 가져오기
+        val productId = arguments?.getLong("productId")
+
+//        // 뷰모델 상품 정보 가져오기
+//        productViewModel.getOneProductData(productId!!)
+//
+//        var productName = productViewModel.productName.value?.get(productId.toInt()).toString()
+//        var productPrice = productViewModel.productPrice.value.toString()
+//        var productImage = productViewModel.productImageList
+//        var productInfo = productViewModel.productInfo.toString()
+//        var productCount = productViewModel.productCount.toString()
+//        var productSellingStatus = productViewModel.productSellingStatus.toString()
+//        var productDiscountRate = productViewModel.productDiscountRate.toString()
+//        var productRecommendationCount = productViewModel.productRecommendationCount.toString()
+//        var productBrand = productViewModel.productBrand.toString()
+//        var productCategory = productViewModel.productCategory.toString()
+
+        var productSellerId = arguments?.getString("productSellerId")
+        var productName = arguments?.getString("productName")
+        var productPrice = arguments?.getLong("productPrice")
+        var productImage = arguments?.getString("productImage")
+        var productInfo = arguments?.getString("productInfo")
+        var productCount = arguments?.getLong("productCount")
+        var productSellingStatus = arguments?.getBoolean("productSellingStatus")
+        var productDiscountRate = arguments?.getLong("productDiscountRate")
+        var productRecommendationCount = arguments?.getLong("productRecommendationCount")
+        var productBrand = arguments?.getString("productBrand")
+        var productCategory = arguments?.getString("productCategory")
 
         fragmentShoppingProductBinding.run {
             //툴바
@@ -63,13 +105,28 @@ class ShoppingProductFragment : Fragment() {
                 }
             }
 
-
             // 플로팅 버튼 클릭시 문의등록 화면 이동
             floatingActionButtonShoppingProductInquriry.run {
                 setOnClickListener {
-                    mainActivity.replaceFragment(MainActivity.INQUIRY_FRAGMENT, true, true, null)
+                    newBundle.run {
+                        putLong("productId", productId!!)
+                        putString("productName", productName)
+                    }
+                    mainActivity.replaceFragment(MainActivity.INQUIRY_FRAGMENT, true, true, newBundle)
                 }
             }
+
+            // 출력 View에 데이터 세팅하기
+            imageViewShoppingProductImage.setImageResource(R.drawable.circle_20px)
+            textViewShoppingProductName.text = productName!!
+            textViewShoppingProductNumber.text = productCount.toString()
+            if (productDiscountRate == 0L) {
+                textViewShoppingProductSale.visibility = View.INVISIBLE
+            }
+            textViewShoppingProductPrice.text = productPrice.toString() + " 원"
+            textViewShoppingProductSellerName.text = productName
+            textViewShoppingProductCategory.text = productCategory
+            textViewShoppingProductExplanationDetailContent.text = productInfo
         }
         return fragmentShoppingProductBinding.root
     }

@@ -33,8 +33,13 @@ class ShoppingFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
 
+    // 상품 뷰모델
     lateinit var productViewModel: ProductViewModel
 
+    // 다음 화면으로 넘겨줄 번들
+    val newBundle = Bundle()
+
+    // 뷰모델 체크리스트
     var productCheckedList = mutableListOf<Boolean>()
 
     // 드루어 레이아웃에 나오는 카테고리 아이템 메뉴
@@ -203,7 +208,7 @@ class ShoppingFragment : Fragment() {
             val shoppingProductViewHolder = ShoppingProductViewHolder(rowShoppingBinding)
 
             rowShoppingBinding.root.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT, true,true, null)
+                mainActivity.replaceFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT, true,true, newBundle)
             }
 
             rowShoppingBinding.root.layoutParams = ViewGroup.LayoutParams(
@@ -218,6 +223,22 @@ class ShoppingFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ShoppingProductAdapter.ShoppingProductViewHolder, position: Int) {
+            newBundle.run {
+                // 상품 id만 번들로 저장하여 다음화면에 넘겨줌.
+                putLong("productId", productViewModel.productList.value?.get(position)!!.productId)
+                putString("productSellerId", productViewModel.productList.value?.get(position)!!.productSellerId)
+                putString("productName", productViewModel.productList.value?.get(position)!!.productName)
+                putLong("productPrice", productViewModel.productList.value?.get(position)!!.productPrice)
+                putString("productImage", productViewModel.productList.value?.get(position)!!.productImage)
+                putString("productInfo", productViewModel.productList.value?.get(position)!!.productInfo)
+                putLong("productCount", productViewModel.productList.value?.get(position)!!.productCount)
+                putBoolean("productSellingStatus", productViewModel.productList.value?.get(position)!!.productSellingStatus)
+                putLong("productDiscountRate", productViewModel.productList.value?.get(position)!!.productDiscountRate)
+                putLong("productRecommendationCount", productViewModel.productList.value?.get(position)!!.productRecommendationCount)
+                putString("productBrand", productViewModel.productList.value?.get(position)!!.productBrand)
+                putString("productCategory", productViewModel.productList.value?.get(position)!!.productCategory)
+            }
+
             // 이미지
             // 상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
             ProductRepository.getProductFirstImage(productViewModel.productList.value?.get(position)?.productImage!!){ uri->
