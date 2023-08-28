@@ -8,9 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentMyInfoBinding
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
 
 class MyInfoFragment : Fragment() {
@@ -37,6 +44,9 @@ class MyInfoFragment : Fragment() {
                     setTitle("로그아웃")
                     setMessage("정말 로그아웃 하시겠습니까?")
                     setPositiveButton("네"){ dialogInterface: DialogInterface, i: Int ->
+                        UserInfoRepository.deletePre(mainActivity)
+                        mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT,false,false,null)
+                        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
 
                     }
                     setNegativeButton("아니오"){dialogInterface: DialogInterface, i: Int ->
@@ -50,6 +60,11 @@ class MyInfoFragment : Fragment() {
                     setTitle("회원탈퇴")
                     setMessage("정말 탈퇴 하시겠습니까?")
                     setPositiveButton("네"){ dialogInterface: DialogInterface, i: Int ->
+//                        val database = FirebaseDatabase.getInstance()
+//                        val db = database.getReference("SellerUser")
+
+//                        db.orderByChild("sellerUserId").equalTo().delete()
+
 
                     }
                     setNegativeButton("아니오"){ dialogInterface: DialogInterface, i: Int ->
@@ -66,3 +81,7 @@ class MyInfoFragment : Fragment() {
         return fragmentMyInfoBinding.root
     }
 }
+
+
+
+
