@@ -20,6 +20,18 @@ interface APIInterface {
         @Query("mapY") y: String,//위도
         @Query("radius") radius: String,//거리반경
     ): Call<ApiResponse>
+
+
+    @GET("searchList")
+    fun getCampSiteSearch(
+        @Query("numOfRows") perData: Int,//1페이지 당 읽을 데이터 수
+        @Query("pageNo") pageNum: Int,//페이지 번호
+        @Query("MobileOS") mobileOs: String,//OS구분
+        @Query("MobileApp") appName: String,//서비스 이름
+        @Query("serviceKey") apiKey: String,//api키
+        @Query("_type") outputType: String,//출력 타입(json)
+        @Query("keyword") keyword: String//출력 타입(json)
+    ): Call<ApiResponse>
 }
 
 
