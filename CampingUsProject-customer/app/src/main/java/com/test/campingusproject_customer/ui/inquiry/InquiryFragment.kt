@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentInquiryBinding
+import com.test.campingusproject_customer.repository.InquiryRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.InquiryViewModel
+import com.test.campingusproject_customer.viewmodel.ProductViewModel
 
 class InquiryFragment : Fragment() {
     lateinit var fragmentInquiryBinding: FragmentInquiryBinding
@@ -28,6 +31,12 @@ class InquiryFragment : Fragment() {
                 setNavigationIcon(R.drawable.arrow_back_24px)
                 setNavigationOnClickListener {
                     mainActivity.removeFragment(MainActivity.INQUIRY_FRAGMENT)
+                }
+            }
+
+            buttonInquirySubmit.run {
+                setOnClickListener {
+                    InquiryRepository.setInquiryData()
                 }
             }
         }
