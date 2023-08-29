@@ -42,11 +42,11 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <CheckBox
-            android:id="@+id/checkBoxRowCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false" />
+<!--        <CheckBox-->
+<!--            android:id="@+id/checkBoxCart"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checked="false" />-->
 
         <TextView
             android:id="@+id/textViewCartSum"
