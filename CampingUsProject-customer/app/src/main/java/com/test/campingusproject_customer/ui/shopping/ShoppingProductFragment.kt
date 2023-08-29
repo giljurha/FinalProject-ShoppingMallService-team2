@@ -106,6 +106,7 @@ class ShoppingProductFragment : Fragment() {
             buttonShoppingProductToCart.run {
                 setOnClickListener { // 버튼 클릭시 다이얼로그
                     MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+
                         val cartModel = CartModel(sharedPreferences.getString("customerUserId", null).toString(), productId, 1)
                         CartRepository.addCartData(cartModel) {
 
