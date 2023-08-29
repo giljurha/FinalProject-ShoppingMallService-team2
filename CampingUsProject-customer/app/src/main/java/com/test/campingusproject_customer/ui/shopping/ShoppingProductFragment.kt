@@ -21,7 +21,6 @@ import com.test.campingusproject_customer.repository.CartRepository
 import com.test.campingusproject_customer.databinding.RowProductImageBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.ProductViewModel
-import java.util.Locale.Category
 
 class ShoppingProductFragment : Fragment() {
     lateinit var fragmentShoppingProductBinding: FragmentShoppingProductBinding
@@ -78,7 +77,7 @@ class ShoppingProductFragment : Fragment() {
         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
         val productUserName = sharedPreferences.getString("customerUserName", null)!!
 
-        // 번들 객체 값 가져오기
+        // 번들 객체로 position 값 가져와 상품 id 가져오기
         val position = arguments?.getInt("adapterPosition")!!
         val productId = productViewModel.productList.value?.get(position)!!.productId
 
