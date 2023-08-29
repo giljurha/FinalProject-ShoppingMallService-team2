@@ -111,15 +111,6 @@ class PostReadFragment : Fragment() {
                     mainActivity.removeFragment(MainActivity.POST_READ_FRAGMENT)
                 }
             }
-
-            buttonPostReadSaveButton.run {
-                setOnClickListener {
-                    val inputMethodManager =
-                        mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-                    mainActivity.removeFragment(MainActivity.POST_READ_FRAGMENT)
-                }
-            }
             recyclerViewComments.run {
                 adapter = PostReadAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
@@ -148,7 +139,12 @@ class PostReadFragment : Fragment() {
                 fragmentPostReadBinding.textViewPostReadComentTextCount.text =
                     "($currentTextLength / $maxLength)"
             }
+            //댓글 저장 버튼
             buttonPostReadSaveButton.setOnClickListener {
+                val inputMethodManager =
+                    mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+
                 //댓글 내용
                 val postCommentsContents = textInputEditTextPostReadInputComments.text.toString()
 
@@ -165,6 +161,7 @@ class PostReadFragment : Fragment() {
                 //댓글 Idx
                 var postCommentsCommentsIdx:Long = 0L
 
+                //db 인덱스 증가
                 CommentsRepository.getCommentsIdx {
                     postCommentsCommentsIdx = it.result.value as Long
                     postCommentsCommentsIdx++
@@ -184,11 +181,18 @@ class PostReadFragment : Fragment() {
                             //게시글 db에 저장된 댓글 수 변경
                             var commentsCount = postViewModel.postCommentCount.value!!
                             PostRepository.modifyPostCommentsCount(postIdx,commentsCount){
-                                Log.d("aaaa","11111 ${postViewModel.postCommentCount.value}")
                                 postViewModel.postCommentCount.value = commentsCount+1L
-                                Log.d("aaaa","${postViewModel.postCommentCount.value}")
                             }
                         }
+                    }
+                }
+            }
+            textViewPostReadPostLike.run {
+                isClickable = true
+                setOnClickListener {
+                    var likedCount = postViewModel.postLiked.value!!
+                    PostRepository.modifyPostLikedCount(postIdx,likedCount){
+                        postViewModel.postLiked.value = likedCount+1
                     }
                 }
             }
