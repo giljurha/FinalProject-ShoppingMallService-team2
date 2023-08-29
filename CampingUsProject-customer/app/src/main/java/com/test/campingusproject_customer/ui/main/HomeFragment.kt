@@ -47,6 +47,8 @@ class HomeFragment : Fragment() {
 
         postViewModel.getPostPopularAll()
 
+
+
         fragmentHomeBinding.run {
             materialToolbarHomeFragment.run {
                 textViewHomeToolbarTitle.text = "CampingUs"
@@ -219,7 +221,6 @@ class HomeFragment : Fragment() {
             val textVewRowBoardWriteDate : TextView // 글 작성 시간
             val textViewRowBoardComment : TextView // 댓글 수
 
-
             init {
                 imageViewRowBoardWriterImage = rowPopularboardBinding.imageViewRowBoardWriterImage
                 textViewRowBoardTitle = rowPopularboardBinding.textViewRowBoardTitle
@@ -227,6 +228,13 @@ class HomeFragment : Fragment() {
                 textViewRowBoardLike = rowPopularboardBinding.textViewRowBoardLike
                 textVewRowBoardWriteDate = rowPopularboardBinding.textViewRowBoardWriteDate
                 textViewRowBoardComment = rowPopularboardBinding.textViewRowBoardComment
+
+                rowPopularboardBinding.root.setOnClickListener {
+                    val readPostIdx = postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
+                    val newBundle = Bundle()
+                    newBundle.putLong("PostIdx", readPostIdx!!)
+                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,newBundle)
+                }
             }
         }
 
