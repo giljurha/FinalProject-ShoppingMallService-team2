@@ -23,7 +23,6 @@ import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingBinding
 import com.test.campingusproject_customer.databinding.HeaderShoppingBinding
 import com.test.campingusproject_customer.databinding.RowShoppingBinding
-import com.test.campingusproject_customer.dataclassmodel.ProductModel
 import com.test.campingusproject_customer.repository.ProductRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.ProductViewModel
@@ -106,9 +105,6 @@ class ShoppingFragment : Fragment() {
                 val headerShoppingBinding = HeaderShoppingBinding.inflate(inflater)
                 headerShoppingBinding.textViewShoppingHeaderUserName.text = "김민우 님"
                 addHeaderView(headerShoppingBinding.root)
-//
-//                // 쇼핑 화면에 들어왔을 시 보여줄 항목
-//                menu.findItem(R.id.itemShoppingRealTimeRanking).setIcon(R.drawable.circle_20px)
 
                 // 항목 선택 시 동작 리스너
                 setNavigationItemSelectedListener {
@@ -200,16 +196,17 @@ class ShoppingFragment : Fragment() {
                 textViewShoppingName = rowShoppingBinding.textViewShoppingName
                 textViewShoppingPrice = rowShoppingBinding.textViewShoppingPrice
                 imageShoppingLiked = rowShoppingBinding.imageShoppingLiked
+
+                rowShoppingBinding.root.setOnClickListener {
+                    newBundle.putInt("adapterPosition", adapterPosition)
+                    mainActivity.replaceFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT, true,true, newBundle)
+                }
             }
         }
 
         override fun onCreateViewHolder( parent: ViewGroup,viewType: Int): ShoppingProductViewHolder {
             val rowShoppingBinding = RowShoppingBinding.inflate(layoutInflater)
             val shoppingProductViewHolder = ShoppingProductViewHolder(rowShoppingBinding)
-
-            rowShoppingBinding.root.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.SHOPPING_PRODUCT_FRAGMENT, true,true, newBundle)
-            }
 
             rowShoppingBinding.root.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -223,21 +220,21 @@ class ShoppingFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ShoppingProductAdapter.ShoppingProductViewHolder, position: Int) {
-            newBundle.run {
-                // 상품 id만 번들로 저장하여 다음화면에 넘겨줌.
-                putLong("productId", productViewModel.productList.value?.get(position)!!.productId)
-                putString("productSellerId", productViewModel.productList.value?.get(position)!!.productSellerId)
-                putString("productName", productViewModel.productList.value?.get(position)!!.productName)
-                putLong("productPrice", productViewModel.productList.value?.get(position)!!.productPrice)
-                putString("productImage", productViewModel.productList.value?.get(position)!!.productImage)
-                putString("productInfo", productViewModel.productList.value?.get(position)!!.productInfo)
-                putLong("productCount", productViewModel.productList.value?.get(position)!!.productCount)
-                putBoolean("productSellingStatus", productViewModel.productList.value?.get(position)!!.productSellingStatus)
-                putLong("productDiscountRate", productViewModel.productList.value?.get(position)!!.productDiscountRate)
-                putLong("productRecommendationCount", productViewModel.productList.value?.get(position)!!.productRecommendationCount)
-                putString("productBrand", productViewModel.productList.value?.get(position)!!.productBrand)
-                putString("productCategory", productViewModel.productList.value?.get(position)!!.productCategory)
-            }
+//            newBundle.run {
+//                // 상품 id만 번들로 저장하여 다음화면에 넘겨줌.
+//                putInt("productId", productViewModel.productList.value?.get(position)!!.productId.toInt())
+//                putString("productSellerId", productViewModel.productList.value?.get(position)!!.productSellerId)
+//                putString("productName", productViewModel.productList.value?.get(position)!!.productName)
+//                putLong("productPrice", productViewModel.productList.value?.get(position)!!.productPrice)
+//                putString("productImage", productViewModel.productList.value?.get(position)!!.productImage)
+//                putString("productInfo", productViewModel.productList.value?.get(position)!!.productInfo)
+//                putLong("productCount", productViewModel.productList.value?.get(position)!!.productCount)
+//                putBoolean("productSellingStatus", productViewModel.productList.value?.get(position)!!.productSellingStatus)
+//                putLong("productDiscountRate", productViewModel.productList.value?.get(position)!!.productDiscountRate)
+//                putLong("productRecommendationCount", productViewModel.productList.value?.get(position)!!.productRecommendationCount)
+//                putString("productBrand", productViewModel.productList.value?.get(position)!!.productBrand)
+//                putString("productCategory", productViewModel.productList.value?.get(position)!!.productCategory)
+//            }
 
             // 이미지
             // 상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시

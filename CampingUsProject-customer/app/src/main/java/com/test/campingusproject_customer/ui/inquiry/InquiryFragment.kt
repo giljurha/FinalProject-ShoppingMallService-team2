@@ -30,20 +30,20 @@ class InquiryFragment : Fragment() {
         fragmentInquiryBinding = FragmentInquiryBinding.inflate(layoutInflater)
         mainActivity = activity as MainActivity
 
-        // SharedPreferences 선언
+        // SharedPreferences 사용
         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
-        val inquiryUserId = sharedPreferences.getString("customerUserId", null)
-        val inquiryUserName = sharedPreferences.getString("customerUserName", null)
-
-        Log.d("ㅁㅇ", inquiryUserId.toString())
-        Log.d("ㅁㅇ", inquiryUserName.toString())
+        val inquiryUserId = sharedPreferences.getString("customerUserId", null)!!
+        val inquiryUserName = sharedPreferences.getString("customerUserName", null)!!
 
         // 번들 객체 정보 가져오기
-        val inquiryItemId = arguments?.getLong("productId")
-        val inquiryProductName = arguments?.getString("productName")
+        val inquiryItemId = arguments?.getLong("productId")!!
+        val inquiryProductName = arguments?.getString("productName")!!
 
 
         fragmentInquiryBinding.run {
+            // 상품 이름
+            textViewInquiryProductName.text = inquiryProductName
+
             toolbarInquiry.run {
                 title = "상품 문의 등록"
 
@@ -62,8 +62,8 @@ class InquiryFragment : Fragment() {
                     val formatted = current.format(formatter)
 
                     val inquiryData = InquiryModel(
-                        inquiryItemId!!, inquiryUserId!!, inquiryProductName!!,
-                        editTextTextInquiryContent.text.toString(), inquiryUserName!!, formatted, "답변이 작성되지 않았습니다.", false)
+                        inquiryItemId, inquiryUserId, inquiryProductName,
+                        editTextTextInquiryContent.text.toString(), inquiryUserName, formatted, "답변이 작성되지 않았습니다.", false)
 
                     Log.d("민우", inquiryData.toString())
 

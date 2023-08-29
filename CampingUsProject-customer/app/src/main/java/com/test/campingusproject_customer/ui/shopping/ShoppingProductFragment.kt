@@ -1,16 +1,22 @@
 package com.test.campingusproject_customer.ui.shopping
 
+import android.content.Context
 import android.content.DialogInterface
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentShoppingProductBinding
-import com.test.campingusproject_customer.repository.ProductRepository.Companion.getOneProductData
+import com.test.campingusproject_customer.databinding.RowProductImageBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.ProductViewModel
 import java.util.Locale.Category
@@ -21,6 +27,9 @@ class ShoppingProductFragment : Fragment() {
 
     // 상품 뷰모델
     lateinit var productViewModel: ProductViewModel
+
+    // 이미지 변수
+    var productImages = mutableListOf<Uri>()
 
     // 다음 화면으로 넘겨줄 번들
     val newBundle = Bundle()
@@ -35,34 +44,51 @@ class ShoppingProductFragment : Fragment() {
         // 상품 뷰모델 객체 생성
         productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
 
+        productViewModel.run {
+            productName.observe(mainActivity) {
+                fragmentShoppingProductBinding.textViewShoppingProductName.text = it
+            }
+            productPrice.observe(mainActivity) {
+                fragmentShoppingProductBinding.textViewShoppingProductPrice.text = it.toString()
+            }
+            productInfo.observe(mainActivity) {
+                fragmentShoppingProductBinding.textViewShoppingProductExplanationDetailContent.text = it
+            }
+            productCount.observe(mainActivity) {
+                fragmentShoppingProductBinding.textViewShoppingProductNumber.text = "총 판매수량 : $it"
+            }
+            productDiscountRate.observe(mainActivity) {
+                if(productDiscountRate.value == 0L) {
+                    fragmentShoppingProductBinding.textViewShoppingProductSale.visibility = View.INVISIBLE
+                }
+            }
+            productCategory.observe(mainActivity) {
+                fragmentShoppingProductBinding.textViewShoppingProductCategory.text = it
+            }
+
+            productImageList.observe(mainActivity) { uriList ->
+                productImages = uriList
+                fragmentShoppingProductBinding.recyclerViewShoppingProductImage.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        // 회원 이름 가져오기
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        val productUserName = sharedPreferences.getString("customerUserName", null)!!
+
         // 번들 객체 값 가져오기
-        val productId = arguments?.getLong("productId")
+        val position = arguments?.getInt("adapterPosition")!!
+        val productId = productViewModel.productList.value?.get(position)!!.productId
 
-//        // 뷰모델 상품 정보 가져오기
-//        productViewModel.getOneProductData(productId!!)
-//
-//        var productName = productViewModel.productName.value?.get(productId.toInt()).toString()
-//        var productPrice = productViewModel.productPrice.value.toString()
-//        var productImage = productViewModel.productImageList
-//        var productInfo = productViewModel.productInfo.toString()
-//        var productCount = productViewModel.productCount.toString()
-//        var productSellingStatus = productViewModel.productSellingStatus.toString()
-//        var productDiscountRate = productViewModel.productDiscountRate.toString()
-//        var productRecommendationCount = productViewModel.productRecommendationCount.toString()
-//        var productBrand = productViewModel.productBrand.toString()
-//        var productCategory = productViewModel.productCategory.toString()
+        // 뷰모델 상품 정보 가져오기
+        productViewModel.getOneProductData(productId)
 
-        var productSellerId = arguments?.getString("productSellerId")
-        var productName = arguments?.getString("productName")
-        var productPrice = arguments?.getLong("productPrice")
-        var productImage = arguments?.getString("productImage")
-        var productInfo = arguments?.getString("productInfo")
-        var productCount = arguments?.getLong("productCount")
-        var productSellingStatus = arguments?.getBoolean("productSellingStatus")
-        var productDiscountRate = arguments?.getLong("productDiscountRate")
-        var productRecommendationCount = arguments?.getLong("productRecommendationCount")
-        var productBrand = arguments?.getString("productBrand")
-        var productCategory = arguments?.getString("productCategory")
+        var productName = productViewModel.productList.value?.get(position)!!.productName
+        var productPrice =productViewModel.productList.value?.get(position)!!.productPrice
+        var productInfo = productViewModel.productList.value?.get(position)!!.productInfo
+        var productCount = productViewModel.productList.value?.get(position)!!.productCount
+        var productDiscountRate = productViewModel.productList.value?.get(position)!!.productDiscountRate
+        var productCategory = productViewModel.productList.value?.get(position)!!.productCategory
 
         fragmentShoppingProductBinding.run {
             //툴바
@@ -109,25 +135,60 @@ class ShoppingProductFragment : Fragment() {
             floatingActionButtonShoppingProductInquriry.run {
                 setOnClickListener {
                     newBundle.run {
-                        putLong("productId", productId!!)
+                        putLong("productId", productId)
                         putString("productName", productName)
                     }
                     mainActivity.replaceFragment(MainActivity.INQUIRY_FRAGMENT, true, true, newBundle)
                 }
             }
 
-            // 출력 View에 데이터 세팅하기
-            imageViewShoppingProductImage.setImageResource(R.drawable.circle_20px)
+            // 여러 이미지 출력하기
+            recyclerViewShoppingProductImage.run {
+                adapter = ProductImageAdapter()
+
+                // 리사이클러뷰 가로로 사용하기
+                layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
+            }
+
             textViewShoppingProductName.text = productName!!
             textViewShoppingProductNumber.text = productCount.toString()
             if (productDiscountRate == 0L) {
                 textViewShoppingProductSale.visibility = View.INVISIBLE
             }
             textViewShoppingProductPrice.text = productPrice.toString() + " 원"
-            textViewShoppingProductSellerName.text = productName
+            textViewShoppingProductSellerName.text = productUserName
             textViewShoppingProductCategory.text = productCategory
             textViewShoppingProductExplanationDetailContent.text = productInfo
         }
         return fragmentShoppingProductBinding.root
+    }
+
+    // 이미지 리사이클러뷰
+    inner class ProductImageAdapter : RecyclerView.Adapter<ProductImageAdapter.ProductImageViewHolder>(){
+        inner class ProductImageViewHolder (rowProductImageBinding: RowProductImageBinding) :
+            RecyclerView.ViewHolder (rowProductImageBinding.root){
+            var imageViewRowProductImage : ImageView
+
+            init {
+                imageViewRowProductImage = rowProductImageBinding.imageViewRowProductImage
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductImageViewHolder {
+            val rowProductImageBinding = RowProductImageBinding.inflate(layoutInflater)
+
+            return ProductImageViewHolder(rowProductImageBinding)
+        }
+
+        override fun getItemCount(): Int {
+            return productImages.size
+        }
+
+        override fun onBindViewHolder(holder: ProductImageViewHolder, position: Int) {
+            //글라이드 라이브러리로 recycler view에 이미지 출력
+            Glide.with(mainActivity).load(productImages[position])
+                .override(600, 600)
+                .into(holder.imageViewRowProductImage)
+        }
     }
 }
