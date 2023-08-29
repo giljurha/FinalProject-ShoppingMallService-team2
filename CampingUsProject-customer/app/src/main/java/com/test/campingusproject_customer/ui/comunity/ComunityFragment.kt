@@ -56,6 +56,9 @@ class ComunityFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentComunityBinding = FragmentComunityBinding.inflate(layoutInflater)
 
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        val userId =  sharedPreferences.getString("customerUserId", null).toString()
+
         postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
         postViewModel.run {
             postDataList.observe(mainActivity) {
@@ -66,9 +69,26 @@ class ComunityFragment : Fragment() {
         // 게시판 타입 번호를 전달하여 게시글 정보를 가져온다.
         postViewModel.getPostAll(postType)
         postViewModel.resetImageList()
+
+        //홈에서 인기 게시글 더보기 눌렀을 때
+        var receiveBoardType:Long = 0L
+        mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemComunity
+        if (arguments?.getLong("boardType") != null) {
+            receiveBoardType = arguments?.getLong("boardType")!!
+            postType = 1L
+            postViewModel.getPostPopularAll()
+        } else {
+            receiveBoardType = 0L
+        }
+
+
         fragmentComunityBinding.run {
         materialToolbarComunityFragment.run {
-            textViewToolbarTitle.text = boardTypeList[postType.toInt()]
+            if(receiveBoardType == 0L)
+                textViewToolbarTitle.text = boardTypeList[postType.toInt()]
+            else if(receiveBoardType == 1L){
+                textViewToolbarTitle.text = boardTypeList[1]
+            }
             setNavigationIcon(R.drawable.menu_24px)
             setNavigationOnClickListener {
                 // 키보드가 열려있으면 내림
@@ -104,6 +124,8 @@ class ComunityFragment : Fragment() {
                     // 키보드가 열려있으면 내림
                     val inputMethodManager = mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+
+                    textViewToolbarTitle.setText("검색결과")
                 }
                 //검색할 단어 없이 검색 버튼 눌렀을 떄
                 else{
@@ -115,7 +137,7 @@ class ComunityFragment : Fragment() {
         navigationViewComunity.run {
             // 헤더설정
             val headerBinding = HeaderNavigationBinding.inflate(inflater)
-            headerBinding.textViewHeadrerName.text = "청량 미남 강현구"
+            headerBinding.textViewHeadrerName.text = userId
             addHeaderView(headerBinding.root)
 
             //커뮤니티 들어왔을 때는 전체 게시판을 보여줌
@@ -125,6 +147,7 @@ class ComunityFragment : Fragment() {
                 when(postType){
                     1L ->{
                         setNavigationIcon(itemList[1])
+                        postViewModel.getPostPopularAll()
                     }
                     2L ->{
                         setNavigationIcon(itemList[2])
@@ -155,7 +178,7 @@ class ComunityFragment : Fragment() {
                         postType = 1L
                         setNavigationIcon(R.id.item_coumnity_popular)
                         drawerLayoutComunity.close()
-                        postViewModel.getPostAll(postType)
+                        postViewModel.getPostPopularAll()
                     }
                     //자유 게시판
                     R.id.item_coumnity_free ->{

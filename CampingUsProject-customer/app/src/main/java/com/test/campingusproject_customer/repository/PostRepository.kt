@@ -88,6 +88,13 @@ class PostRepository {
             postDataRef.orderByChild("postIdx").get().addOnCompleteListener(callback1)
         }
 
+        //인기순으로 정렬한 게시판
+        fun getPostPopularAll(callback1: (Task<DataSnapshot>) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            val postDataRef = database.getReference("PostData")
+            postDataRef.orderByChild("postLiked").get().addOnCompleteListener(callback1)
+        }
+
         //상품 이미지 전부 삭제하는 함수
         fun removeImages(fileDir: String, callback1: () -> Unit) {
             val storage = FirebaseStorage.getInstance()
@@ -143,6 +150,17 @@ class PostRepository {
                 .addOnCompleteListener {
                     for (a1 in it.result.children) {
                         a1.ref.child("postCommentCount").setValue(currentCommentsCount+1).addOnCompleteListener(callback1)
+                    }
+                }
+        }
+        fun modifyPostLikedCount(postIdx:Long,currentLikedCount:Long, callback1: (Task<Void>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+            val postDataRef = database.getReference("PostData")
+
+            postDataRef.orderByChild("postIdx").equalTo(postIdx.toDouble()).get()
+                .addOnCompleteListener {
+                    for (a1 in it.result.children) {
+                        a1.ref.child("postLiked").setValue(currentLikedCount+1).addOnCompleteListener(callback1)
                     }
                 }
         }

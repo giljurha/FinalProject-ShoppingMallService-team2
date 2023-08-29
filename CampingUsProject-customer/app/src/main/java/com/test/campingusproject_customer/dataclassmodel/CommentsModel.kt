@@ -6,5 +6,4 @@ data class CommentsModel(
     val userId: String, //댓글을 적은 User 이름
     val contents: String, //댓글 내용
     val writeDate : String//작성 날짜
-) {
-}
+)
