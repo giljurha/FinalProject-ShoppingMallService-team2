@@ -2,7 +2,11 @@ package com.test.campingusproject_customer.ui.myprofile
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
@@ -10,12 +14,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentModifyMyprofileBinding
+import com.test.campingusproject_customer.dataclassmodel.CustomerUserModel
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 
 class ModifyMyprofileFragment : Fragment() {
@@ -25,7 +36,7 @@ class ModifyMyprofileFragment : Fragment() {
 
     lateinit var albumLauncher: ActivityResultLauncher<Intent>
 
-    lateinit var profileImage : Uri
+    var profileImage : Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,12 +53,14 @@ class ModifyMyprofileFragment : Fragment() {
 
         fragmentModifyMyprofileBinding.run {
             //유저 정보 가져옴
+            val userId = sharedPreference.getString("customerUserId", null)
             val userName =  sharedPreference.getString("customerUserName", null)
             val userPw = sharedPreference.getString("customerUserPw", null)
+            val userPhoneNumber = sharedPreference.getString("customerUserPhoneNumber", null)
             val userShipRecipient = sharedPreference.getString("customerUserShipRecipient", null)
             val userShipContact = sharedPreference.getString("customerUserShipContact", null)
             val userShipAddress = sharedPreference.getString("customerUserShipAddress", null)
-            val userProfileImage = sharedPreference.getString("customerUserProfileImage", null)
+            var userProfileImage = sharedPreference.getString("customerUserProfileImage", null)
 
             //뷰 초기값 설정
             textInputEditTextModifyMyProfileName.setText(userName)
@@ -61,10 +74,13 @@ class ModifyMyprofileFragment : Fragment() {
             if(userProfileImage?.isEmpty()!!){
                 imageViewModifyMyProfileImage.setImageResource(R.drawable.account_circle_24px)
                 imageViewModifyMyProfileImage.setBackgroundResource(R.drawable.shape_myprofile)
+                userProfileImage = "CustomerUserProfile/$userId/1"
             }else{
-                Glide.with(mainActivity).load(userProfileImage)
-                    .override(500, 500)
-                    .into(imageViewModifyMyProfileImage)
+                CustomerUserRepository.getUserProfileImage(userProfileImage){
+                    Glide.with(mainActivity).load(it.result)
+                        .override(500, 500)
+                        .into(imageViewModifyMyProfileImage)
+                }
             }
 
             imageButtonModifyMyProfileImage.setOnClickListener {
@@ -84,10 +100,57 @@ class ModifyMyprofileFragment : Fragment() {
                 setNavigationOnClickListener {
                     mainActivity.removeFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT)
                 }
+                //수정 내용 등록
                 setOnMenuItemClickListener {
                     if(it.itemId == R.id.menuItemSave){
-                        //수정 내용 등록
+                        val profileName = textInputEditTextModifyMyProfileName.text.toString()
+                        val profilePw = textInputEditTextModifyMyProfilePw.text.toString()
+                        val profilePw2 = textInputEditTextModifyMyProfilePw2.text.toString()
+                        val profileReceiver = editTextModifyMyprofileInputReceiverName.text.toString()
+                        val profilePhoneNumber = editTextModifyMyprofileInputPhoneNumber.text.toString()
+                        val profileAddress = editTextModifyMyprofileInputDestinationAddress.text.toString()
 
+                        //요소 입력 검사
+                        if(textInputLayoutisEmptyCheck(textInputLayoutModifyMyProfileName, textInputEditTextModifyMyProfileName, "이름을 입력해주세요")||
+                           textInputLayoutisEmptyCheck(textInputLayoutModifyMyProfilePw, textInputEditTextModifyMyProfilePw, "비밀번호를 입력해주세요")||
+                           textInputLayoutisEmptyCheck(textInputLayoutModifyMyProfilePw2, textInputEditTextModifyMyProfilePw2, "비밀번호 확인을 입력해주세요"))
+                        {
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        if(profileAddress.isEmpty() || profileReceiver.isEmpty() || profilePhoneNumber.isEmpty()){
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        //비밀번호 일치 검사
+                        if(profilePw != profilePw2){
+                            textInputEditTextModifyMyProfilePw2.setText("")
+                            textInputEditTextModifyMyProfilePw.setText("")
+
+                            createDialog("비밀번호 오류", "비밀번호가 일치하지 않습니다"){
+                                mainActivity.focusOnView(textInputLayoutModifyMyProfilePw)
+                            }
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        //이미지 등록 검사
+                        if(profileImage == null){
+                            createDialog("이미지 미등록", "이미지를 입력해주세요"){}
+                            return@setOnMenuItemClickListener true
+                        }
+
+                        //변경된 값으로 유저 객체 생성
+                        val customerUserModel = CustomerUserModel(profileName, userId!!, profilePw,
+                        profileReceiver, profilePhoneNumber, profileAddress, userPhoneNumber!!, userProfileImage!!)
+
+                        //수정된 유저 객체를 DB와 SharedPreference에 저장하고 화면 전환
+                        CustomerUserRepository.modifyUserInfo(customerUserModel.customerUserId, customerUserModel){
+                            CustomerUserRepository.uploadProfileImage(userProfileImage, profileImage!!){
+                                CustomerUserRepository.saveUserInfo(sharedPreference, customerUserModel)
+                                Snackbar.make(fragmentModifyMyprofileBinding.root, "유저 정보 수정이 완료되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                mainActivity.removeFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT)
+                            }
+                        }
 
                     }
                     true
@@ -109,12 +172,31 @@ class ModifyMyprofileFragment : Fragment() {
                 it.data?.data?.let { uri ->
                     if(uri != null){
                         profileImage = uri
-                        imageView.setImageURI(uri)
+
+                        setImage(uri, imageView)
                     }
                 }
             }
         }
         return albumLauncher
+    }
+
+    //uri를 이미지뷰에 셋팅하는 함수
+    fun setImage(image: Uri, imageView: ImageView){
+        val inputStream = mainActivity.contentResolver.openInputStream(image)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+
+        //회전 각도값을 가져옴
+        val degree = getDegree(image)
+
+        //회전 이미지를 생성한다
+        val matrix = Matrix()
+        matrix.postRotate(degree.toFloat())
+        val rotateBitmap = Bitmap.createBitmap(bitmap!!, 0, 0, bitmap.width, bitmap.height, matrix, false)
+
+        //글라이드 라이브러리로 view에 이미지 출력
+        Glide.with(mainActivity).load(rotateBitmap)
+            .into(imageView)
     }
 
     // 이미지 파일에 기록되어 있는 회전 정보를 가져온다.
@@ -143,5 +225,43 @@ class ModifyMyprofileFragment : Fragment() {
             }
         }
         return degree
+    }
+
+    //textInputLayout 오류 표시 함수
+    fun textInputLayoutEmptyError(textInputLayout: TextInputLayout, errorMessage : String){
+        textInputLayout.run {
+            error = errorMessage
+            setErrorIconDrawable(R.drawable.error_24px)
+            requestFocus()
+        }
+    }
+
+    //textInputLayout 입력 검사 함수
+    fun textInputLayoutisEmptyCheck(
+        textInputLayout: TextInputLayout,
+        textInputEditText: TextInputEditText,
+        errorMessage: String) : Boolean
+    {
+        if(textInputEditText.text.toString().isEmpty()){
+            //입력되지 않았으면 오류 표시
+            textInputLayoutEmptyError(textInputLayout, errorMessage)
+            mainActivity.focusOnView(textInputEditText)
+            return true
+        }
+        else{
+            textInputLayout.error = null
+            return false
+        }
+    }
+
+    fun createDialog(title : String, message : String, callback: () -> Unit){
+        MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+                callback()
+            }
+            show()
+        }
     }
 }
