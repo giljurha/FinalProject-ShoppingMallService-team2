@@ -3,6 +3,7 @@ package com.test.campingusproject_customer.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -42,6 +43,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
+    var currentFragment = 0
 
     companion object {
         val HOME_FRAGMENT = "HomeFragment"
@@ -92,27 +94,35 @@ class MainActivity : AppCompatActivity() {
                     when (it.itemId) {
                         //홈 클릭
                         R.id.menuItemHome -> {
-                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                            replaceFragment(HOME_FRAGMENT, false, true, null)
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
-                            replaceFragment(CAMPSITE_FRAGMENT,false,false,null)
+                            replaceFragment(CAMPSITE_FRAGMENT,false,true,null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
-                            replaceFragment(SHOPPING_FRAGMENT, false, false, null)
+                            replaceFragment(SHOPPING_FRAGMENT, false, true, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
-                            replaceFragment(COMUNITY_FRAGMENT, false, false, null)
+                            if(it.itemId != R.id.menuItemComunity)
+                                replaceFragment(COMUNITY_FRAGMENT, false, true, null)
+                            else{
+                                val boardType:Long = 1L
+                                val newBundle = Bundle()
+                                newBundle.putLong("boardType", boardType)
+                                replaceFragment(COMUNITY_FRAGMENT,false,true,newBundle)
+                            }
+
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
-                            replaceFragment(MYPROFILE_FRAGMENT, false, false, null)
+                            replaceFragment(MYPROFILE_FRAGMENT, false, true, null)
                         }
 
                         else -> {
-                            replaceFragment(HOME_FRAGMENT, false, false, null)
+                            replaceFragment(HOME_FRAGMENT, false, true, null)
                         }
                     }
                     true
@@ -161,6 +171,7 @@ class MainActivity : AppCompatActivity() {
         newFragment.arguments = bundle
 
         if (newFragment != null) {
+
             // Fragment를 교체한다.
             fragmentTransaction.replace(R.id.fragmentContainerMain, newFragment)
 
