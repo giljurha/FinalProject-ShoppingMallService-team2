@@ -102,7 +102,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:numStars="5"
-                android:rating="5"
+                android:rating="0"
                 android:stepSize="0.5" />
 
             <TextView
@@ -114,14 +114,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/imageViewReviewWriteLiked"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:button="@drawable/sl_favorite_24px"
-                android:text=" 추천"
-                app:buttonTint="@color/subColor" />
+                android:layout_margin="10dp"
+                android:src="@drawable/favorite_24px" />
 
             <TextView
                 android:layout_width="wrap_content"
