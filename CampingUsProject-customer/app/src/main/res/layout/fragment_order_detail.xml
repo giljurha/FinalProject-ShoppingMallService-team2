@@ -97,28 +97,14 @@
                         android:text="받는사람"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailRecipent"
+                    <TextView
+                        android:id="@+id/textViewReceiverName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailRecipent"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="받는사람 이름"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="강현구"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -128,34 +114,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewOrderDetailContact"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="연락처"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailContact"
+                    <TextView
+                        android:id="@+id/textViewReceiverPhoneNum"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailContact"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="받는사람 연락처"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="010-2281-2181"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -172,27 +144,14 @@
                         android:text="주소"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailAddress"
+                    <TextView
+                        android:id="@+id/textViewReceiverAddress"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailAddress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="받는사람 주소"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="허리도 가늘군 만지면 부러지리"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -230,28 +189,14 @@
                         android:text="이름"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailName"
+                    <TextView
+                        android:id="@+id/textViewOrderName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="주문자 이름"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="허리도 가늘군 만지면 부러지리"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -259,36 +204,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textViewOrderDetailPhone"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="이메일"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailPhone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailPhone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="주문자 이메일"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -305,27 +220,14 @@
                         android:text="휴대전화"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailEmail"
+                    <TextView
+                        android:id="@+id/textViewOrderPhoneNum"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailEmail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:padding="10dp"
-                            android:text="주문자 전화번호"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="허리도 가늘군 만지면 부러지리"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -362,27 +264,15 @@
                         android:text="결제수단"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailPaymentMethod"
+                    <TextView
+                        android:id="@+id/textViewOrderWay"
                         android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailPaymentMethod"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="카드"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="카드"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -419,27 +309,15 @@
                         android:text="금액"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailPaymentAmount"
+                    <TextView
+                        android:id="@+id/textViewOrderTotalPrice"
                         android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailPaymentAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="000.000"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="200000"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -477,27 +355,15 @@
                         android:text="상태"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutOrderDetailState"
+                    <TextView
+                        android:id="@+id/textViewOrderState"
                         android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:textCursorDrawable="@color/highLightColor"
-                        android:transitionGroup="true"
-                        app:boxStrokeColor="@drawable/textinputlayout_selector"
-                        app:endIconMode="clear_text">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/textInputEditTextOrderDetailState"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:enabled="false"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="배송 완료"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/black" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:text="결제 완료"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 </LinearLayout>
 
             </LinearLayout>
