@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menuItemSave"
+        android:icon="@drawable/done_24px"
         android:title="저장"
         app:showAsAction="always" />
 </menu>
