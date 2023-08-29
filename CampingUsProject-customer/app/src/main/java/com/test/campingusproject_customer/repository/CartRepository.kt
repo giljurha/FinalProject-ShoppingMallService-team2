@@ -1,8 +1,10 @@
 package com.test.campingusproject_customer.repository
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.test.campingusproject_customer.dataclassmodel.CartModel
 
 class CartRepository {
@@ -63,6 +65,16 @@ class CartRepository {
             productRef.orderByChild("productId").equalTo(cartProductId.toDouble()).get()
                 .addOnCompleteListener(callback1)
         }
+
+        //상품의 대표이미지만 가져오는 함수
+        fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+            val fileName = fileDir + "1.png"
+
+            val imageRef = storage.reference.child(fileName)
+            imageRef.downloadUrl.addOnCompleteListener(callback1)
+        }
+
 
     }
 }
