@@ -29,15 +29,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/imageViewShoppingProductImage"
-                    android:layout_width="400dp"
-                    android:layout_height="400dp"
-                    android:layout_margin="5dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewShoppingProductImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textViewShoppingProductName"
@@ -49,7 +50,7 @@
                     android:textSize="@dimen/text_size_1"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageViewShoppingProductImage" />
+                    app:layout_constraintTop_toBottomOf="@+id/recyclerViewShoppingProductImage" />
 
                 <TextView
                     android:id="@+id/textViewShoppingProductNumber"
@@ -60,7 +61,7 @@
                     android:text="남은 수량 : 20"
                     android:textSize="@dimen/text_size_3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageViewShoppingProductImage" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerViewShoppingProductImage" />
 
                 <TextView
                     android:id="@+id/textViewShoppingProductTotalNumber"

@@ -50,8 +50,8 @@
                 android:textSize="@dimen/text_size_3" />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/imageButtonLiked"
+        <ImageView
+            android:id="@+id/imageShoppingLiked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right"
