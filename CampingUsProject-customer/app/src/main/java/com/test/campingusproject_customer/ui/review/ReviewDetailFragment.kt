@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.test.campingusproject_customer.R
-import com.test.campingusproject_customer.databinding.FragmentReviewBinding
 import com.test.campingusproject_customer.databinding.FragmentReviewDetailBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
 
