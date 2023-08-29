@@ -36,16 +36,13 @@ class CartRepository {
             val database = FirebaseDatabase.getInstance()
             val cartRef = database.getReference("CartData")
 
-            cartRef.orderByChild("cartUserId").equalTo(cartModel.cartUserId).get()
-                .addOnCompleteListener {
-                    cartRef.orderByChild("cartProductId")
-                        .equalTo(cartModel.cartProductId.toDouble()).get().addOnCompleteListener {
-                            for (a1 in it.result.children) {
-                                a1.ref.child("cartProductCount")
-                                    .setValue(cartModel.cartProductCount)
-                            }
-                        }
+            cartRef.orderByChild("cartUserId").equalTo(cartModel.cartUserId).get().addOnCompleteListener {
+                cartRef.orderByChild("cartProductId").equalTo(cartModel.cartProductId.toDouble()).get().addOnCompleteListener {
+                    for (a1 in it.result.children) {
+                        a1.ref.child("cartProductCount").setValue(cartModel.cartProductCount)
+                    }
                 }
+            }
         }
 
         // 모든 장바구니 상품 가져오는 함수
@@ -67,7 +64,7 @@ class CartRepository {
         }
 
         //상품의 대표이미지만 가져오는 함수
-        fun getProductFirstImage(fileDir:String, callback1: (Task<Uri>) -> Unit){
+        fun getProductFirstImage(fileDir: String, callback1: (Task<Uri>) -> Unit) {
             val storage = FirebaseStorage.getInstance()
             val fileName = fileDir + "1.png"
 

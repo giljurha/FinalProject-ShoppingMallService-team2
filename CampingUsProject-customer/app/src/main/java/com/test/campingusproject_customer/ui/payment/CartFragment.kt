@@ -48,6 +48,8 @@ class CartFragment : Fragment() {
 
     var checkedItemList = mutableListOf<CartModel>()
 
+    var totalSum = 0
+
     val newBundle = Bundle()
 
     override fun onCreateView(
@@ -90,6 +92,14 @@ class CartFragment : Fragment() {
                 adapter = CartAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
             }
+
+//            // 체크박스
+//            checkBoxCart.run {
+//                setOnCheckedChangeListener { compoundButton, b ->
+//
+//                }
+//            }
+
 
             // 구매하기 버튼
             buttonCartBuy.run {
@@ -156,20 +166,17 @@ class CartFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            Log.d("size", "${cartViewModel.cartProductList.value?.size!!}")
             return cartViewModel.cartProductList.value?.size!!
-
-//            return 10
         }
 
         override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
             holder.textViewRowCartTitle.text = cartViewModel.cartProductList.value?.get(position)?.productName.toString()
-            holder.textViewRowCartCost.text = cartViewModel.cartProductList.value?.get(position)?.productPrice.toString()
+            holder.textViewRowCartCost.text = "${cartViewModel.cartProductList.value?.get(position)?.productPrice.toString()} 원"
 
-            //상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
+            // 상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
             CartRepository.getProductFirstImage(cartViewModel.cartProductList.value?.get(position)?.productImage!!){ uri->
-                //글라이드 라이브러리로 이미지 표시
-                //이미지 로딩 완료되거나 실패하기 전까지 프로그래스바 활성화
+                // 글라이드 라이브러리로 이미지 표시
+                // 이미지 로딩 완료되거나 실패하기 전까지 프로그래스바 활성화
                 Glide.with(mainActivity).load(uri.result)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -187,16 +194,18 @@ class CartFragment : Fragment() {
                     .into(holder.imageViewRowCart)
             }
 
+            // 상품 개수
             holder.spinnerRowCart.run {
+
                 onItemSelectedListener = object : OnItemSelectedListener {
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
                         val cartUserId: String
                         val cartProductId: Long
                         val cartProductCount: Long
 
                         cartUserId = cartViewModel.cartDataList.value?.get(position)?.cartUserId.toString()
                         cartProductId = cartViewModel.cartDataList.value?.get(position)?.cartProductId!!.toLong()
-                        cartProductCount = cartViewModel.cartDataList.value?.get(position)?.cartProductCount!!.toLong()
+                        cartProductCount = countList[pos].toLong()
 
                         val cartModel = CartModel(cartUserId, cartProductId, cartProductCount)
 
@@ -207,9 +216,10 @@ class CartFragment : Fragment() {
                     override fun onNothingSelected(p0: AdapterView<*>?) {
                         // TODO("Not yet implemented")
                     }
-
                 }
             }
+
+            // 체크 박스
             holder.checkBoxRowCart.run {
                 setOnCheckedChangeListener { compoundButton, isChecked ->
 
@@ -225,8 +235,10 @@ class CartFragment : Fragment() {
 
                     if(isChecked == true) {
                         checkedItemList.add(cartModel)
+                        totalSum += cartModel.cartProductCount.toInt()
                     } else {
                         checkedItemList.remove(cartModel)
+                        totalSum -= cartModel.cartProductCount.toInt()
                     }
                 }
             }
