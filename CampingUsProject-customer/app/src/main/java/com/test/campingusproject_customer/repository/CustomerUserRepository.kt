@@ -178,5 +178,21 @@ class CustomerUserRepository() {
                     customerUserShipRecipient == null || customerUserShipContact == null ||
                     customerUserShipAddress == null || customerUserPhoneNumber == null || customerUserProfileImage == null)
         }
+
+        fun resetPref(sharedPreferences: SharedPreferences){
+            //sharedreferences 값 삭제
+            val editor = sharedPreferences.edit()
+
+            editor.remove("customerUserName")
+            editor.remove("customerUserId")
+            editor.remove("customerUserPw")
+            editor.remove("customerUserShipRecipient")
+            editor.remove("customerUserShipContact")
+            editor.remove("customerUserShipAddress")
+            editor.remove("customerUserPhoneNumber")
+            editor.remove("customerUserProfileImage")
+
+            editor.apply()
+        }
     }
 }
