@@ -1,5 +1,6 @@
 package com.test.campingusproject_customer.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.test.campingusproject_customer.dataclassmodel.CartModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 
 class CartViewModel() : ViewModel() {
 
-    var totalCount = MutableLiveData<Int>()
+    var totalCount = MutableLiveData<MutableList<Int>>()
 
     // 장바구니 목록
     var cartDataList = MutableLiveData<MutableList<CartModel>>()
@@ -21,8 +22,6 @@ class CartViewModel() : ViewModel() {
         cartDataList.value = mutableListOf<CartModel>()
         cartProductList.value = mutableListOf<CartProductModel>()
     }
-
-
 
     // 장바구니 목록 화면
     fun getCartData(cartUserId: String) {
@@ -37,6 +36,8 @@ class CartViewModel() : ViewModel() {
                     val cartProductId = c1.child("cartProductId").value as Long
                     val cartProductCount = c1.child("cartProductCount").value as Long
 
+
+
                     val cartProduct = CartModel(cartUserId, cartProductId, cartProductCount)
                     tempList.add(cartProduct)
 
@@ -44,7 +45,6 @@ class CartViewModel() : ViewModel() {
                         getProductData(cartProductId, tempList2)
                     }
                 }
-
                 cartDataList.value = tempList
             }
         }
@@ -67,4 +67,7 @@ class CartViewModel() : ViewModel() {
             cartProductList.value = tempList2
         }
     }
+
+
+
 }
