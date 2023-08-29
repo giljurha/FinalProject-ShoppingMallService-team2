@@ -50,6 +50,7 @@ class ModifyProductFragment : Fragment() {
 
         //상품 뷰모델 객체 생성
         productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
+
         productViewModel.run {
             productName.observe(mainActivity){
                 fragmentModifyProductBinding.textInputEditTextModifyProductName.setText(it)

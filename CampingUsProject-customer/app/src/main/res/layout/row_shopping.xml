@@ -1,53 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progressBarRowShopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
 
     <ImageView
         android:id="@+id/imageViewShoppingImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/textViewShoppingName"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="슬리퍼"
-        android:textSize="@dimen/text_size_2"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewShoppingImage" />
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textViewShoppingSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="260"
-        android:textSize="@dimen/text_size_3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewShoppingName" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewShoppingPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="230000원"
-        android:textSize="@dimen/text_size_3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewShoppingSize" />
+            <TextView
+                android:id="@+id/textViewShoppingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="슬리퍼"
+                android:textSize="@dimen/text_size_2"
+                android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/imageButtonLiked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintRight_toRightOf="@id/imageViewShoppingImage"
-        app:layout_constraintTop_toBottomOf="@id/imageViewShoppingImage"
-        tools:srcCompat="@drawable/favorite_24px" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textViewShoppingPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="230000원"
+                android:textSize="@dimen/text_size_3" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageShoppingLiked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/favorite_24px"
+            android:src="@drawable/favorite_24px" />
+    </LinearLayout>
+
+</LinearLayout>
