@@ -218,4 +218,40 @@ class PostViewModel() : ViewModel() {
             postDataList.value = tempList
         }
     }
+
+    // 인기게시글 목록
+    fun getPostPopularAll(){
+        val tempList = mutableListOf<PostModel>()
+        PostRepository.getPostPopularAll {
+            for(c1 in it.result.children){
+                val postIdx = c1.child("postIdx").value as Long
+                val postImagePath = c1.child("postImagePath").value as String
+                val postSubject = c1.child("postSubject").value as String
+                val postText = c1.child("postText").value as String
+                val postType = c1.child("postType").value as Long
+                val postWriteDate = c1.child("postWriteDate").value as String
+                val postUserId = c1.child("postUserId").value as String
+                val postLiked = c1.child("postLiked").value as Long
+                val postCommentCount = c1.child("postCommentCount").value as Long
+
+                val p1 = PostModel(
+                    postIdx,
+                    postUserId,
+                    postType,
+                    postSubject,
+                    postText,
+                    postLiked,
+                    postCommentCount,
+                    postWriteDate,
+                    postImagePath
+                )
+                tempList.add(p1)
+            }
+            // 데이터가 postIdx를 기준으로 오름 차순 정렬되어 있기 때문에
+            // 순서를 뒤집는다.
+            tempList.reverse()
+
+            postDataList.value = tempList
+        }
+    }
 }

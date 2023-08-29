@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,17 +20,32 @@ import com.test.campingusproject_customer.databinding.FragmentHomeBinding
 import com.test.campingusproject_customer.databinding.RowBoardBinding
 import com.test.campingusproject_customer.databinding.RowPopularsaleBinding
 import com.test.campingusproject_customer.databinding.RowRealtimerankBinding
+import com.test.campingusproject_customer.dataclassmodel.PostModel
+import com.test.campingusproject_customer.viewmodel.PostViewModel
+import java.lang.Integer.min
 
 class HomeFragment : Fragment() {
     lateinit var fragmentHomeBinding: FragmentHomeBinding
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
+    lateinit var postViewModel : PostViewModel
+    var postPopularList = mutableListOf<PostModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mainActivity = activity as MainActivity
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
+
+        postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
+        postViewModel.run {
+            postDataList.observe(mainActivity) {
+                postPopularList = it
+                fragmentHomeBinding.recyclerViewPopularBoard.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        postViewModel.getPostPopularAll()
 
         fragmentHomeBinding.run {
             materialToolbarHomeFragment.run {
@@ -95,7 +111,10 @@ class HomeFragment : Fragment() {
             }
             //인기게시판 더보기 눌렀을 때
             textViewHomePopularBoardShowMore.setOnClickListener {
-                textViewHomeToolbarTitle.text = "인기게시판 더보기"
+                val boardType:Long = 1L
+                val newBundle = Bundle()
+                newBundle.putLong("boardType", boardType)
+                mainActivity.replaceFragment(MainActivity.COMUNITY_FRAGMENT,false,true,newBundle)
             }
         }
 
@@ -223,16 +242,17 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            val itemCount = min(postPopularList.size, 10)
+            return itemCount
         }
 
         override fun onBindViewHolder(holder: PopularBoardViewHolder, position: Int) {
             // holder.imageViewRowBoardWriterImage =
-            holder.textViewRowBoardTitle.text = "강현구 = 차은우"
-            holder.textViewRowBoardWriter.text = "강현구"
-            holder.textViewRowBoardLike.text = "${100 - position}"
-            holder.textVewRowBoardWriteDate.text = "2023-08-23"
-            holder.textViewRowBoardComment.text = "${100 - position}"
+            holder.textViewRowBoardTitle.text = postPopularList[position].postSubject
+            holder.textViewRowBoardWriter.text = postPopularList[position].postUserId
+            holder.textViewRowBoardLike.text = postPopularList[position].postLiked.toString()
+            holder.textVewRowBoardWriteDate.text = postPopularList[position].postWriteDate
+            holder.textViewRowBoardComment.text = postPopularList[position].postCommentCount.toString()
         }
     }
 
