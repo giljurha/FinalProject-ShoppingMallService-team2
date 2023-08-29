@@ -14,6 +14,7 @@ import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentSellStateBinding
 import com.test.campingusproject_seller.databinding.RowSellStateOrderHistoryBinding
 import com.test.campingusproject_seller.databinding.RowSellStateOrderHistoryItemBinding
+import com.test.campingusproject_seller.repository.UserInfoRepository
 import com.test.campingusproject_seller.ui.main.MainActivity
 
 class SellStateFragment : Fragment() {
@@ -26,8 +27,9 @@ class SellStateFragment : Fragment() {
         fragmentSellStateBinding = FragmentSellStateBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
-        //하단 nav bar 보이게
-        mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+
+
+
 
         fragmentSellStateBinding.run {
             toolbarSellState.run {

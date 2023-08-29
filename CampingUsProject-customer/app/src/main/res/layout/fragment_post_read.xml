@@ -89,8 +89,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPostReadImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp" />
 
             <LinearLayout
@@ -149,7 +149,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextPostReadInputEditText"
+                    android:id="@+id/textInputEditTextPostReadInputComments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLength="50"
@@ -185,7 +185,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewComments"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,15 +23,24 @@ import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentPostReadBinding
 import com.test.campingusproject_customer.databinding.RowPostReadBinding
 import com.test.campingusproject_customer.databinding.RowReadPostImageListBinding
+import com.test.campingusproject_customer.dataclassmodel.CommentsModel
+import com.test.campingusproject_customer.repository.CommentsRepository
+import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.CommentsViewModel
 import com.test.campingusproject_customer.viewmodel.PostViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PostReadFragment : Fragment() {
     lateinit var fragmentPostReadBinding: FragmentPostReadBinding
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
     lateinit var postViewModel: PostViewModel
+    lateinit var commentsViewModel : CommentsViewModel
     var imageList = mutableListOf<Uri?>()
+    var commentsShowList = mutableListOf<CommentsModel>()
 
     //게시판 종류
     val boardTypeList = arrayOf(
@@ -42,6 +53,9 @@ class PostReadFragment : Fragment() {
     ): View? {
         mainActivity = activity as MainActivity
         fragmentPostReadBinding = FragmentPostReadBinding.inflate(layoutInflater)
+
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        val userId =  sharedPreferences.getString("customerUserId", null).toString()
 
         postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
         postViewModel.run {
@@ -71,10 +85,20 @@ class PostReadFragment : Fragment() {
                 fragmentPostReadBinding.recyclerViewPostReadImage.adapter?.notifyDataSetChanged()
             }
         }
+        commentsViewModel = ViewModelProvider(mainActivity)[CommentsViewModel::class.java]
+        commentsViewModel.run {
+            commentsList.observe(mainActivity){
+                commentsShowList = it
+                fragmentPostReadBinding.recyclerViewComments.adapter?.notifyDataSetChanged()
+            }
+        }
 
         //번들로 게시글 번호 가져오기
         val postIdx = arguments?.getLong("PostIdx")
+        //해당 게시글 내용 가져오기
         postViewModel.getOnePostReadData(postIdx?.toDouble()!!)
+        //게시글 댓글 가져오기
+        commentsViewModel.getCommentsList(postIdx)
 
         fragmentPostReadBinding.run {
             materialToolbarPostRead.run {
@@ -113,6 +137,61 @@ class PostReadFragment : Fragment() {
                 adapter = PhotoAdapter()
                 layoutManager = LinearLayoutManager(mainActivity, RecyclerView.HORIZONTAL, false)
             }
+
+            //댓글
+            textInputEditTextPostReadInputComments.addTextChangedListener {
+                val currentTextLength = it?.length ?: 0
+                val maxLengthResId = R.integer.textInputEditText_max_length // 여기에 리소스 ID를 넣어주세요
+                val maxLength = resources.getInteger(maxLengthResId)
+
+                // 현재 글자 수와 최대 글자 수를 표시
+                fragmentPostReadBinding.textViewPostReadComentTextCount.text =
+                    "($currentTextLength / $maxLength)"
+            }
+            buttonPostReadSaveButton.setOnClickListener {
+                //댓글 내용
+                val postCommentsContents = textInputEditTextPostReadInputComments.text.toString()
+
+                // 작성일
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+                val commentsWriteDate = sdf.format(Date(System.currentTimeMillis())).toString()
+
+                //게시글 번호
+                val postCommentsPostIdx = postIdx
+
+                //댓글 남긴 유저 Id
+                val postCommentsUserId = userId
+
+                //댓글 Idx
+                var postCommentsCommentsIdx:Long = 0L
+
+                CommentsRepository.getCommentsIdx {
+                    postCommentsCommentsIdx = it.result.value as Long
+                    postCommentsCommentsIdx++
+
+                    //객체 생성
+                    val commentsModel = CommentsModel(postCommentsPostIdx,postCommentsCommentsIdx,postCommentsUserId,postCommentsContents,commentsWriteDate)
+
+                    //댓글 저장
+                    CommentsRepository.addComments(commentsModel){
+                        //Idx 증가
+                        CommentsRepository.setCommentsIdx(postCommentsCommentsIdx){
+                            //댓글 입력한 거 비우기
+                            textInputEditTextPostReadInputComments.setText("")
+                            //댓글 리스트 불러오기
+                            commentsViewModel.getCommentsList(postCommentsPostIdx)
+
+                            //게시글 db에 저장된 댓글 수 변경
+                            var commentsCount = postViewModel.postCommentCount.value!!
+                            PostRepository.modifyPostCommentsCount(postIdx,commentsCount){
+                                Log.d("aaaa","11111 ${postViewModel.postCommentCount.value}")
+                                postViewModel.postCommentCount.value = commentsCount+1L
+                                Log.d("aaaa","${postViewModel.postCommentCount.value}")
+                            }
+                        }
+                    }
+                }
+            }
         }
         return fragmentPostReadBinding.root
     }
@@ -144,34 +223,6 @@ class PostReadFragment : Fragment() {
         }
     }
 
-    // 이미지 파일에 기록되어 있는 회전 정보를 가져온다.
-    fun getDegree(uri: Uri) : Int{
-        var exifInterface: ExifInterface? = null
-
-        // 사진 파일로 부터 tag 정보를 관리하는 객체를 추출한다.
-        try {
-            val inputStream = mainActivity.contentResolver.openInputStream(uri)
-            if (inputStream != null) {
-                exifInterface = ExifInterface(inputStream)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        var degree = 0
-        if(exifInterface != null){
-            // 각도 값을 가지고온다.
-            val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1)
-
-            when(orientation){
-                ExifInterface.ORIENTATION_ROTATE_90 -> degree = 90
-                ExifInterface.ORIENTATION_ROTATE_180 -> degree = 180
-                ExifInterface.ORIENTATION_ROTATE_270 -> degree = 270
-            }
-        }
-        return degree
-    }
-
     //댓글 리사이클러 뷰
     inner class PostReadAdapter : RecyclerView.Adapter<PostReadFragment.PostReadAdapter.PostReadViewHolder>(){
         inner class PostReadViewHolder(rowPostReadBinding: RowPostReadBinding) : RecyclerView.ViewHolder(rowPostReadBinding.root) {
@@ -198,13 +249,13 @@ class PostReadFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return commentsShowList.size
         }
 
         override fun onBindViewHolder(holder: PostReadViewHolder, position: Int) {
-            holder.textViewRowCommentUserName.text = "차은우"
-            holder.textViewRowCommentWriteDate.text = "2023-08-23 17:13"
-            holder.textViewRowCommentContents.text = "풉ㅋ"
+            holder.textViewRowCommentUserName.text = commentsShowList[position].userId
+            holder.textViewRowCommentWriteDate.text = commentsShowList[position].writeDate
+            holder.textViewRowCommentContents.text = commentsShowList[position].contents
         }
     }
 

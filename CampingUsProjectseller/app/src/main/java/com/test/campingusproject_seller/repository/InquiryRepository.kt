@@ -38,8 +38,8 @@ class InquiryRepository {
         // 판매자 문의 전체를 가져온다.
         fun getSellerInquiry(inquiryItemId: String, callback1: (Task<DataSnapshot>) -> Unit) {
             val database = FirebaseDatabase.getInstance()
-            val questionDataRef = database.getReference("InquiryData")
-            questionDataRef.orderByChild("inquiryItemId").equalTo(inquiryItemId)
+            val inquiryDataRef = database.getReference("InquiryData")
+            inquiryDataRef.orderByChild("inquiryItemId").equalTo(inquiryItemId)
                 .ref.orderByChild("inquiryIdx").get().addOnCompleteListener(callback1)
         }
 
