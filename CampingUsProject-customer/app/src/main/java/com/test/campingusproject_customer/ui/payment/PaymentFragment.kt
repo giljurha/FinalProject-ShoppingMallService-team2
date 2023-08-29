@@ -24,6 +24,8 @@ import com.test.campingusproject_customer.dataclassmodel.OrderProductModel
 import com.test.campingusproject_customer.repository.OrderRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import kotlinx.coroutines.runBlocking
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class PaymentFragment : Fragment() {
 
@@ -32,6 +34,10 @@ class PaymentFragment : Fragment() {
 
     val orderproductList = mutableListOf<OrderProductModel>()
 
+    //현재 시간 받아와 주문 번호와 주문 날짜 값 저장
+    val time = System.currentTimeMillis()
+    val orderId = time.toString()
+    val sdf = SimpleDateFormat("yyyy-MM-dd")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +51,15 @@ class PaymentFragment : Fragment() {
         //하단 nav bar 안보이게
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
 
-        val orderId = System.currentTimeMillis().toString()
-
         //현재 로그인된 유저의 정보가 담긴 sharedPreference 객체
         val sharedPreference = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
 
         fragmentPaymentBinding.run {
             //주문 번호 설정
             textViewPaymentOrderId.setText(orderId)
+
+            //주문 날짜 설정
+            textViewPaymentDate.setText(sdf.format(time))
 
             //주문자 설정
             textInputEditTextPaymentName.setText("${sharedPreference.getString("customerUserName", null)}")
@@ -112,8 +119,11 @@ class PaymentFragment : Fragment() {
                 //val totalPrice
 
 
+                //주문번호 다음 페이지로 넘김
+                val newBundle = Bundle()
+                newBundle.putString("orderId", orderId)
 
-                mainActivity.replaceFragment(MainActivity.ORDER_DETAIL_FRAGMENT, true, true, null)
+                mainActivity.replaceFragment(MainActivity.ORDER_DETAIL_FRAGMENT, true, true, newBundle)
 
             }
         }
