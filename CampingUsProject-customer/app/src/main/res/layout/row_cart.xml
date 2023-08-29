@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/border"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -22,17 +22,16 @@
             android:layout_height="wrap_content"
             android:checked="false" />
 
-        <!--        <ProgressBar-->
-        <!--            android:id="@+id/progressBarRow"-->
-        <!--            style="?android:attr/progressBarStyle"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content" />-->
+        <ProgressBar
+            android:id="@+id/progressBarRow"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/imageViewRowCart"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
