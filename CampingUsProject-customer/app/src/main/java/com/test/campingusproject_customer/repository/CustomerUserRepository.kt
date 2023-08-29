@@ -148,6 +148,24 @@ class CustomerUserRepository() {
             fileRef.downloadUrl.addOnCompleteListener(callback)
         }
 
+        fun removeUserInfo(customerUserId : String, callback1: (Task<Void>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+
+            val customerUserRef = database.getReference("CustomerUsers")
+            customerUserRef.orderByChild("customerUserId").equalTo(customerUserId).get().addOnCompleteListener{
+                for(a1 in it.result.children){
+                    a1.ref.removeValue().addOnCompleteListener(callback1)
+                }
+            }
+        }
+
+        fun removeUserProfileImage(fileName: String, callback1: (Task<Void>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+
+            val fileRef = storage.reference.child(fileName)
+            fileRef.delete().addOnCompleteListener(callback1)
+        }
+
         fun saveUserInfo(sharedPreferences: SharedPreferences, customerUser: CustomerUserModel){
             val editor = sharedPreferences.edit()
 
