@@ -102,15 +102,10 @@ class MainActivity : AppCompatActivity() {
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
-                            if(it.itemId != R.id.menuItemComunity)
-                                replaceFragment(COMUNITY_FRAGMENT, false, true, null)
-                            else{
-                                val boardType:Long = 1L
-                                val newBundle = Bundle()
-                                newBundle.putLong("boardType", boardType)
-                                replaceFragment(COMUNITY_FRAGMENT,false,true,newBundle)
-                            }
-
+                            val boardType: Long = 1L
+                            val newBundle = Bundle()
+                            newBundle.putLong("boardType", boardType)
+                            replaceFragment(COMUNITY_FRAGMENT, false, true, newBundle)
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {

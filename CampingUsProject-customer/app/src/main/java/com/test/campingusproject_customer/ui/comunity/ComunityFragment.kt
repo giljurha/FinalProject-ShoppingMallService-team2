@@ -59,7 +59,6 @@ class ComunityFragment : Fragment() {
         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
         val userId =  sharedPreferences.getString("customerUserId", null).toString()
 
-
         postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
         postViewModel.run {
             postDataList.observe(mainActivity) {
@@ -73,16 +72,15 @@ class ComunityFragment : Fragment() {
 
         //홈에서 인기 게시글 더보기 눌렀을 때
         var receiveBoardType:Long = 0L
-        if(mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId != R.id.menuItemComunity)
-            mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemComunity
-        if(arguments?.getLong("boardType") != null){
+        mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemComunity
+        if (arguments?.getLong("boardType") != null) {
             receiveBoardType = arguments?.getLong("boardType")!!
             postType = 1L
             postViewModel.getPostPopularAll()
-        }
-        else{
+        } else {
             receiveBoardType = 0L
         }
+
 
         fragmentComunityBinding.run {
         materialToolbarComunityFragment.run {
