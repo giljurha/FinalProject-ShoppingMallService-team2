@@ -27,6 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.search.SearchView
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.CameraUpdate.zoomTo
 import com.naver.maps.map.CameraUpdateParams
@@ -343,20 +344,17 @@ class CampsiteFragment : Fragment(), OnMapReadyCallback, Overlay.OnClickListener
                     markerList[adapterPosition].iconTintColor = Color.RED
                     markerList[adapterPosition].zIndex = 2
                     val tagInfo = markerList[adapterPosition].tag as CampsiteInfo
+//
+//                    val cameraUpdate =
+//                        CameraUpdate.scrollTo(LatLng(tagInfo.위도.toDouble(), tagInfo.경도.toDouble()))
+//                    naverMap.moveCamera(cameraUpdate)
                     //카메라 이동
-                    val cameraUpdate =
-                        CameraUpdate.scrollTo(LatLng(tagInfo.위도.toDouble(), tagInfo.경도.toDouble()))
-                    naverMap.moveCamera(cameraUpdate)
-
                     naverMap.run {
-                        // 현재 줌 레벨 가져오기
-                        val currentZoom = cameraPosition.zoom
-
-                        // 원하는 줌 레벨로 이동하기
-                        val newZoom = currentZoom + 3.0f // 예시로 1단계씩 증가시킴
-                        val cameraUpdate2 = CameraUpdate.scrollTo(cameraPosition.target)
-                        zoomTo(newZoom)
-                        moveCamera(cameraUpdate2)
+                        val cameraPosition = CameraPosition(
+                            LatLng(tagInfo.위도.toDouble(), tagInfo.경도.toDouble()), // 대상 지점
+                            20.0, // 줌 레벨
+                        )
+                        this.cameraPosition=cameraPosition
                     }
 
                     fragmentCampsiteBinding.root2.requestFocus()
