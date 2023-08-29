@@ -19,6 +19,7 @@ import com.test.campingusproject_customer.databinding.FragmentPaymentBinding
 import com.test.campingusproject_customer.databinding.RowPaymentBinding
 import com.test.campingusproject_customer.dataclassmodel.BundleData
 import com.test.campingusproject_customer.dataclassmodel.CartModel
+import com.test.campingusproject_customer.dataclassmodel.CartProductModel
 import com.test.campingusproject_customer.dataclassmodel.OrderProductModel
 import com.test.campingusproject_customer.repository.OrderRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
@@ -187,28 +188,33 @@ class PaymentFragment : Fragment() {
     //모든 상품 리스트를 서버로부터 받아오는 과정
     fun getProductList(orderId : String){
         //장바구니에서 bundle로 전달한 선택 상품 목록
-        val checkedItems = arguments?.getParcelableArrayList<BundleData>("checkedItems")
+        val spinnerList = arguments?.getIntArray("spinnerList")
+        val productList = arguments?.getParcelableArrayList<CartProductModel>("productList")
 
-        if (checkedItems != null) {
-            for (item in checkedItems){
-                val productId = item.productId
-                val productCount = item.productCount
 
-                //상품 목록의 모든 값을 받아옴
-                runBlocking {
-                    OrderRepository.getOneProductData(productId){
-                        for(c1 in it.result.children){
-                            val orderProductName = c1.child("productName").value as String
-                            val orderProductPrice = c1.child("productPrice").value as Long
-                            val orderProductImage = c1.child("productImage").value as String
 
-                            val orderProduct = OrderProductModel(orderId, orderProductName, productCount.toString(),
-                                orderProductPrice.toString(), orderProductImage)
+        if (productList != null) {
+            for (item in productList){
 
-                            orderproductList.add(orderProduct)
-                        }
-                    }
-                }
+                Log.d("item", "$item")
+//                val productId = item.productId
+//                val productCount = item.productCount
+//
+//                //상품 목록의 모든 값을 받아옴
+//                runBlocking {
+//                    OrderRepository.getOneProductData(productId){
+//                        for(c1 in it.result.children){
+//                            val orderProductName = c1.child("productName").value as String
+//                            val orderProductPrice = c1.child("productPrice").value as Long
+//                            val orderProductImage = c1.child("productImage").value as String
+//
+//                            val orderProduct = OrderProductModel(orderId, orderProductName, productCount.toString(),
+//                                orderProductPrice.toString(), orderProductImage)
+//
+//                            orderproductList.add(orderProduct)
+//                        }
+//                    }
+//                }
             }
         }
     }

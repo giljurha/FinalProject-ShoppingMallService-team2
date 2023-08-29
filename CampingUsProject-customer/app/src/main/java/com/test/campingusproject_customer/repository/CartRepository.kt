@@ -44,37 +44,6 @@ class CartRepository {
             )
         }
 
-//        fun setCartCount(cartModel: CartModel) {
-//            val database = FirebaseDatabase.getInstance()
-//            val cartRef = database.getReference("CartData")
-//
-//            cartRef.orderByChild("cartUserId").equalTo(cartModel.cartUserId)
-//                .orderByChild("cartProductId").equalTo(cartModel.cartProductId.toDouble())
-//                .get().addOnCompleteListener{
-////                cartRef.orderByChild("cartProductId").equalTo(cartModel.cartProductId.toDouble()).get().addOnCompleteListener {
-//                    for (a1 in it.result.children) {
-//                        a1.ref.child("cartProductCount").setValue(cartModel.cartProductCount)
-//                    }
-////                }
-//                }
-//        }
-
-//        // 장바구니 상품 개수 설정하는 함수
-//        fun setCartCount(cartModel: CartModel) {
-//            val database = FirebaseDatabase.getInstance()
-//            val cartRef = database.getReference("CartData")
-//
-//            cartRef.orderByChild("cartUserId").equalTo(cartModel.cartUserId).get().addOnCompleteListener {
-//
-////                cartRef.orderByChild("cartProductId").equalTo(cartModel.cartProductId.toDouble()).get().addOnCompleteListener {
-//                    for (a1 in it.result.children) {
-//
-//                        a1.ref.child("cartProductCount").setValue(cartModel.cartProductCount)
-//                    }
-////                }
-//            }
-//        }
-
         // 장바구니 상품 개수 설정하는 함수
         fun setCartCount(cartModel: CartModel) {
             val database = FirebaseDatabase.getInstance()

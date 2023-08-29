@@ -10,53 +10,53 @@ data class CartModel(
 ) {
     constructor() : this("", 0, 0)
 }
-//    : Parcelable {
-//    constructor(parcel: Parcel) : this(
-//        parcel.readString().toString(),
-//        parcel.readLong(),
-//        parcel.readLong()
-//    ) {
-//    }
-//
-//    override fun writeToParcel(parcel: Parcel, flags: Int) {
-//        parcel.writeString(cartUserId)
-//        parcel.writeLong(cartProductId)
-//        parcel.writeLong(cartProductCount)
-//    }
-//
-//    override fun describeContents(): Int {
-//        return 0
-//    }
-//
-//    companion object CREATOR : Parcelable.Creator<CartModel> {
-//        override fun createFromParcel(parcel: Parcel): CartModel {
-//            return CartModel(parcel)
-//        }
-//
-//        override fun newArray(size: Int): Array<CartModel?> {
-//            return arrayOfNulls(size)
-//        }
-//    }
-//
-//}
 
 data class CartProductModel(
-    var productName: String,
+    var productName: String?,
     var productPrice: Long,
-    var productImage: String,
-    var productInfo: String,
-)
+    var productImage: String?,
+    var productInfo: String?,
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
 
-data class BundleData(var productId: Long, var productCount: Int) : Parcelable {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(productName)
+        parcel.writeLong(productPrice)
+        parcel.writeString(productImage)
+        parcel.writeString(productInfo)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CartProductModel> {
+        override fun createFromParcel(parcel: Parcel): CartProductModel {
+            return CartProductModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CartProductModel?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
+
+data class BundleData(var productId: Long, var productCount: Long) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
-        parcel.readInt()
+        parcel.readLong()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(productId)
-        parcel.writeInt(productCount)
+        parcel.writeLong(productCount)
     }
 
     override fun describeContents(): Int {
