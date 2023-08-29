@@ -2,6 +2,7 @@ package com.test.campingusproject_customer.repository
 
 import android.app.Activity
 import android.content.SharedPreferences
+import android.net.Uri
 import android.provider.ContactsContract.Data
 import android.util.Log
 import com.google.android.gms.tasks.Task
@@ -17,8 +18,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.test.campingusproject_customer.dataclassmodel.CustomerUserModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
@@ -108,6 +112,60 @@ class CustomerUserRepository() {
                 .get().addOnCompleteListener(callback)
         }
 
+        fun modifyUserInfo(customerUserId: String, customerUserModel: CustomerUserModel,
+                           callback1: (Task<Void>) -> Unit)
+        {
+            val database = FirebaseDatabase.getInstance()
+
+            val customerUserRef = database.getReference("CustomerUsers")
+            customerUserRef.orderByChild("customerUserId").equalTo(customerUserId).get()
+                .addOnCompleteListener{
+                    runBlocking {
+                        for(a1 in it.result.children){
+                            a1.ref.child("customerUserName").setValue(customerUserModel.customerUserName)
+                            a1.ref.child("customerUserPw").setValue(customerUserModel.customerUserPw)
+                            a1.ref.child("customerUserShipRecipient").setValue(customerUserModel.customerUserShipRecipient)
+                            a1.ref.child("customerUserShipContact").setValue(customerUserModel.customerUserShipContact)
+                            a1.ref.child("customerUserShipAddress").setValue(customerUserModel.customerUserShipAddress)
+                            a1.ref.child("customerUserProfileImage").setValue(customerUserModel.customerUserProfileImage)
+                                .addOnCompleteListener(callback1)
+                        }
+                    }
+                }
+        }
+
+        fun uploadProfileImage(fileName:String, uploadUri: Uri, callback: (Task<UploadTask.TaskSnapshot>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+
+            val imageRef = storage.reference.child(fileName)
+            imageRef.putFile(uploadUri).addOnCompleteListener(callback)
+        }
+
+        fun getUserProfileImage(fileName:String, callback: (Task<Uri>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+            val fileRef = storage.reference.child(fileName)
+
+            fileRef.downloadUrl.addOnCompleteListener(callback)
+        }
+
+        fun removeUserInfo(customerUserId : String, callback1: (Task<Void>) -> Unit){
+            val database = FirebaseDatabase.getInstance()
+
+            val customerUserRef = database.getReference("CustomerUsers")
+            customerUserRef.orderByChild("customerUserId").equalTo(customerUserId).get().addOnCompleteListener{
+                for(a1 in it.result.children){
+                    a1.ref.removeValue().addOnCompleteListener(callback1)
+                }
+            }
+        }
+
+        fun removeUserProfileImage(fileName: String, callback1: (Task<Void>) -> Unit){
+            val storage = FirebaseStorage.getInstance()
+
+            val fileRef = storage.reference.child(fileName)
+            fileRef.delete().addOnCompleteListener(callback1)
+        }
+
         fun saveUserInfo(sharedPreferences: SharedPreferences, customerUser: CustomerUserModel){
             val editor = sharedPreferences.edit()
 
@@ -137,6 +195,22 @@ class CustomerUserRepository() {
             return !(customerUserName == null || customerUserId == null || customerUserPw == null ||
                     customerUserShipRecipient == null || customerUserShipContact == null ||
                     customerUserShipAddress == null || customerUserPhoneNumber == null || customerUserProfileImage == null)
+        }
+
+        fun resetPref(sharedPreferences: SharedPreferences){
+            //sharedreferences 값 삭제
+            val editor = sharedPreferences.edit()
+
+            editor.remove("customerUserName")
+            editor.remove("customerUserId")
+            editor.remove("customerUserPw")
+            editor.remove("customerUserShipRecipient")
+            editor.remove("customerUserShipContact")
+            editor.remove("customerUserShipAddress")
+            editor.remove("customerUserPhoneNumber")
+            editor.remove("customerUserProfileImage")
+
+            editor.apply()
         }
     }
 }
