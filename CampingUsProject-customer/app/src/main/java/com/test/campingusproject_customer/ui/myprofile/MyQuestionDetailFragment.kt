@@ -1,5 +1,6 @@
 package com.test.campingusproject_customer.ui.myprofile
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,11 +24,16 @@ class MyQuestionDetailFragment : Fragment() {
         fragmentMyQuestionDetailBinding = FragmentMyQuestionDetailBinding.inflate(inflater)
         mainActivity = activity as MainActivity
 
+        val inquiryProduct = arguments?.getString("inquiryProduct")
+        val inquiryContent = arguments?.getString("inquiryContent")
+        val inquiryAnswer = arguments?.getString("inquiryAnswer")
+        val inquiryDate = arguments?.getString("inquiryDate")
+
         fragmentMyQuestionDetailBinding.run {
-            textInputEditTextMyQuestionDetailProductName.setText("강현구의 바람숭숭 텐트")
-            textInputEditTextMyQuestionDetailUserName.setText("차은우")
-            textInputEditTextMyQuestionDetailAnswerContent.setText("텐트 문을 닫으세요....")
-            textInputEditTextMyQuestionDetailQuestionContent.setText("바람이 너무 잘통해요 ㅜㅜㅜㅜㅠㅠㅠ")
+            textInputEditTextMyQuestionDetailProductName.setText(inquiryProduct)
+            textInputEditTextMyQuestionDetailDate.setText(inquiryDate)
+            textInputEditTextMyQuestionDetailAnswerContent.setText(inquiryAnswer)
+            textInputEditTextMyQuestionDetailQuestionContent.setText(inquiryContent)
 
             materialToolbarMyQuestionDetail.run {
                 setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)

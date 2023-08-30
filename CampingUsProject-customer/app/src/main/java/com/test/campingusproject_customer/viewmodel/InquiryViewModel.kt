@@ -1,20 +1,37 @@
 package com.test.campingusproject_customer.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.test.campingusproject_customer.dataclassmodel.InquiryModel
+import com.test.campingusproject_customer.repository.InquiryRepository
 
 class InquiryViewModel: ViewModel() {
-//    var inquiryItemId = MutableLiveData<String>()               // 제품 아이템 ID
-//    var inquiryUserId = MutableLiveData<String>()               // 문의 작성자 ID
-//    var inquiryProductName = MutableLiveData<String>()          // 문의 아이템(제목)
-//    var inquiryContent = MutableLiveData<String>()              // 문의 내용
-//    var inquiryUserName = MutableLiveData<String>()             // 문의 작성자 이름
-//    var inquiryWriteDate = MutableLiveData<String>()            // 문의 작성 날짜
-//    var inquiryAnswer = MutableLiveData<String>()               // 문의 답변
-//    var inquiryQuestion = MutableLiveData<String>()             // 답변 여부
-//
-//    var inquiryList = MutableLiveData<MutableList<InquiryModel>>()
-//
-//    init {
-//        inquiryList.value = mutableListOf()
-//    }
+    var inquiryList = MutableLiveData<MutableList<InquiryModel>>()
+
+    init {
+        inquiryList.value = mutableListOf()
+    }
+
+    fun getQuestionList(userId: String){
+        val tempList = mutableListOf<InquiryModel>()
+        InquiryRepository.getInquiryData(userId){
+            for(c1 in it.result.children){
+                var inquiryItemId = c1.child("inquiryItemId").value as Long
+                var inquiryUserId = c1.child("inquiryUserId").value as String
+                var inquiryProductName = c1.child("inquiryProductName").value as String
+                var inquiryContent = c1.child("inquiryContent").value as String
+                var inquiryUserName = c1.child("inquiryUserName").value as String
+                var inquiryWriteDate = c1.child("inquiryWriteDate").value as String
+                var inquiryAnswer = c1.child("inquiryAnswer").value as String
+                var inquiryQuestion = c1.child("inquiryQuestion").value as Boolean
+                var inquriyImage = c1.child("inquiryImage").value as String
+
+                val inquiryModel = InquiryModel(inquiryItemId, inquiryUserId, inquiryProductName,
+                    inquiryContent, inquiryUserName, inquiryWriteDate, inquiryAnswer, inquiryQuestion, inquriyImage)
+
+                tempList.add(inquiryModel)
+            }
+            inquiryList.value = tempList
+        }
+    }
 }

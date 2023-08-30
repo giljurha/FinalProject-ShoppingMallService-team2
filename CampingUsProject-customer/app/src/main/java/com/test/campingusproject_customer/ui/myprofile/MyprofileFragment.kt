@@ -4,26 +4,18 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
 import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import java.lang.NullPointerException
-import kotlin.concurrent.thread
 
 class MyprofileFragment : Fragment() {
     lateinit var fragmentMyprofileBinding: FragmentMyprofileBinding
@@ -56,10 +48,7 @@ class MyprofileFragment : Fragment() {
                             .into(imageViewMyProfileMyImage)
                     }
                 }
-            }catch (e : NullPointerException){
-                Log.d("myProfile", "로그인 안 된 상태")
-                mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
-            }
+            }catch (e : NullPointerException){}
 
 
             materialToolbarMyProfile.run {
@@ -160,11 +149,15 @@ class MyprofileFragment : Fragment() {
             fragmentMyprofileBinding.textViewMyProfileMyName.text = ""
             fragmentMyprofileBinding.textViewMyProfileMyPhoneNumber.text = ""
             fragmentMyprofileBinding.textViewMyprofileMyDestination.text = ""
+            fragmentMyprofileBinding.imageViewMyProfileMyImage.setImageResource(R.drawable.account_circle_24px)
             MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog).run {
                 setTitle("접근 권한 없음")
                 setMessage("로그인이 필요한 서비스입니다.")
-                setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
+                setPositiveButton("닫기"){ dialogInterface: DialogInterface, i: Int ->
                     mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+                }
+                setNegativeButton("메인으로"){ dialogInterface: DialogInterface, i: Int ->
+                    mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, true, null)
                 }
                 show()
             }
