@@ -22,5 +22,23 @@ class InquiryRepository {
             val inquiryRef = database.getReference("InquiryData")
             inquiryRef.orderByChild("inquiryUserId").equalTo(userId).get().addOnCompleteListener(callback1)
         }
+
+        // 문의 인덱스 번호를 가져온다.
+        fun getInquiryIdx(callback1: (Task<DataSnapshot>) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            // 게시글 인덱스 번호
+            val inquiryIdxRef = database.getReference("InquiryIdx")
+            inquiryIdxRef.get().addOnCompleteListener(callback1)
+        }
+
+        // 문의 인덱스 번호를 저장한다.
+        fun setInquiryIdx(inquiryIdx: Long, callback1: (Task<Void>) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            val inquiryIdxRef = database.getReference("InquiryIdx")
+            // 게시글 인덱스번호 저장
+            inquiryIdxRef.get().addOnCompleteListener {
+                it.result.ref.setValue(inquiryIdx).addOnCompleteListener(callback1)
+            }
+        }
     }
 }

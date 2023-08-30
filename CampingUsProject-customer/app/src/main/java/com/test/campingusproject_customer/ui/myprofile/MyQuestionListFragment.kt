@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.ui.myprofile
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyQuestionListBinding
@@ -126,7 +131,7 @@ class MyQuestionListFragment : Fragment() {
             holder.textViewRowQuestionTitle.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryProductName
             holder.textViewRowQuestionContent.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryContent
             holder.textViewRowQuestionDate.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryWriteDate
-            holder.textViewRowQuestionAnswerStatus.text = if(inquiryViewModel.inquiryList.value?.get(position)?.inquiryQuestion!!) "답변 완료" else "미답변"
+            holder.textViewRowQuestionAnswerStatus.text = if(inquiryViewModel.inquiryList.value?.get(position)?.inquiryResult!!) "답변 완료" else "미답변"
 
             //이미지
             ProductRepository.getProductFirstImage(inquiryViewModel.inquiryList.value?.get(position)?.inquiryImage!!){

@@ -1,8 +1,10 @@
 package com.test.campingusproject_seller.repository
 
+import android.net.Uri
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.test.campingusproject_seller.dataclassmodel.InquiryModel
 
 class InquiryRepository {
@@ -31,16 +33,23 @@ class InquiryRepository {
         fun getSellerProduct(sellerId: String, callback1: (Task<DataSnapshot>) -> Unit) {
             val database = FirebaseDatabase.getInstance()
             val productDataRef = database.getReference("ProductData")
-            productDataRef.orderByChild("productSellerId").equalTo(sellerId)
-                .ref.orderByChild("productId").get().addOnCompleteListener(callback1)
+            productDataRef.orderByChild("productSellerId").equalTo(sellerId).get()
+                .addOnCompleteListener(callback1)
         }
 
         // 판매자 문의 전체를 가져온다.
-        fun getSellerInquiry(inquiryItemId: String, callback1: (Task<DataSnapshot>) -> Unit) {
+        fun getSellerInquiry(inquiryItemId: Long, callback1: (Task<DataSnapshot>) -> Unit) {
             val database = FirebaseDatabase.getInstance()
             val inquiryDataRef = database.getReference("InquiryData")
-            inquiryDataRef.orderByChild("inquiryItemId").equalTo(inquiryItemId)
-                .ref.orderByChild("inquiryIdx").get().addOnCompleteListener(callback1)
+            inquiryDataRef.orderByChild("inquiryItemId").equalTo(inquiryItemId.toDouble()).get()
+                .addOnCompleteListener(callback1)
+        }
+
+        // 판매자 문의 전체를 가져온다.
+        fun getInquiry(callback1: (Task<DataSnapshot>) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            val inquiryDataRef = database.getReference("InquiryData")
+            inquiryDataRef.orderByChild("inquiryIdx").get().addOnCompleteListener(callback1)
         }
 
         // 문의 상세정보를 가져온다.
@@ -72,6 +81,15 @@ class InquiryRepository {
                             .addOnCompleteListener(callback1)
                     }
                 }
+        }
+
+        //상품의 대표이미지만 가져오는 함수
+        fun getProductFirstImage(fileDir: String, callback1: (Task<Uri>) -> Unit) {
+            val storage = FirebaseStorage.getInstance()
+            val fileName = fileDir + "1.png"
+
+            val imageRef = storage.reference.child(fileName)
+            imageRef.downloadUrl.addOnCompleteListener(callback1)
         }
 
     }
