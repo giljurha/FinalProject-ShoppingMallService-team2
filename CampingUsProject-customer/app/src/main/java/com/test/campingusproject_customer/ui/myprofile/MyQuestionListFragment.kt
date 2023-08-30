@@ -1,24 +1,36 @@
 package com.test.campingusproject_customer.ui.myprofile
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyQuestionListBinding
 import com.test.campingusproject_customer.databinding.RowMyQuestionsBinding
+import com.test.campingusproject_customer.dataclassmodel.InquiryModel
+import com.test.campingusproject_customer.repository.InquiryRepository
+import com.test.campingusproject_customer.repository.ProductRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.InquiryViewModel
 
 class MyQuestionListFragment : Fragment() {
 
     lateinit var fragmentMyQuestionListBinding: FragmentMyQuestionListBinding
     lateinit var mainActivity: MainActivity
+
+    lateinit var inquiryViewModel: InquiryViewModel
+
+    var questionList = mutableListOf<InquiryModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +39,16 @@ class MyQuestionListFragment : Fragment() {
 
         fragmentMyQuestionListBinding = FragmentMyQuestionListBinding.inflate(inflater)
         mainActivity = activity as MainActivity
+
+        inquiryViewModel = ViewModelProvider(mainActivity)[InquiryViewModel::class.java]
+        inquiryViewModel.inquiryList.observe(mainActivity){
+            fragmentMyQuestionListBinding.recyclerViewMyQuestionList.adapter?.notifyDataSetChanged()
+        }
+
+        val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        val userId =  sharedPreferences.getString("customerUserId", null).toString()
+
+        inquiryViewModel.getQuestionList(userId)
 
         fragmentMyQuestionListBinding.run{
             materialToolbarMyQuestionList.run{
@@ -63,18 +85,23 @@ class MyQuestionListFragment : Fragment() {
                 val textViewRowQuestionTitle : TextView
                 val textViewRowQuestionContent : TextView
                 val textViewRowQuestionAnswerStatus : TextView
-                val textViewRowQuestionUserId : TextView
+                val textViewRowQuestionDate : TextView
 
                 init {
                     imageviewRowQuestionProductImage = rowMyQuestionsBinding.imageViewRowQuestionProductImage
                     textViewRowQuestionTitle = rowMyQuestionsBinding.textViewRowQuestionTitle
                     textViewRowQuestionContent = rowMyQuestionsBinding.textViewRowQuestionContent
                     textViewRowQuestionAnswerStatus = rowMyQuestionsBinding.textViewRowQuestionAnswerStatus
-                    textViewRowQuestionUserId = rowMyQuestionsBinding.textViewRowQuestionUserId
+                    textViewRowQuestionDate = rowMyQuestionsBinding.textViewRowQuestionDate
 
                     //recycler view 아이템 클릭시 상세 페이지로 전환
                     rowMyQuestionsBinding.root.setOnClickListener {
-                        mainActivity.replaceFragment(MainActivity.MY_QUESTION_DETAIL_FRAGMENT, true, true, null)
+                        val newBundle = Bundle()
+                        newBundle.putString("inquiryProduct", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryProductName)
+                        newBundle.putString("inquiryContent", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryContent)
+                        newBundle.putString("inquiryAnswer", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryAnswer)
+                        newBundle.putString("inquiryDate", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryWriteDate)
+                        mainActivity.replaceFragment(MainActivity.MY_QUESTION_DETAIL_FRAGMENT, true, true, newBundle)
                     }
 
                 }
@@ -92,14 +119,21 @@ class MyQuestionListFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 2
+            return inquiryViewModel.inquiryList.value?.size!!
         }
 
         override fun onBindViewHolder(holder: MyQuestionViewHolder, position: Int) {
-            holder.textViewRowQuestionTitle.text = "현구님의 바람숭숭 텐트"
-            holder.textViewRowQuestionContent.text = "바람이 너무 잘통해요 ㅜㅜㅜㅜㅜ"
-            holder.textViewRowQuestionUserId.text = "차은우"
-            holder.textViewRowQuestionAnswerStatus.text = "답변 완료"
+            holder.textViewRowQuestionTitle.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryProductName
+            holder.textViewRowQuestionContent.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryContent
+            holder.textViewRowQuestionDate.text = inquiryViewModel.inquiryList.value?.get(position)?.inquiryWriteDate
+            holder.textViewRowQuestionAnswerStatus.text = if(inquiryViewModel.inquiryList.value?.get(position)?.inquiryQuestion!!) "답변 완료" else "미답변"
+
+            //이미지
+            ProductRepository.getProductFirstImage(inquiryViewModel.inquiryList.value?.get(position)?.inquiryImage!!){
+                Glide.with(mainActivity).load(it.result)
+                    .override(300, 300)
+                    .into(holder.imageviewRowQuestionProductImage)
+            }
         }
     }
 
