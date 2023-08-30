@@ -59,11 +59,6 @@ class ProductRepository {
             imageRef.downloadUrl.addOnCompleteListener(callback1)
         }
 
-        //판매자 id 받아오는 함수 - 수정필
-        fun getSellerId() : String{
-            return "jieun"
-        }
-
         //모든 상품 정보 가져오는 함수
         fun getAllProductData(callback1: (Task<DataSnapshot>) -> Unit){
             val database = FirebaseDatabase.getInstance()
