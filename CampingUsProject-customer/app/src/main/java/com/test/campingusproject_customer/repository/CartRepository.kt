@@ -44,6 +44,18 @@ class CartRepository {
             )
         }
 
+        //모든 상품 정보를 장바구니에서 제거하는 함수
+        fun removeAllCartData(cartUserId: String){
+            val database = FirebaseDatabase.getInstance()
+            val cartRef = database.getReference("CartData")
+
+            cartRef.orderByChild("cartUserId").equalTo(cartUserId).get().addOnCompleteListener {
+                for(a1 in it.result.children){
+                    a1.ref.removeValue()
+                }
+            }
+        }
+
         // 장바구니 상품 개수 설정하는 함수
         fun setCartCount(cartModel: CartModel) {
             val database = FirebaseDatabase.getInstance()
