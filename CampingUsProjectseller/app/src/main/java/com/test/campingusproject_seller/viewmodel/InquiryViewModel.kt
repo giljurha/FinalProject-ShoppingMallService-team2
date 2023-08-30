@@ -81,7 +81,7 @@ class InquiryViewModel() : ViewModel() {
                 val inquiryContent = c2.child("inquiryContent").value as String
                 val inquiryUserName = c2.child("inquiryUserName").value as String
                 val inquiryWriteDate = c2.child("inquiryWriteDate").value as String
-                val inquiryAnswer = c2.child("inquiryAnswer").value as? String ?: ""
+                val inquiryAnswer = c2.child("inquiryAnswer").value as String
                 val inquiryResult = c2.child("inquiryResult").value as? Boolean ?: false
                 val inquiryImage = c2.child("inquiryImage").value as String
 
