@@ -28,6 +28,7 @@ import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentPostWriteBinding
 import com.test.campingusproject_customer.databinding.RowPostImageBinding
 import com.test.campingusproject_customer.dataclassmodel.PostModel
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.repository.PostRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import java.text.SimpleDateFormat
@@ -164,6 +165,7 @@ class PostWriteFragment : Fragment() {
                         var postText = "" // 내용
                         var postWriteDate = "" // 작성일
                         var postImagePath = "" // 첨부이미지 파일 이름
+                        var profileImagePath = "" //프로필 이미지 경로
 
                         // 게시글 작성자 ID
                         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
@@ -196,6 +198,15 @@ class PostWriteFragment : Fragment() {
                                 postImagePath = "PostImage/$postUserId/$postIdx/"
                             }
 
+                            val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                            var userProfileImage = sharedPreferences.getString("customerUserProfileImage", null)
+
+                            if(userProfileImage?.isEmpty()!!){
+                                profileImagePath = "null"
+                            }
+                            else{
+                                profileImagePath = "CustomerUserProfile/$postUserId/1"
+                            }
                             //객체 생성
                             val postModel = PostModel(
                                 postIdx,
@@ -206,7 +217,8 @@ class PostWriteFragment : Fragment() {
                                 postLiked = 0 ,
                                 postCommentCount = 0,
                                 postWriteDate,
-                                postImagePath
+                                postImagePath,
+                                profileImagePath
                             )
 
                             //게시글 저장

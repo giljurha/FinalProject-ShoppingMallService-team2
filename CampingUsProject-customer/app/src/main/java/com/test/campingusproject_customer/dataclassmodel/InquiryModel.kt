@@ -11,4 +11,5 @@ data class InquiryModel(
     var inquiryWriteDate: String,           // 문의 작성 날짜
     var inquiryAnswer: String,              // 문의 답변
     var inquiryQuestion: Boolean,           // 답변 여부
+    var inquiryImage : String               // 문의 상품 이미지
 ): Serializable
