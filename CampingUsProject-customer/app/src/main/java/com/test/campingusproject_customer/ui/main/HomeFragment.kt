@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
 
         postViewModel.getPostPopularAll()
 
-
+        mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemHome
 
         fragmentHomeBinding.run {
             materialToolbarHomeFragment.run {
