@@ -38,7 +38,7 @@
             android:id="@+id/textViewMyInfoUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="10dp"
             android:text="사용자명"
@@ -49,15 +49,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="30dp"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/textViewMyInfoPhoneName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:text="전화 번호"
+                android:layout_weight="0.4"
+                android:text="전화번호"
                 android:layout_marginLeft="20dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
