@@ -109,47 +109,81 @@ class AuthFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                //휴대폰 번호 중복 검사
-                CustomerUserRepository.getRegisteredPhoneNumber(phoneNumber, object : ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        //서버에 저장된 전화번호
-                        if(snapshot.exists()){
-                            Log.d("existNum", "중복된 번호")
-                            createDialog("회원 정보 중복", "이미 가입된 번호입니다."){
-                                editTextAuthPhoneNumber.setText("")
-                                mainActivity.focusOnView(editTextAuthPhoneNumber)
-                            }
-                        }
-                        //서버에 저장되지 않은 전화번호
-                        else{
-                            Log.d("existNum", "중복되지 않은 번호")
-                            Snackbar.make(fragmentAuthBinding.root, "사용 가능한 전화번호입니다.", Snackbar.LENGTH_SHORT).show()
-
-                            job = lifecycleScope.launch {
-                            //인증 상태에 맞게 코드 처리하는 콜백 함수 생성
-                                SystemClock.sleep(500)
-                                val callbacks = CustomerUserRepository.phoneAuthCallback(
-                                    onVerificationCompleted = {customerUserViewModel.verificationCompleted.value = true},
-                                    onVerificationFailed = {customerUserViewModel.verificationFailed.value = true},
-                                    onCodeSent = { verificationId ->
-                                        customerUserViewModel.verificationId.value = verificationId
-                                        customerUserViewModel.codeSent.value = true
-                                    }
-                                )
-
-                                val phoneNumber = fragmentAuthBinding.editTextAuthPhoneNumber.text.toString()
-                                //입력된 휴대폰 번호 포맷팅
-                                val validPhoneNumber = phoneNumber.replaceFirst("0", "+82")
-
-                                //해당 번호로 인증코드 전송하는 함수 호출
-                                CustomerUserRepository.sendAuthCode(auth, validPhoneNumber, mainActivity, callbacks)
-                            }
+                CustomerUserRepository.getRegisteredPhoneNumber(phoneNumber){
+                    if(it.result.exists()){
+                        Log.d("existNum", "중복된 번호")
+                        createDialog("회원 정보 중복", "이미 가입된 번호입니다."){
+                            editTextAuthPhoneNumber.setText("")
+                            mainActivity.focusOnView(editTextAuthPhoneNumber)
                         }
                     }
+                    else{
+                        Log.d("existNum", "중복되지 않은 번호")
+                        Snackbar.make(fragmentAuthBinding.root, "사용 가능한 전화번호입니다.", Snackbar.LENGTH_SHORT).show()
 
-                    override fun onCancelled(error: DatabaseError) {}
+                        job = lifecycleScope.launch {
+                            //인증 상태에 맞게 코드 처리하는 콜백 함수 생성
+                            SystemClock.sleep(500)
+                            val callbacks = CustomerUserRepository.phoneAuthCallback(
+                                onVerificationCompleted = {customerUserViewModel.verificationCompleted.value = true},
+                                onVerificationFailed = {customerUserViewModel.verificationFailed.value = true},
+                                onCodeSent = { verificationId ->
+                                    customerUserViewModel.verificationId.value = verificationId
+                                    customerUserViewModel.codeSent.value = true
+                                }
+                            )
 
-                })
+                            val phoneNumber = fragmentAuthBinding.editTextAuthPhoneNumber.text.toString()
+                            //입력된 휴대폰 번호 포맷팅
+                            val validPhoneNumber = phoneNumber.replaceFirst("0", "+82")
+
+                            //해당 번호로 인증코드 전송하는 함수 호출
+                            CustomerUserRepository.sendAuthCode(auth, validPhoneNumber, mainActivity, callbacks)
+                        }
+                    }
+                }
+
+//                //휴대폰 번호 중복 검사
+//                CustomerUserRepository.getRegisteredPhoneNumber(phoneNumber, object : ValueEventListener{
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        //서버에 저장된 전화번호
+//                        if(snapshot.exists()){
+//                            Log.d("existNum", "중복된 번호")
+//                            createDialog("회원 정보 중복", "이미 가입된 번호입니다."){
+//                                editTextAuthPhoneNumber.setText("")
+//                                mainActivity.focusOnView(editTextAuthPhoneNumber)
+//                            }
+//                        }
+//                        //서버에 저장되지 않은 전화번호
+//                        else{
+//                            Log.d("existNum", "중복되지 않은 번호")
+//                            Snackbar.make(fragmentAuthBinding.root, "사용 가능한 전화번호입니다.", Snackbar.LENGTH_SHORT).show()
+//
+//                            job = lifecycleScope.launch {
+//                            //인증 상태에 맞게 코드 처리하는 콜백 함수 생성
+//                                SystemClock.sleep(500)
+//                                val callbacks = CustomerUserRepository.phoneAuthCallback(
+//                                    onVerificationCompleted = {customerUserViewModel.verificationCompleted.value = true},
+//                                    onVerificationFailed = {customerUserViewModel.verificationFailed.value = true},
+//                                    onCodeSent = { verificationId ->
+//                                        customerUserViewModel.verificationId.value = verificationId
+//                                        customerUserViewModel.codeSent.value = true
+//                                    }
+//                                )
+//
+//                                val phoneNumber = fragmentAuthBinding.editTextAuthPhoneNumber.text.toString()
+//                                //입력된 휴대폰 번호 포맷팅
+//                                val validPhoneNumber = phoneNumber.replaceFirst("0", "+82")
+//
+//                                //해당 번호로 인증코드 전송하는 함수 호출
+//                                CustomerUserRepository.sendAuthCode(auth, validPhoneNumber, mainActivity, callbacks)
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {}
+//
+//                })
 
             }
 

@@ -133,19 +133,20 @@ class ModifyMyprofileFragment : Fragment() {
                             return@setOnMenuItemClickListener true
                         }
 
-                        //이미지 등록 검사
-                        if(profileImage == null){
-                            createDialog("이미지 미등록", "이미지를 입력해주세요"){}
-                            return@setOnMenuItemClickListener true
-                        }
-
                         //변경된 값으로 유저 객체 생성
                         val customerUserModel = CustomerUserModel(profileName, userId!!, profilePw,
                         profileReceiver, profilePhoneNumber, profileAddress, userPhoneNumber!!, userProfileImage!!)
 
                         //수정된 유저 객체를 DB와 SharedPreference에 저장하고 화면 전환
                         CustomerUserRepository.modifyUserInfo(customerUserModel.customerUserId, customerUserModel){
-                            CustomerUserRepository.uploadProfileImage(userProfileImage, profileImage!!){
+                            //이미지 등록 검사
+                            if(profileImage != null){
+                                CustomerUserRepository.uploadProfileImage(userProfileImage, profileImage!!){
+                                    CustomerUserRepository.saveUserInfo(sharedPreference, customerUserModel)
+                                    Snackbar.make(fragmentModifyMyprofileBinding.root, "유저 정보 수정이 완료되었습니다.", Snackbar.LENGTH_SHORT).show()
+                                    mainActivity.removeFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT)
+                                }
+                            }else{
                                 CustomerUserRepository.saveUserInfo(sharedPreference, customerUserModel)
                                 Snackbar.make(fragmentModifyMyprofileBinding.root, "유저 정보 수정이 완료되었습니다.", Snackbar.LENGTH_SHORT).show()
                                 mainActivity.removeFragment(MainActivity.MODIFY_MYPROFILE_FRAGMENT)
