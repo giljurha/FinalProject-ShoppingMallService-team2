@@ -189,7 +189,7 @@ class PaymentFragment : Fragment() {
             init {
                 textViewRowPaymentTitle = rowPaymentBinding.textViewRowPaymentTitle
                 imageViewRowPayment = rowPaymentBinding.imageViewRowPayment
-                textViewRowPaymentContent = rowPaymentBinding.textViewRowPaymentContent
+                textViewRowPaymentContent = rowPaymentBinding.textViewRowPaymentPrice
                 textViewRowPaymentCount = rowPaymentBinding.textViewRowPaymentCount
             }
         }

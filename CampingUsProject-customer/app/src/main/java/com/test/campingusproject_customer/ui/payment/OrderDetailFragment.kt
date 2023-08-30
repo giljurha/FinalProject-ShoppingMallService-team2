@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.campingusproject_customer.databinding.FragmentOrderDetailBinding
 import com.test.campingusproject_customer.databinding.RowPaymentBinding
 import com.test.campingusproject_customer.ui.main.MainActivity
+import com.test.campingusproject_customer.viewmodel.OrderDetailViewModel
 
 class OrderDetailFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentOrderDetailBinding: FragmentOrderDetailBinding
+    lateinit var productList:MutableList<OrderProductModel>
+    lateinit var orderDetailViewModel: OrderDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +30,46 @@ class OrderDetailFragment : Fragment() {
 
         mainActivity = activity as MainActivity
         fragmentOrderDetailBinding = FragmentOrderDetailBinding.inflate(layoutInflater)
+        orderDetailViewModel=ViewModelProvider(mainActivity)[OrderDetailViewModel::class.java]
+        orderDetailViewModel.run {
+            orderDeliveryReceiver.observe(mainActivity){
+                //받는사람
+                fragmentOrderDetailBinding.textViewReceiverName.text=it
+            }
+            orderDeliveryReceiverPhone.observe(mainActivity){
+                //연락처
+                fragmentOrderDetailBinding.textViewReceiverPhoneNum.text=it
+            }
+            orderUserAddress.observe(mainActivity){
+                //주소
+                fragmentOrderDetailBinding.textViewReceiverAddress.text=it
+            }
+            orderUserName.observe(mainActivity){
+                //이름
+                fragmentOrderDetailBinding.textViewOrderName.text=it
+            }
+            orderUserPhone.observe(mainActivity){
+                //휴대전화
+                fragmentOrderDetailBinding.textViewOrderPhoneNum.text=it
+            }
+            orderMeans.observe(mainActivity){
+                //결제수단
+                fragmentOrderDetailBinding.textViewOrderWay.text=it
+            }
+            orderTotalPrice.observe(mainActivity){
+                //금액
+                fragmentOrderDetailBinding.textViewOrderTotalPrice.text=it
+            }
+            orderStatus.observe(mainActivity){
+                //결제 상태?
+                fragmentOrderDetailBinding.textViewOrderState.text=it
+            }
+            orderProductList.observe(mainActivity){
+                productList=it
+            }
+
+        }
+
 
         //하단 nav bar 안보이게
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
@@ -64,7 +108,7 @@ class OrderDetailFragment : Fragment() {
             init {
                 textViewRowPaymentTitle = rowPaymentBinding.textViewRowPaymentTitle
                 imageViewRowPayment = rowPaymentBinding.imageViewRowPayment
-                textViewRowPaymentContent = rowPaymentBinding.textViewRowPaymentContent
+                textViewRowPaymentContent = rowPaymentBinding.textViewRowPaymentPrice
                 textViewRowPaymentCount = rowPaymentBinding.textViewRowPaymentCount
             }
         }

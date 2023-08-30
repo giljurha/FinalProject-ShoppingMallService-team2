@@ -1,0 +1,10 @@
+diff a/CampingUsProject-customer/app/src/main/java/com/test/campingusproject_customer/viewmodel/CartViewModel.kt b/CampingUsProject-customer/app/src/main/java/com/test/campingusproject_customer/viewmodel/CartViewModel.kt	(rejected hunks)
+@@ -57,8 +57,6 @@
+ 
+     fun getProductData(cartProductId: Long) {
+         CartRepository.getProductData(cartProductId) {
+-
+-
+             if(it.result.exists() == true) {
+                 for (c2 in it.result.children) {
+                     val productName = c2.child("productName").value as String
