@@ -16,6 +16,7 @@ class PostViewModel() : ViewModel() {
     var postType = MutableLiveData<Long>() // 게시글 타입
     var postLiked = MutableLiveData<Long>() // 좋아요 수
     var postCommentCount = MutableLiveData<Long>()// 댓글 수
+    var profileImagePath = MutableLiveData<String>() // 프로필 이미지 경로
 
     // 이미지 저장 리스트
     var postImageList = MutableLiveData<MutableList<Uri?>>()
@@ -54,6 +55,8 @@ class PostViewModel() : ViewModel() {
                 postCommentCount.value = c1.child("postCommentCount").value as Long
                 //이미지 경로
                 postImagePath.value = c1.child("postImagePath").value as String
+                //프로필 이미지 경로
+                profileImagePath.value = c1.child("profileImagePath").value as String
 
                 // 이미지가 있다면
                 if (postImagePath.value != "null") {
@@ -90,6 +93,8 @@ class PostViewModel() : ViewModel() {
                 val postUserId = c1.child("postUserId").value as String
                 val postLiked = c1.child("postLiked").value as Long
                 val postCommentCount = c1.child("postCommentCount").value as Long
+                //프로필 이미지 경로
+                val profileImagePath = c1.child("profileImagePath").value as String
 
                 if(getPostType != 0L && getPostType != postType){
                     continue
@@ -104,7 +109,8 @@ class PostViewModel() : ViewModel() {
                     postLiked,
                     postCommentCount,
                     postWriteDate,
-                    postImagePath
+                    postImagePath,
+                    profileImagePath
                 )
                 tempList.add(p1)
             }
@@ -141,7 +147,7 @@ class PostViewModel() : ViewModel() {
                 val postUserId = c1.child("postUserId").value as String
                 val postLiked = c1.child("postLiked").value as Long
                 val postCommentCount = c1.child("postCommentCount").value as Long
-
+                val profileImagePath = c1.child("profileImagePath").value as String
 //                if(getPostType != 0L && getPostType != postType){
 //                    continue
 //                }
@@ -159,7 +165,8 @@ class PostViewModel() : ViewModel() {
                     postLiked,
                     postCommentCount,
                     postWriteDate,
-                    postImagePath
+                    postImagePath,
+                    profileImagePath
                 )
                 tempList.add(p1)
 
@@ -188,7 +195,7 @@ class PostViewModel() : ViewModel() {
                 val postUserId = c1.child("postUserId").value as String
                 val postLiked = c1.child("postLiked").value as Long
                 val postCommentCount = c1.child("postCommentCount").value as Long
-
+                val profileImagePath = c1.child("profileImagePath").value as String
 //                if(getPostType != 0L && getPostType != postType){
 //                    continue
 //                }
@@ -206,7 +213,8 @@ class PostViewModel() : ViewModel() {
                     postLiked,
                     postCommentCount,
                     postWriteDate,
-                    postImagePath
+                    postImagePath,
+                    profileImagePath
                 )
                 tempList.add(p1)
 
@@ -233,6 +241,7 @@ class PostViewModel() : ViewModel() {
                 val postUserId = c1.child("postUserId").value as String
                 val postLiked = c1.child("postLiked").value as Long
                 val postCommentCount = c1.child("postCommentCount").value as Long
+                val profileImagePath = c1.child("profileImagePath").value as String
 
                 val p1 = PostModel(
                     postIdx,
@@ -243,7 +252,8 @@ class PostViewModel() : ViewModel() {
                     postLiked,
                     postCommentCount,
                     postWriteDate,
-                    postImagePath
+                    postImagePath,
+                    profileImagePath
                 )
                 tempList.add(p1)
             }
