@@ -69,15 +69,20 @@ class InquiryRepository {
         }
 
         // 문의 답변 작성
-        fun inquiryAnswer(inquiryModel: InquiryModel, callback1: (Task<Void>) -> Unit) {
+        fun inquiryAnswer(
+            inquiryIdx: Long,
+            inquiryAnswer: String,
+            inquiryResult: Boolean,
+            callback1: (Task<Void>) -> Unit
+        ) {
             val database = FirebaseDatabase.getInstance()
             val inquiryDataRef = database.getReference("InquiryData")
 
-            inquiryDataRef.orderByChild("inquiryIdx").equalTo(inquiryModel.inquiryIdx.toDouble())
-                .get()
+            inquiryDataRef.orderByChild("inquiryIdx").equalTo(inquiryIdx.toDouble()).get()
                 .addOnCompleteListener {
                     for (a1 in it.result.children) {
-                        a1.ref.child("inqiuryAnswer").setValue(inquiryModel.inquiryAnswer)
+                        a1.ref.child("inquiryAnswer").setValue(inquiryAnswer)
+                        a1.ref.child("inquiryResult").setValue(inquiryResult)
                             .addOnCompleteListener(callback1)
                     }
                 }

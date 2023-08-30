@@ -9,9 +9,10 @@ import com.test.campingusproject_seller.repository.InquiryRepository
 import kotlinx.coroutines.runBlocking
 
 class InquiryViewModel() : ViewModel() {
-    var inquiryUserId = MutableLiveData<String>()      // 문의 작성자 ID
-    var inquiryItemTitle = MutableLiveData<String>()   // 문의 아이템(제목)
-    var inquiryContent = MutableLiveData<String>()     // 문의 내용
+    var inquiryUserId = MutableLiveData<String>()        // 문의 작성자 ID
+    var inquiryProductName = MutableLiveData<String>()   // 문의 아이템(제목)
+    var inquiryContent = MutableLiveData<String>()       // 문의 내용
+    var inquiryAnswer = MutableLiveData<String>()        // 답변 내용
 
     // 상품 목록
     var inquiryProductList = MutableLiveData<MutableList<InquiryProductModel>>()
@@ -30,11 +31,13 @@ class InquiryViewModel() : ViewModel() {
         InquiryRepository.getInquiryDetail(inquiryIdx) {
             for (c1 in it.result.children) {
                 // 문의 아이템(제목)
-                inquiryItemTitle.value = c1.child("inquiryItemTitle").value as String
+                inquiryProductName.value = c1.child("inquiryProductName").value as String
                 // 문의 작성자 이름
                 inquiryUserId.value = c1.child("inquiryUserId").value as String
                 // 문의 내용
                 inquiryContent.value = c1.child("inquiryContent").value as String
+                // 답변 내용
+                inquiryAnswer.value = c1.child("inquiryAnswer").value as? String ?: ""
             }
         }
     }
@@ -78,7 +81,7 @@ class InquiryViewModel() : ViewModel() {
                 val inquiryContent = c2.child("inquiryContent").value as String
                 val inquiryUserName = c2.child("inquiryUserName").value as String
                 val inquiryWriteDate = c2.child("inquiryWriteDate").value as String
-                val inquiryAnswer = c2.child("inquiryAnswer").value as String
+                val inquiryAnswer = c2.child("inquiryAnswer").value as? String ?: ""
                 val inquiryResult = c2.child("inquiryResult").value as? Boolean ?: false
                 val inquiryImage = c2.child("inquiryImage").value as String
 

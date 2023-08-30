@@ -120,16 +120,16 @@ class InquiryFragment : Fragment() {
                 progressBarRow = rowInquiryBinding.progressBarRow
 
                 rowInquiryBinding.root.setOnClickListener {
-//                    val inquiryIdx = inquiryViewModel.inquiryDataList.value?.get(adapterPosition)?.inquiryIdx
-//                    val newBundle = Bundle()
-//                    newBundle.putLong("inquiryIdx", inquiryIdx!!)
-//                    mainActivity.replaceFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT, true, false, newBundle)
-                    mainActivity.replaceFragment(
-                        MainActivity.INQUIRY_DETAIL_FRAGMENT,
-                        true,
-                        false,
-                        null
-                    )
+                    val inquiryIdx = inquiryViewModel.inquiryDataList.value?.get(adapterPosition)?.inquiryIdx
+                    val newBundle = Bundle()
+                    newBundle.putLong("inquiryIdx", inquiryIdx!!)
+                    mainActivity.replaceFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT, true, false, newBundle)
+//                    mainActivity.replaceFragment(
+//                        MainActivity.INQUIRY_DETAIL_FRAGMENT,
+//                        true,
+//                        false,
+//                        null
+//                    )
                 }
             }
         }
