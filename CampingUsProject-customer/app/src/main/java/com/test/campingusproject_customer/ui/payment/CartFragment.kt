@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.ui.payment
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,8 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentCartBinding
 import com.test.campingusproject_customer.databinding.RowCartBinding
 import com.test.campingusproject_customer.dataclassmodel.BundleData
@@ -97,15 +100,27 @@ class CartFragment : Fragment() {
             // 구매하기 버튼
             buttonCartBuy.run {
                 setOnClickListener {
-                    newBundle.putParcelableArrayList("productList", ArrayList(productList))
-                    newBundle.putIntArray("spinnerList", spinnerList)
+                    if(productList.isEmpty()){
+                        MaterialAlertDialogBuilder(mainActivity,
+                            R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+                            setTitle("결제 오류")
+                            setMessage("장바구니에 담긴 상품이 없습니다")
+                            setPositiveButton("확인",null)
+                            show()
+                        }
+                        return@setOnClickListener
+                    }else{
+                        newBundle.putParcelableArrayList("productList", ArrayList(productList))
+                        newBundle.putIntArray("spinnerList", spinnerList)
 
-                    mainActivity.replaceFragment(
-                        MainActivity.PAYMENT_FRAGMENT,
-                        true,
-                        true,
-                        newBundle
-                    )
+                        mainActivity.replaceFragment(
+                            MainActivity.PAYMENT_FRAGMENT,
+                            true,
+                            true,
+                            newBundle
+                        )
+                    }
+
                 }
             }
         }

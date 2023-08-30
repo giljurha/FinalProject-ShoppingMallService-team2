@@ -24,13 +24,5 @@ class OrderRepository {
             orderProductRef.push().setValue(orderProductModel).addOnCompleteListener(callback)
         }
 
-        //해당하는 ID의 상품 정보 가져오는 함수
-        fun getOneProductData(productId:Long, callback1: (Task<DataSnapshot>) -> Unit){
-            val database = FirebaseDatabase.getInstance()
-
-            val productRef = database.getReference("ProductData")
-            productRef.orderByChild("productId").equalTo(productId.toDouble()).get().addOnCompleteListener(callback1)
-        }
-
     }
 }
