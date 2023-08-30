@@ -126,7 +126,7 @@ class ModifyMyPostFragment : Fragment() {
                         var postText = "" // 내용
                         var postWriteDate = "" // 작성일
                         var postImagePath = "" // 첨부이미지 파일 이름
-
+                        var profileImagePath = ""
                         // 게시글 작성자 ID
                         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
                         postUserId = sharedPreferences.getString("customerUserId", null).toString()
@@ -148,6 +148,15 @@ class ModifyMyPostFragment : Fragment() {
                             postImagePath = "PostImage/$postUserId/$postIdx/"
                         }
 
+                        var userProfileImage = sharedPreferences.getString("customerUserProfileImage", null)
+
+                        if(userProfileImage?.isEmpty()!!){
+                            profileImagePath = "null"
+                        }
+                        else{
+                            profileImagePath = "CustomerUserProfile/$postUserId/1"
+                        }
+
                         //객체 생성
                         val postModel = PostModel(
                             postIdx,
@@ -155,10 +164,11 @@ class ModifyMyPostFragment : Fragment() {
                             postType,
                             postSubject,
                             postText,
-                            postLiked = 0,
+                            postLiked = 0 ,
                             postCommentCount = 0,
                             postWriteDate,
-                            postImagePath
+                            postImagePath,
+                            profileImagePath
                         )
                         //수정본 저장
                         PostRepository.modifyPost(postModel){

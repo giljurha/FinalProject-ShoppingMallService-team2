@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentHomeBinding
@@ -21,6 +22,7 @@ import com.test.campingusproject_customer.databinding.RowBoardBinding
 import com.test.campingusproject_customer.databinding.RowPopularsaleBinding
 import com.test.campingusproject_customer.databinding.RowRealtimerankBinding
 import com.test.campingusproject_customer.dataclassmodel.PostModel
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.viewmodel.PostViewModel
 import java.lang.Integer.min
 
@@ -256,6 +258,15 @@ class HomeFragment : Fragment() {
 
         override fun onBindViewHolder(holder: PopularBoardViewHolder, position: Int) {
             // holder.imageViewRowBoardWriterImage =
+            if(postViewModel.postDataList.value?.get(position)?.profileImagePath != "null") {
+                CustomerUserRepository.getUserProfileImage(postViewModel.postDataList.value?.get(position)?.profileImagePath!!) {
+                    Glide.with(mainActivity).load(it.result)
+                        .into(holder.imageViewRowBoardWriterImage)
+                }
+            }else {
+                holder.imageViewRowBoardWriterImage.setImageResource(R.drawable.account_circle_24px)
+            }
+
             holder.textViewRowBoardTitle.text = postPopularList[position].postSubject
             holder.textViewRowBoardWriter.text = postPopularList[position].postUserId
             holder.textViewRowBoardLike.text = postPopularList[position].postLiked.toString()

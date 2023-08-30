@@ -19,12 +19,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentComunityBinding
 import com.test.campingusproject_customer.databinding.HeaderNavigationBinding
 import com.test.campingusproject_customer.databinding.RowBoardBinding
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.PostViewModel
 
@@ -270,6 +272,15 @@ class ComunityFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ComunityViewHolder, position: Int) {
             // holder.imageViewRowPopularBoardWriterImage =
+            if(postViewModel.postDataList.value?.get(position)?.profileImagePath != "null") {
+                CustomerUserRepository.getUserProfileImage(postViewModel.postDataList.value?.get(position)?.profileImagePath!!) {
+                    Glide.with(mainActivity).load(it.result)
+                        .into(holder.imageViewRowBoardWriterImage)
+                }
+            }else {
+                    holder.imageViewRowBoardWriterImage.setImageResource(R.drawable.account_circle_24px)
+                }
+
             holder.textViewRowBoardTitle.text = postViewModel.postDataList.value?.get(position)?.postSubject
             holder.textViewRowBoardWriter.text = postViewModel.postDataList.value?.get(position)?.postUserId
             holder.textViewRowBoardLike.text = postViewModel.postDataList.value?.get(position)?.postLiked.toString()

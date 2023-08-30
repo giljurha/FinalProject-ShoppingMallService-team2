@@ -11,4 +11,5 @@ data class PostModel(
     var postCommentCount : Long = 0L,     // 댓글 수
     var postWriteDate: String,      // 작성일
     var postImagePath: String,          // 첨부이미지 파일 이름
+    var profileImagePath :String // 프로필 이미지 경로
 )
