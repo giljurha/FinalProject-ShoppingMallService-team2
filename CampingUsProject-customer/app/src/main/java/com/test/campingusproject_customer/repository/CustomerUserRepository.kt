@@ -91,13 +91,13 @@ class CustomerUserRepository() {
 
         //서버에서 전화번호 찾는 함수
         fun getRegisteredPhoneNumber(
-            customerUserPhoneNumber: String, listener: ValueEventListener
+            customerUserPhoneNumber: String, callback: (Task<DataSnapshot>) -> Unit
         ){
             val database = FirebaseDatabase.getInstance()
 
             val customerUserRef = database.getReference("CustomerUsers")
             customerUserRef.orderByChild("customerUserPhoneNumber").equalTo(customerUserPhoneNumber)
-                .addValueEventListener(listener)
+                .get().addOnCompleteListener(callback)
         }
 
         //서버에서 유저 ID 찾는 함수
