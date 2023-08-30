@@ -1,6 +1,7 @@
 package com.test.campingusproject_customer.ui.payment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.test.campingusproject_customer.databinding.FragmentOrderDetailBinding
 import com.test.campingusproject_customer.databinding.RowPaymentBinding
+import com.test.campingusproject_customer.dataclassmodel.OrderProductModel
+import com.test.campingusproject_customer.repository.CartRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.OrderDetailViewModel
 
@@ -19,18 +23,22 @@ class OrderDetailFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var fragmentOrderDetailBinding: FragmentOrderDetailBinding
-    lateinit var productList:MutableList<OrderProductModel>
     lateinit var orderDetailViewModel: OrderDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+       //번들로 넘어온 값을 받는 부분
+        val orderId=arguments?.getString("orderId")
+
 
         mainActivity = activity as MainActivity
         fragmentOrderDetailBinding = FragmentOrderDetailBinding.inflate(layoutInflater)
         orderDetailViewModel=ViewModelProvider(mainActivity)[OrderDetailViewModel::class.java]
+        //제품 리스트 패치
+        orderDetailViewModel.fetchOrderedProductList(orderId!!)
         orderDetailViewModel.run {
             orderDeliveryReceiver.observe(mainActivity){
                 //받는사람
@@ -59,13 +67,12 @@ class OrderDetailFragment : Fragment() {
             orderTotalPrice.observe(mainActivity){
                 //금액
                 fragmentOrderDetailBinding.textViewOrderTotalPrice.text=it
+                val adapter=fragmentOrderDetailBinding.recyclerViewOrderDetail.adapter as OrderDetailAdapter
+                adapter.notifyDataSetChanged()
             }
             orderStatus.observe(mainActivity){
                 //결제 상태?
                 fragmentOrderDetailBinding.textViewOrderState.text=it
-            }
-            orderProductList.observe(mainActivity){
-                productList=it
             }
 
         }
@@ -75,6 +82,10 @@ class OrderDetailFragment : Fragment() {
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
 
         fragmentOrderDetailBinding.run {
+
+            //결제 내용 패치
+            orderDetailViewModel.fetchOrderInfo(orderId!!)
+
             // 툴바
             toolbarOrderDetail.run {
                 //백버튼 설정
@@ -88,6 +99,7 @@ class OrderDetailFragment : Fragment() {
 
             // 리사이클러 뷰
             recyclerViewOrderDetail.run {
+
                 adapter = OrderDetailAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
             }
@@ -125,11 +137,17 @@ class OrderDetailFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 3
+            return orderDetailViewModel.orderProductList.size
         }
 
         override fun onBindViewHolder(holder: OrderDetailViewHolder, position: Int) {
-            holder.textViewRowPaymentTitle.text = "title $position"
+            holder.textViewRowPaymentTitle.text=orderDetailViewModel.orderProductList[position].orderProductName
+            holder.textViewRowPaymentContent.text=orderDetailViewModel.orderProductList[position].orderProductPrice+"원"
+            holder.textViewRowPaymentCount.text=orderDetailViewModel.orderProductList[position].orderProductCount+"개"
+            CartRepository.getProductFirstImage(orderDetailViewModel.orderProductList[position].orderProductImage){
+                Glide.with(mainActivity).load(it.result)
+                    .into(holder.imageViewRowPayment)
+            }
 
         }
     }
