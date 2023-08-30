@@ -60,11 +60,11 @@ class ProductRepository {
         }
 
         //모든 상품 정보 가져오는 함수
-        fun getAllProductData(callback1: (Task<DataSnapshot>) -> Unit){
+        fun getAllProductData(productSellerId: String, callback1: (Task<DataSnapshot>) -> Unit){
             val database = FirebaseDatabase.getInstance()
 
             val productRef = database.getReference("ProductData")
-            productRef.orderByChild("productId").get().addOnCompleteListener(callback1)
+            productRef.orderByChild("productSellerId").equalTo(productSellerId).get().addOnCompleteListener(callback1)
         }
 
         //하나의 상품 정보 가져오는 함수

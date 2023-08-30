@@ -29,7 +29,7 @@ class ProductViewModel() : ViewModel() {
     fun getAllProductData(sellerId : String){
         val tempList = mutableListOf<ProductModel>()
 
-        ProductRepository.getAllProductData {
+        ProductRepository.getAllProductData(sellerId) {
             for(c1 in it.result.children){
                 val productId = c1.child("productId").value as Long
                 val productSellerId = c1.child("productSellerId").value as String
