@@ -106,6 +106,9 @@ class MyQuestionListFragment : Fragment() {
                         newBundle.putString("inquiryContent", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryContent)
                         newBundle.putString("inquiryAnswer", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryAnswer)
                         newBundle.putString("inquiryDate", inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryWriteDate)
+
+                        Log.d("test", "bundle ${inquiryViewModel.inquiryList.value?.get(adapterPosition)?.inquiryAnswer}")
+
                         mainActivity.replaceFragment(MainActivity.MY_QUESTION_DETAIL_FRAGMENT, true, true, newBundle)
                     }
 

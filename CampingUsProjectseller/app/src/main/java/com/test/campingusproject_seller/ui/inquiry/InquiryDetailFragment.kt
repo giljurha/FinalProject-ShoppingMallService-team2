@@ -37,18 +37,24 @@ class InquiryDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
         fragmentInquiryDetailBinding = FragmentInquiryDetailBinding.inflate(layoutInflater)
 
-//        inquiryViewModel = ViewModelProvider(mainActivity)[InquiryViewModel::class.java]
-//        inquiryViewModel.run {
-//            inquiryItemTitle.observe(mainActivity) {
-//                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailTitle.setText(it)
-//            }
-//            inquiryUserId.observe(mainActivity) {
-//                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailWriter.setText(it)
-//            }
-//            inquiryContent.observe(mainActivity) {
-//                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailContent.setText(it)
-//            }
-//        }
+        // 문의 인덱스 번호를 받는다.
+        inquiryIdx = arguments?.getLong("inquiryIdx")!!
+
+        inquiryViewModel = ViewModelProvider(mainActivity)[InquiryViewModel::class.java]
+        inquiryViewModel.run {
+            inquiryProductName.observe(mainActivity) {
+                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailTitle.setText(it)
+            }
+            inquiryUserId.observe(mainActivity) {
+                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailWriter.setText(it)
+            }
+            inquiryContent.observe(mainActivity) {
+                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailContent.setText(it)
+            }
+            inquiryAnswer.observe(mainActivity) {
+                fragmentInquiryDetailBinding.textInputEditTextInquiryDetailAnswer.setText(it)
+            }
+        }
 
         fragmentInquiryDetailBinding.run {
 
@@ -74,27 +80,19 @@ class InquiryDetailFragment : Fragment() {
                         return@setOnClickListener
                     }
 
-                    mainActivity.removeFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT)
+//                    mainActivity.removeFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT)
 
-//                    InquiryRepository.getInquiryIdx {
-//                        var inquiryIdx = it.result.value as Long
-//
-//                        val inquiryModel =
-//                            InquiryModel(inquiryIdx, 0L, "", "", "", "", "", answer, true)
-//
-//                        InquiryRepository.inquiryAnswer(inquiryModel) {
-//                            mainActivity.removeFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT)
-//                        }
-//                    }
+                    InquiryRepository.inquiryAnswer(inquiryIdx, answer, true) {
+                        mainActivity.removeFragment(MainActivity.INQUIRY_DETAIL_FRAGMENT)
+                    }
 
                 }
             }
         }
 
-//        // 문의 인덱스 번호를 받는다.
-//        inquiryIdx = arguments?.getLong("inquiryIdx")!!
-//        // 문의 정보를 가져온다.
-//        inquiryViewModel.setInquiryDetailData(inquiryIdx.toDouble())
+
+        // 문의 정보를 가져온다.
+        inquiryViewModel.setInquiryDetailData(inquiryIdx.toDouble())
 
         return fragmentInquiryDetailBinding.root
     }
