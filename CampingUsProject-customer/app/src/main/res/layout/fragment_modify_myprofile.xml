@@ -26,37 +26,45 @@
             android:orientation="vertical"
             android:padding="10dp" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/imageButtonModifyMyProfileCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:backgroundTint="@color/mainColor"
-                    android:src="@drawable/photo_camera_24px"
-                    android:tint="@color/highLightColor" />
-
-                <ImageButton
-                    android:id="@+id/imageButtonModifyMyProfileAlbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/mainColor"
-                    android:src="@drawable/photo_library_24px"
-                    android:tint="@color/highLightColor" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageViewModifyMyProfileImage"
+            <TextView
+                android:id="@+id/textViewDestination2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/account_circle_24px"
-                android:background="@drawable/shape_myprofile"/>
+                android:layout_marginBottom="20dp"
+                android:text="회원 정보"
+                android:textColor="@color/highLightColor"
+                android:textSize="18sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp">
+
+                <ImageView
+                    android:id="@+id/imageViewModifyMyProfileImage"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="300dp"
+                    android:maxHeight="300dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/imageButtonModifyMyProfileImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/subColor"
+                    android:src="@drawable/edit_24px"
+                    android:tint="@color/highLightColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView6"
@@ -144,51 +152,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/textViewDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="기본 배송지 정보 변경"
+                android:layout_marginBottom="20dp"
+                android:text="기본 배송지 정보"
                 android:textColor="@color/highLightColor"
                 android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:gravity="center_vertical"
-                    android:text="배송지명"
-                    android:textColor="@color/highLightColor" />
-
-                <EditText
-                    android:id="@+id/editTextModifyMyprofileInputDestinationName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_edit_text"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -216,7 +195,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal">
 
                 <TextView

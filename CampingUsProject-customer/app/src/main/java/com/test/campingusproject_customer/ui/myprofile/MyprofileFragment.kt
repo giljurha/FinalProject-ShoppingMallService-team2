@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentMyprofileBinding
 import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
+import java.lang.NullPointerException
 import kotlin.concurrent.thread
 
 class MyprofileFragment : Fragment() {
@@ -33,6 +37,8 @@ class MyprofileFragment : Fragment() {
         fragmentMyprofileBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
         val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+        val userId =  sharedPreferences.getString("customerUserId", null).toString()
+        var userProfileImage = sharedPreferences.getString("customerUserProfileImage", null)
 
         loginStatusCheck(sharedPreferences)
 
@@ -40,6 +46,21 @@ class MyprofileFragment : Fragment() {
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
 
         fragmentMyprofileBinding.run {
+            //사용자 프로필 이미지 설정
+            try{
+                if(userProfileImage?.isEmpty()!!){
+                    imageViewMyProfileMyImage.setImageResource(R.drawable.account_circle_24px)
+                }else{
+                    CustomerUserRepository.getUserProfileImage(userProfileImage){
+                        Glide.with(mainActivity).load(it.result)
+                            .into(imageViewMyProfileMyImage)
+                    }
+                }
+            }catch (e : NullPointerException){
+                Log.d("myProfile", "로그인 안 된 상태")
+                mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT, true, true, null)
+            }
+
 
             materialToolbarMyProfile.run {
                 title = "내정보"
@@ -52,7 +73,6 @@ class MyprofileFragment : Fragment() {
 
             //내가 쓴 글
             textViewMyProfileMyPost.setOnClickListener {
-                val userId =  sharedPreferences.getString("customerUserId", null).toString()
                 val newBundle = Bundle()
                 newBundle.putString("userId",userId)
                 mainActivity.replaceFragment(MainActivity.MY_POST_LIST_FRAGMENT,true,true,newBundle)
@@ -79,20 +99,12 @@ class MyprofileFragment : Fragment() {
                     setTitle("로그아웃")
                     setMessage("로그아웃 하시겠습니까?")
                     setPositiveButton("확인"){ dialogInterface: DialogInterface, i: Int ->
-                        //로그아웃된 상태
+                        //로그아웃 처리
 
-                        //sharedreferences 값 삭제
-                        val editor = sharedPreferences.edit()
-                        editor.remove("customerUserName")
-                        editor.remove("customerUserId")
-                        editor.remove("customerUserPw")
-                        editor.remove("customerUserShipRecipient")
-                        editor.remove("customerUserShipContact")
-                        editor.remove("customerUserShipAddress")
-                        editor.remove("customerUserPhoneNumber")
-                        editor.remove("customerUserProfileImage")
-                        editor.apply()
+                        //sharedPrefrence 값 삭제
+                        CustomerUserRepository.resetPref(sharedPreferences)
 
+                        //로그인 상태 확인
                         loginStatusCheck(sharedPreferences)
                     }
                     setNegativeButton("아니오", null)
@@ -111,11 +123,20 @@ class MyprofileFragment : Fragment() {
                         setTitle("회원탈퇴")
                         setMessage("회원탈퇴 하시겠습니까?")
                         setPositiveButton("예") { dialogInterface: DialogInterface, i: Int ->
-                            textViewMyProfileSignout.text = "회원탈퇴 됨"
+                            //탈퇴 처리
+                            //서버 DB 유저 데이터 삭제
+                            CustomerUserRepository.removeUserInfo(userId){
+                                //서버 저장소 유저 프로필 삭제
+                                CustomerUserRepository.removeUserProfileImage(userProfileImage!!){
+                                    //SharedPreference에 저장된 유저 정보 삭제
+                                    CustomerUserRepository.resetPref(sharedPreferences)
+                                    //로그인 여부 검사해서 로그인 페이지로 이동
+                                    loginStatusCheck(sharedPreferences)
+                                }
+                            }
+
                         }
-                        setNegativeButton("아니오") { dialogInterface: DialogInterface, i: Int ->
-                            textViewMyProfileSignout.text = "회원탈퇴 안됨"
-                        }
+                        setNegativeButton("아니오", null)
                         show()
                     }
                 }

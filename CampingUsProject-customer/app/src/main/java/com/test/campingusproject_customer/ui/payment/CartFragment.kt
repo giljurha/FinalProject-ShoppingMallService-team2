@@ -1,11 +1,9 @@
 package com.test.campingusproject_customer.ui.payment
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +13,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Spinner
@@ -28,10 +25,12 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.FragmentCartBinding
 import com.test.campingusproject_customer.databinding.RowCartBinding
 import com.test.campingusproject_customer.dataclassmodel.BundleData
-import com.test.campingusproject_customer.dataclassmodel.CartModel
+import com.test.campingusproject_customer.dataclassmodel.CartProductModel
 import com.test.campingusproject_customer.repository.CartRepository
 import com.test.campingusproject_customer.ui.main.MainActivity
 import com.test.campingusproject_customer.viewmodel.CartViewModel
@@ -51,9 +50,11 @@ class CartFragment : Fragment() {
 
     var checkedItemList = mutableListOf<BundleData>()
 
-    var totalSum = 0
-
     val newBundle = Bundle()
+
+    lateinit var spinnerList: IntArray
+
+    lateinit var productList: MutableList<CartProductModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,10 +73,8 @@ class CartFragment : Fragment() {
         cartViewModel.run {
             cartProductList.observe(mainActivity) {
                 fragmentCartBinding.recyclerViewCart.adapter?.notifyDataSetChanged()
-            }
-
-            totalCount.observe(mainActivity) {
-                fragmentCartBinding.textViewCartSum.text = it.toString()
+                productList = it
+                spinnerList = IntArray(cartViewModel.cartProductList.value!!.size) { 1 }
             }
         }
 
@@ -94,40 +93,43 @@ class CartFragment : Fragment() {
 
             // 리사이클러 뷰
             recyclerViewCart.run {
-//                cartViewModel.getCartData(sharedPreferences.getString("customerUserId", null).toString())
-
-
                 adapter = CartAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)
             }
 
-//            // 체크박스
-//            checkBoxCart.run {
-//                setOnCheckedChangeListener { compoundButton, b ->
-//
-//                }
-//            }
-
-            // 합계
-            textViewCartSum.text
-
             // 구매하기 버튼
             buttonCartBuy.run {
                 setOnClickListener {
-                    newBundle.putParcelableArrayList("checkedItemList", ArrayList(checkedItemList))
-                    Log.d("check", "${checkedItemList}")
-                    mainActivity.replaceFragment(
-                        MainActivity.PAYMENT_FRAGMENT,
-                        true,
-                        true,
-                        newBundle
-                    )
+                    if(productList.isEmpty()){
+                        MaterialAlertDialogBuilder(mainActivity,
+                            R.style.ThemeOverlay_App_MaterialAlertDialog).run {
+                            setTitle("결제 오류")
+                            setMessage("장바구니에 담긴 상품이 없습니다")
+                            setPositiveButton("확인",null)
+                            show()
+                        }
+                        return@setOnClickListener
+                    }else{
+                        newBundle.putParcelableArrayList("productList", ArrayList(productList))
+                        newBundle.putIntArray("spinnerList", spinnerList)
+
+                        mainActivity.replaceFragment(
+                            MainActivity.PAYMENT_FRAGMENT,
+                            true,
+                            true,
+                            newBundle
+                        )
+                    }
+
                 }
             }
         }
 
-        cartViewModel.getCartData(sharedPreferences.getString("customerUserId", null).toString())
-
+        runBlocking {
+            cartViewModel.getCartData(
+                sharedPreferences.getString("customerUserId", null).toString()
+            )
+        }
 
         return fragmentCartBinding.root
     }
@@ -137,7 +139,6 @@ class CartFragment : Fragment() {
 
         inner class CartViewHolder(rowCartBinding: RowCartBinding) :
             RecyclerView.ViewHolder(rowCartBinding.root) {
-            val checkBoxRowCart: CheckBox
             val imageViewRowCart: ImageView
             val textViewRowCartTitle: TextView
             val buttonRowCartDelete: Button
@@ -151,7 +152,6 @@ class CartFragment : Fragment() {
                 buttonRowCartDelete = rowCartBinding.buttonRowCartDelete
                 textViewRowCartCost = rowCartBinding.textViewRowCartCost
                 spinnerRowCart = rowCartBinding.spinnerRowCart
-                checkBoxRowCart = rowCartBinding.checkBoxRowCart
                 progressBarRow = rowCartBinding.progressBarRow
 
                 spinnerRowCart.run {
@@ -227,7 +227,6 @@ class CartFragment : Fragment() {
             // 상품 개수
             holder.spinnerRowCart.run {
 
-//                Log.d("count", "${cartViewModel.cartDataList.value?.get(holder.absoluteAdapterPosition)?.cartProductCount!!.toInt()}")
                 onItemSelectedListener = object : OnItemSelectedListener {
                     override fun onItemSelected(
                         p0: AdapterView<*>?,
@@ -236,74 +235,26 @@ class CartFragment : Fragment() {
                         p3: Long
                     ) {
 
-                        val cartUserId: String
                         val cartProductId: Long
                         val cartProductCount: Long
 
-                        cartUserId =
-                            cartViewModel.cartDataList.value?.get(position)?.cartUserId.toString()
                         cartProductId =
                             cartViewModel.cartDataList.value?.get(position)?.cartProductId!!.toLong()
                         cartProductCount = countList[pos].toLong()
-                        Log.d("count", "${cartProductCount}")
-                        val cartModel = CartModel(cartUserId, cartProductId, cartProductCount)
+
+                        spinnerList[position] = cartProductCount.toInt()
 
                         holder.textViewRowCartCost.text =
                             "${cartViewModel.cartProductList.value?.get(position)?.productPrice!!.toInt() * countList[pos].toInt()} 원"
 
-
-//                        totalSum += cartViewModel.cartProductList.value?.get(position)?.productPrice!!.toInt() * countList[pos].toInt()
-//                        fragmentCartBinding.textViewCartSum.text =
-//                            "합계 : ${totalSum.toString()} 원"
-
-
-
-                        holder.checkBoxRowCart.run {
-                            if (isChecked == true) {
-                                totalSum += cartViewModel.cartProductList.value?.get(position)?.productPrice!!.toInt() * countList[pos].toInt()
-                                fragmentCartBinding.textViewCartSum.text =
-                                    "합계 : ${totalSum.toString()} 원"
-                            } else {
-                                totalSum -= cartViewModel.cartProductList.value?.get(position)?.productPrice!!.toInt() * countList[pos].toInt()
-                                fragmentCartBinding.textViewCartSum.text =
-                                    "합계 : ${totalSum.toString()} 원"
-                            }
-                        }
-
-                        // 상품 개수 설정
-                        CartRepository.setCartCount(cartModel)
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
                         // TODO("Not yet implemented")
-//                        setSelection(cartViewModel.cartDataList.value?.get(holder.absoluteAdapterPosition)?.cartProductCount!!.toInt())
                     }
                 }
             }
 
-            // 체크 박스
-            holder.checkBoxRowCart.run {
-                setOnCheckedChangeListener { compoundButton, isChecked ->
-
-//                    val cartUserId: String
-                    val cartProductId: Long
-                    val cartProductCount: Long
-
-//                    cartUserId = cartViewModel.cartDataList.value?.get(position)?.cartUserId.toString()
-                    cartProductId = cartViewModel.cartDataList.value?.get(position)?.cartProductId!!.toLong()
-                    cartProductCount = cartViewModel.cartDataList.value?.get(position)?.cartProductCount!!.toLong()
-
-                    val bundleData = BundleData(cartProductId, cartProductCount.toInt())
-
-                    if(isChecked == true) {
-                        checkedItemList.add(bundleData)
-
-                    } else {
-                        checkedItemList.remove(bundleData)
-
-                    }
-                }
-            }
 
             holder.buttonRowCartDelete.setOnClickListener {
                 CartRepository.removeCartData(
@@ -326,6 +277,8 @@ class CartFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
+        checkedItemList.clear()
+
     }
 
 }
