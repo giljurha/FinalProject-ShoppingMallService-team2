@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.test.campingusproject_seller.R
 import com.test.campingusproject_seller.databinding.FragmentUpdateMyInfoBinding
 import com.test.campingusproject_seller.dataclassmodel.UserModel
@@ -30,7 +33,7 @@ class UpdateMyInfoFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         fragmentUpdateMyInfoBinding.run{
-
+            // 뒤로가기 아이콘
             materialToolbarMyInfoUpdate.run {
 
                 setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material)
@@ -52,11 +55,13 @@ class UpdateMyInfoFragment : Fragment() {
                 val builder = MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog)
 
                 if(inputName.isEmpty() || inputPw.isEmpty() || inputPwCheck.isEmpty()){
+                    builder.setTitle("오류")
                     builder.setMessage("정보가 비어었습니다")
                     builder.setNeutralButton("닫기",null)
                     builder.show()
 
                 } else if (inputPw != inputPwCheck){
+                    builder.setTitle("오류")
                     builder.setMessage("비밀번호가 잘못되었습니다")
                     builder.setNeutralButton("닫기",null)
                     builder.show()
@@ -65,38 +70,52 @@ class UpdateMyInfoFragment : Fragment() {
 
                     val database = FirebaseDatabase.getInstance()
                     val db = database.getReference("SellerUsers")
+                    // 입력된 값을 db에 저장
+                    db.orderByChild("sellerUserId").equalTo(userId).addListenerForSingleValueEvent(object :
+                        ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            for (snapshot in dataSnapshot.children) {
+                                snapshot.ref.child("sellerUserName").setValue(inputName)
+                                snapshot.ref.child("sellerUserPassword").setValue(inputPw)
 
-                    db.orderByChild("sellerUserId").equalTo(userId).get().addOnCompleteListener{
-                        db.setValue(mapOf(
-                            "sellerUserName" to inputName,
-                            "sellerUserPassword" to inputPw
-                        )
-                        )
-                    }
+                            }
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            // Failed to read value
+                        }
+                    })
+                    // db 값 프리퍼런스 값에 초기화
+                    db.orderByChild("sellerUserId").equalTo(userId).addListenerForSingleValueEvent(object :
+                        ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            lateinit var userName: String
+                            lateinit var userIdPref: String
+                            lateinit var userPassword: String
+                            lateinit var userPhoneNumber: String
 
-                    val userName = db.child("sellerUserName").toString()
-                    val userId = db.child("sellerUserId").toString()
-                    val userPassword = db.child("sellerUserPassword").toString()
-                    val userPhoneNumber = db.child("sellerUserPhoneNumber").toString()
+                            for (snapshot in dataSnapshot.children) {
+                                userName = snapshot.child("sellerUserName").value as String
+                                userIdPref = snapshot.child("sellerUserId").value as String
+                                userPassword = snapshot.child("sellerUserPassword").value as String
+                                userPhoneNumber = snapshot.child("sellerUserPhoneNumber").value as String
+                            }
+                            UserInfoRepository.savePre(mainActivity, UserModel(userName,userIdPref,userPassword,userPhoneNumber))
 
-                    UserInfoRepository.savePre(mainActivity, UserModel(userName,userId,userPassword,userPhoneNumber))
-                    mainActivity.replaceFragment(MainActivity.LOGIN_FRAGMENT,false,false,null)
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+                    })
 
                 }
-                // 1번 널값 확인
-                // 2번 비밀번호 일치
-                // 3번 데이터베이스 자료값 확인
-                // 4번 로컬 개인정보 변경
-                // 5번 내정보 화면으로 프래그먼트 전환
+                // 내정보 화면으로 이동
+                mainActivity.replaceFragment(MainActivity.MY_INFO_FRAGMENT,false,false,null)
+                }
+
 
             }
 
-        }
-
-        // Inflate the layout for this fragment
         return fragmentUpdateMyInfoBinding.root
     }
-
-
-
 }

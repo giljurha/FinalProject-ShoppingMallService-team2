@@ -44,9 +44,8 @@ class MyInfoFragment : Fragment() {
             textViewMyInfoUserName.text = userId
             textViewMyInfoPhoneNumber.text = userPhone
 
-
             val builder = MaterialAlertDialogBuilder(mainActivity,R.style.ThemeOverlay_App_MaterialAlertDialog)
-
+            // 로그아웃 버튼
             buttonMyInfoLogout.setOnClickListener {
 
                 builder.run{
@@ -64,6 +63,7 @@ class MyInfoFragment : Fragment() {
                 }.show()
             }
 
+            // 회원탈퇴 버튼
             buttonMyInfoSignOut.setOnClickListener {
                 builder.run{
                     setTitle("회원탈퇴")
@@ -93,7 +93,7 @@ class MyInfoFragment : Fragment() {
                     }
                 }.show()
             }
-
+            // 내정보수정 화면으로 이동
             buttonMyInfoUpdate.setOnClickListener {
                 mainActivity.replaceFragment(MainActivity.UPDATE_MY_INFO_FRAGMENT, true, true, null)
 
