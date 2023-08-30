@@ -1,5 +1,7 @@
 package com.test.campingusproject_customer.ui.main
 
+import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -9,9 +11,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.test.campingusproject_customer.R
 import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.repository.CustomerUserRepository
 import com.test.campingusproject_customer.ui.campsite.CampsiteFragment
 import com.test.campingusproject_customer.ui.campsite.ContractCampsiteFragment
 import com.test.campingusproject_customer.ui.shopping.ShoppingProductFragment
@@ -41,6 +45,7 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
     lateinit var activityMainBinding: ActivityMainBinding
     var currentFragment = 0
+    var selectMenu = 0
 
     companion object {
         val HOME_FRAGMENT = "HomeFragment"
@@ -82,6 +87,8 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.run {
             bottomNavigationViewMain.run {
                 this.selectedItemId = R.id.menuItemHome
+                selectMenu = R.id.menuItemHome
+                Log.d("aaaa","$selectMenu")
                 setOnItemSelectedListener {
                     //선택된 메뉴를 다시 클릭할 때 선택을 넘기는 조건문
                     if (it.itemId == selectedItemId){
@@ -90,25 +97,52 @@ class MainActivity : AppCompatActivity() {
                     when (it.itemId) {
                         //홈 클릭
                         R.id.menuItemHome -> {
+                            selectMenu = it.itemId
+                            Log.d("aaaa","$selectMenu")
                             replaceFragment(HOME_FRAGMENT, false, true, null)
                         }
                         //캠핑장 클릭
                         R.id.menuItemCamping -> {
+                            selectMenu = it.itemId
+                            Log.d("aaaa","$selectMenu")
                             replaceFragment(CAMPSITE_FRAGMENT,false,true,null)
                         }
                         //쇼핑 클릭
                         R.id.menuItemShopping -> {
+                            selectMenu = it.itemId
+                            Log.d("aaaa","$selectMenu")
                             replaceFragment(SHOPPING_FRAGMENT, false, true, null)
                         }
                         //커뮤니티 클릭
                         R.id.menuItemComunity -> {
-                            val boardType: Long = 1L
-                            val newBundle = Bundle()
-                            newBundle.putLong("boardType", boardType)
-                            replaceFragment(COMUNITY_FRAGMENT, false, true, newBundle)
+                            val sharedPreferences = getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                            if(CustomerUserRepository.checkLoginStatus(sharedPreferences) == false) {
+                                replaceFragment(COMUNITY_FRAGMENT, false, true, null)
+                                val builder = MaterialAlertDialogBuilder(this@MainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog)
+                                builder.run {
+                                    setTitle("로그인 필요")
+                                    setMessage("로그인이 필요합니다.")
+                                    setPositiveButton("닫기") { dialogInterface: DialogInterface, i: Int ->
+                                        removeFragment(COMUNITY_FRAGMENT)
+                                        selectedItemId = selectMenu
+                                    }
+                                    show()
+                                }
+                                Log.d("aaaa","$selectMenu")
+                            }
+                            else{
+                                selectMenu = it.itemId
+                                Log.d("aaaa","$selectMenu")
+                                val boardType: Long = 1L
+                                val newBundle = Bundle()
+                                newBundle.putLong("boardType", boardType)
+                                replaceFragment(COMUNITY_FRAGMENT, false, true, newBundle)
+                            }
+
                         }
                         //내정보 클릭
                         R.id.menuItemMyProfile -> {
+                            selectMenu = it.itemId
                             replaceFragment(MYPROFILE_FRAGMENT, false, true, null)
                         }
 
