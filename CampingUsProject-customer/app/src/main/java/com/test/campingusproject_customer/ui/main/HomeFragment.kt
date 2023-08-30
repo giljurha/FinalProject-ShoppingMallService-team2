@@ -1,8 +1,10 @@
 package com.test.campingusproject_customer.ui.main
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +17,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.test.campingusproject_customer.R
+import com.test.campingusproject_customer.databinding.ActivityMainBinding
+import com.test.campingusproject_customer.databinding.FragmentComunityBinding
 import com.test.campingusproject_customer.databinding.FragmentHomeBinding
 import com.test.campingusproject_customer.databinding.RowBoardBinding
 import com.test.campingusproject_customer.databinding.RowPopularsaleBinding
@@ -31,6 +36,8 @@ class HomeFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
     lateinit var postViewModel : PostViewModel
+    lateinit var fragmentComunityBinding: FragmentComunityBinding
+    lateinit var activityMainBinding: ActivityMainBinding
     var postPopularList = mutableListOf<PostModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +45,8 @@ class HomeFragment : Fragment() {
     ): View? {
         mainActivity = activity as MainActivity
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
+        fragmentComunityBinding = FragmentComunityBinding.inflate(layoutInflater)
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         postViewModel = ViewModelProvider(mainActivity)[PostViewModel::class.java]
         postViewModel.run {
@@ -46,7 +55,7 @@ class HomeFragment : Fragment() {
                 fragmentHomeBinding.recyclerViewPopularBoard.adapter?.notifyDataSetChanged()
             }
         }
-
+        postViewModel.resetPostList()
         postViewModel.getPostPopularAll()
 
         mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemHome
@@ -115,10 +124,23 @@ class HomeFragment : Fragment() {
             }
             //인기게시판 더보기 눌렀을 때
             textViewHomePopularBoardShowMore.setOnClickListener {
-                val boardType:Long = 1L
-                val newBundle = Bundle()
-                newBundle.putLong("boardType", boardType)
-                mainActivity.replaceFragment(MainActivity.COMUNITY_FRAGMENT,false,true,newBundle)
+                val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                if(CustomerUserRepository.checkLoginStatus(sharedPreferences) == false) {
+                    val builder = MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog)
+                    builder.run {
+                        setTitle("로그인 필요")
+                        setMessage("로그인이 필요합니다.")
+                        setPositiveButton("닫기") { dialogInterface: DialogInterface, i: Int -> }
+                        show()
+                    }
+
+                }
+                else {
+                    val boardType: Long = 1L
+                    val newBundle = Bundle()
+                    newBundle.putLong("moreShow", boardType)
+                    mainActivity.replaceFragment(MainActivity.COMUNITY_FRAGMENT, false, true, newBundle)
+                }
             }
         }
 
@@ -232,10 +254,28 @@ class HomeFragment : Fragment() {
                 textViewRowBoardComment = rowPopularboardBinding.textViewRowBoardComment
 
                 rowPopularboardBinding.root.setOnClickListener {
-                    val readPostIdx = postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
-                    val newBundle = Bundle()
-                    newBundle.putLong("PostIdx", readPostIdx!!)
-                    mainActivity.replaceFragment(MainActivity.POST_READ_FRAGMENT,true,true,newBundle)
+                    val sharedPreferences = mainActivity.getSharedPreferences("customer_user_info", Context.MODE_PRIVATE)
+                    if(CustomerUserRepository.checkLoginStatus(sharedPreferences) == false) {
+                        val builder = MaterialAlertDialogBuilder(mainActivity, R.style.ThemeOverlay_App_MaterialAlertDialog)
+                        builder.run {
+                            setTitle("로그인 필요")
+                            setMessage("로그인이 필요합니다.")
+                            setPositiveButton("닫기") { dialogInterface: DialogInterface, i: Int -> }
+                            show()
+                        }
+                    }
+                    else {
+                        val readPostIdx =
+                            postViewModel.postDataList.value?.get(adapterPosition)?.postIdx
+                        val newBundle = Bundle()
+                        newBundle.putLong("PostIdx", readPostIdx!!)
+                        mainActivity.replaceFragment(
+                            MainActivity.POST_READ_FRAGMENT,
+                            true,
+                            true,
+                            newBundle
+                        )
+                    }
                 }
             }
         }
@@ -257,14 +297,18 @@ class HomeFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: PopularBoardViewHolder, position: Int) {
-            // holder.imageViewRowBoardWriterImage =
-            if(postViewModel.postDataList.value?.get(position)?.profileImagePath != "null") {
+            if(postViewModel.postDataList.value?.get(position)?.profileImagePath.toString() != "null") {
                 CustomerUserRepository.getUserProfileImage(postViewModel.postDataList.value?.get(position)?.profileImagePath!!) {
-                    Glide.with(mainActivity).load(it.result)
+                    Glide.with(mainActivity)
+                        .load(it.result)
                         .into(holder.imageViewRowBoardWriterImage)
                 }
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.profileImagePath}")
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.postSubject}")
             }else {
                 holder.imageViewRowBoardWriterImage.setImageResource(R.drawable.account_circle_24px)
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.profileImagePath}")
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.postSubject}")
             }
 
             holder.textViewRowBoardTitle.text = postPopularList[position].postSubject
