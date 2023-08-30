@@ -35,7 +35,7 @@ class ComunityFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var callback: OnBackPressedCallback
     lateinit var postViewModel: PostViewModel
-    var postType = 0L
+    var postType = 1L
 
     //네비게이션 드로어에 나오는 아이템 메뉴
     val itemList = arrayOf(
@@ -68,17 +68,22 @@ class ComunityFragment : Fragment() {
             }
         }
 
-        // 게시판 타입 번호를 전달하여 게시글 정보를 가져온다.
-        postViewModel.getPostAll(postType)
+        if(postType == 1L){
+            fragmentComunityBinding.navigationViewComunity.setCheckedItem(R.id.item_coumnity_popular)
+        }
+        else{
+            fragmentComunityBinding.navigationViewComunity.setCheckedItem(itemList[postType.toInt()])
+        }
         postViewModel.resetImageList()
 
         //홈에서 인기 게시글 더보기 눌렀을 때
         var receiveBoardType:Long = 0L
-        mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemComunity
-        if (arguments?.getLong("boardType") != null) {
-            receiveBoardType = arguments?.getLong("boardType")!!
+        if (arguments?.getLong("moreShow") == 1L) {
+            mainActivity.activityMainBinding.bottomNavigationViewMain.selectedItemId = R.id.menuItemComunity
+            receiveBoardType = arguments?.getLong("moreShow")!!
             postType = 1L
-            postViewModel.getPostPopularAll()
+            fragmentComunityBinding.navigationViewComunity.setCheckedItem(R.id.item_coumnity_popular)
+            Log.d("aaaa","홈에서 인기 게시글 더보기")
         } else {
             receiveBoardType = 0L
         }
@@ -144,12 +149,11 @@ class ComunityFragment : Fragment() {
 
             //커뮤니티 들어왔을 때는 전체 게시판을 보여줌
             if(postType == 0L)
-                menu.findItem(R.id.item_coumnity_all).setIcon(R.drawable.circle_20px)
+
             else{ // 게시글 보고 돌아왔을 때
                 when(postType){
                     1L ->{
                         setNavigationIcon(itemList[1])
-                        postViewModel.getPostPopularAll()
                     }
                     2L ->{
                         setNavigationIcon(itemList[2])
@@ -177,10 +181,11 @@ class ComunityFragment : Fragment() {
                     //인기 게시판
                     R.id.item_coumnity_popular ->{
                         textViewToolbarTitle.text = "인기 게시판"
+                        if(postType != 1L)
+                            postViewModel.getPostPopularAll()
                         postType = 1L
                         setNavigationIcon(R.id.item_coumnity_popular)
                         drawerLayoutComunity.close()
-                        postViewModel.getPostPopularAll()
                     }
                     //자유 게시판
                     R.id.item_coumnity_free ->{
@@ -272,13 +277,18 @@ class ComunityFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ComunityViewHolder, position: Int) {
             // holder.imageViewRowPopularBoardWriterImage =
-            if(postViewModel.postDataList.value?.get(position)?.profileImagePath != "null") {
+            if(postViewModel.postDataList.value?.get(position)?.profileImagePath.toString() != "null") {
                 CustomerUserRepository.getUserProfileImage(postViewModel.postDataList.value?.get(position)?.profileImagePath!!) {
-                    Glide.with(mainActivity).load(it.result)
+                    Glide.with(mainActivity)
+                        .load(it.result)
                         .into(holder.imageViewRowBoardWriterImage)
                 }
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.profileImagePath}")
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.postSubject}")
             }else {
-                    holder.imageViewRowBoardWriterImage.setImageResource(R.drawable.account_circle_24px)
+                holder.imageViewRowBoardWriterImage.setImageResource(R.drawable.account_circle_24px)
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.profileImagePath}")
+                Log.d("aaaa","$position ${postViewModel.postDataList.value?.get(position)?.postSubject}")
                 }
 
             holder.textViewRowBoardTitle.text = postViewModel.postDataList.value?.get(position)?.postSubject
