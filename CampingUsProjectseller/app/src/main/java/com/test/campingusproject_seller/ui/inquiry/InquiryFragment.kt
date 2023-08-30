@@ -178,9 +178,9 @@ class InquiryFragment : Fragment() {
 
             // 상품에 등록된 이미지 경로로 첫 번째 이미지만 불러와 표시
             InquiryRepository.getProductFirstImage(
-                inquiryViewModel.inquiryProductList.value?.get(
+                inquiryViewModel.inquiryDataList.value?.get(
                     position
-                )?.productImage!!
+                )?.inquiryImage!!
             ) { uri ->
                 // 글라이드 라이브러리로 이미지 표시
                 // 이미지 로딩 완료되거나 실패하기 전까지 프로그래스바 활성화

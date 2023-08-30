@@ -80,6 +80,7 @@ class InquiryViewModel() : ViewModel() {
                 val inquiryWriteDate = c2.child("inquiryWriteDate").value as String
                 val inquiryAnswer = c2.child("inquiryAnswer").value as String
                 val inquiryResult = c2.child("inquiryResult").value as? Boolean ?: false
+                val inquiryImage = c2.child("inquiryImage").value as String
 
                 val p1 = InquiryModel(
                     inquiryIdx,
@@ -91,7 +92,7 @@ class InquiryViewModel() : ViewModel() {
                     inquiryWriteDate,
                     inquiryAnswer,
                     inquiryResult,
-                    inquiryItemModel.productImage
+                    inquiryImage
                 )
 
                 tempList2.add(p1)
