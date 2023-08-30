@@ -145,6 +145,7 @@ class ShoppingProductFragment : Fragment() {
                     newBundle.run {
                         putLong("productId", productId)
                         putString("productName", productName)
+                        putString("productImage", productViewModel.productImage.value)
                     }
                     mainActivity.replaceFragment(MainActivity.INQUIRY_FRAGMENT, true, true, newBundle)
                 }

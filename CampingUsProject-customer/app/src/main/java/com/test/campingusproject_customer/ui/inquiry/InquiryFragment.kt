@@ -38,6 +38,7 @@ class InquiryFragment : Fragment() {
         // 번들 객체 정보 가져오기
         val inquiryItemId = arguments?.getLong("productId")!!
         val inquiryProductName = arguments?.getString("productName")!!
+        val inquiryProductImage = arguments?.getString("productImage")!!
 
 
         fragmentInquiryBinding.run {
@@ -63,7 +64,7 @@ class InquiryFragment : Fragment() {
 
                     val inquiryData = InquiryModel(
                         inquiryItemId, inquiryUserId, inquiryProductName,
-                        editTextTextInquiryContent.text.toString(), inquiryUserName, formatted, "답변이 작성되지 않았습니다.", false)
+                        editTextTextInquiryContent.text.toString(), inquiryUserName, formatted, "답변이 작성되지 않았습니다.", false, inquiryProductImage)
 
                     Log.d("민우", inquiryData.toString())
 
