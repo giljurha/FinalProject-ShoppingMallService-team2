@@ -45,8 +45,8 @@ class CartViewModel() : ViewModel() {
     }
 
     fun getProductData(cartProductId: Long, tempList2: MutableList<CartProductModel>) {
-        CartRepository.getProductData(cartProductId) {
 
+        CartRepository.getProductData(cartProductId) {
             if(it.result.exists() == true) {
                 for (c2 in it.result.children) {
                     val productName = c2.child("productName").value as String

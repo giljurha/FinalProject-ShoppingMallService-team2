@@ -1,5 +1,6 @@
 package com.test.campingusproject_seller.ui.product
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -49,6 +50,10 @@ class ManageProductFragment : Fragment() {
         //하단 nav bar 보이게
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.VISIBLE
 
+        // 판매자 Id
+        val pref = mainActivity.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        val userId = pref.getString("userId",null)
+
         //제품 뷰 모델 감시자 설정
         productViewModel = ViewModelProvider(mainActivity)[ProductViewModel::class.java]
         productViewModel.run {
@@ -85,7 +90,9 @@ class ManageProductFragment : Fragment() {
 
                                 ProductRepository.removeProduct(productId){
                                     ProductRepository.removeImages(productImage){
-                                        productViewModel.getAllProductData(ProductRepository.getSellerId())
+                                        if (userId != null) {
+                                            productViewModel.getAllProductData(userId)
+                                        }
                                         Snackbar.make(mainActivity.activityMainBinding.root, "삭제되었습니다.", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
@@ -99,7 +106,9 @@ class ManageProductFragment : Fragment() {
             //recycler view
             recyclerViewManageProduct.run {
                 //상품 뷰 모델을 통해 등록된 모든 제품 목록 불러오기
-                productViewModel.getAllProductData(ProductRepository.getSellerId())
+                if (userId != null) {
+                    productViewModel.getAllProductData(userId)
+                }
 
                 adapter = ManageProductAdapter()
                 layoutManager = LinearLayoutManager(mainActivity)

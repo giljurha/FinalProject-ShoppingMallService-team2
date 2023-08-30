@@ -63,6 +63,10 @@ class RegisterProductFragment : Fragment() {
         //하단 nav bar 안보이게
         mainActivity.activityMainBinding.bottomNavigationViewMain.visibility = View.GONE
 
+        // 판매자 Id
+        val pref = mainActivity.getSharedPreferences("user_info", Context.MODE_PRIVATE)
+        val userId = pref.getString("userId",null)
+
         //앨범 런처 초기화
         albumLauncher = albumSetting()
 
@@ -139,8 +143,8 @@ class RegisterProductFragment : Fragment() {
                                 textInputLayoutRegisterProductExplanation.error = null
                             }
 
-                            // userId 값 임시 지정
-                            val productSellerId = "jieun"
+                            // userId 값
+                            val productSellerId = userId!!
 
                             //브랜드명 입력 검사
                             val productBrand = textInputEditTextRegisterProductBrand.text.toString()
